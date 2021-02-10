@@ -15,7 +15,7 @@ export default function MaterialUITable() {
 
   useEffect(() => {
     const getHoldings = async () => {
-      const response = await fetch('/holdings/user/1')
+      const response = await fetch('/holdings/user/6')
       const data = await response.json()
       setHoldings(data)
     }
@@ -56,7 +56,7 @@ export default function MaterialUITable() {
               {holdings.map((holding) => (
                 <TableRow key={holding.name}>
                   <TableCell component="th" scope="row">
-                    {holding.ticker_symbol}
+                    {holding.ticker_symbol ? holding.ticker_symbol : holding.name}
                   </TableCell>
                   <TableCell align="right">{holding.institution_price}</TableCell>
                   <TableCell align="right">{holding.quantity}</TableCell>
