@@ -1,14 +1,14 @@
 import React from "react";
 
 import HoldingsTable from "./HoldingsTable"
+import UserInfo from "./UserInfo"
 import TopNav from "./TopNav"
 
 const Portfolio = ({ match }) => {
-  console.log(match.params.username)
-
   return (
     <>
       <TopNav />
+      <UserInfo username={match.params.username} />
       <HoldingsTable username={match.params.username} />
     </>
   )

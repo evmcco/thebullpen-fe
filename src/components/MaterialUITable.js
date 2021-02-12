@@ -38,7 +38,7 @@ export default function MaterialUITable(props) {
 
   return (
     <>
-      {holdings.length > 1 ? (
+      {holdings ? (
         <TableContainer className={classes.tableContainer} >
           <Table aria-label="simple table">
             <TableHead className={classes.headerRow}>
