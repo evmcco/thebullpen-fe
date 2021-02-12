@@ -77,10 +77,11 @@ const PlaidLink = () => {
 
   return (
     <>
-      <Button onClick={() => generateLinkToken()}>
+      <h1>Link your Brokerage Account:</h1>
+      <Button onClick={() => generateLinkToken()} color="primary" variant="contained">
         Generate Link Token
       </Button>
-      <Button onClick={() => open()} disabled={!ready}>
+      <Button onClick={() => open()} disabled={!ready} color="primary" variant="contained">
         Connect a bank account
       </Button>
     </>

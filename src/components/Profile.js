@@ -3,6 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 import TopNav from './TopNav.js'
 import PlaidLink from './PlaidLink'
+import UserSetup from './UserSetup'
 
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -18,13 +19,14 @@ const Profile = () => {
     isAuthenticated && (
       <>
         <TopNav />
-        <PlaidLink />
+        {/* <PlaidLink /> */}
         <div>
           <img src={user.picture} alt={user.name} />
           <h2>Name: {user.name}</h2>
           <p>Email Address: {user.email}</p>
           {user_metadata && user_metadata.username && <p>Username: {user_metadata.username}</p>}
         </div>
+        <UserSetup />
       </>
     )
   );
