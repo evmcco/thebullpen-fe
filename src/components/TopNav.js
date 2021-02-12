@@ -60,9 +60,9 @@ export default function TopNav() {
               <Link to="/">
                 <MenuItem onClick={handleClose}>Home</MenuItem>
               </Link>
-              <Link to="/profile">
+              {isAuthenticated && <Link to="/profile">
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
-              </Link>
+              </Link>}
             </Menu>
           </div>
           <Typography variant="h6" className={classes.title}>

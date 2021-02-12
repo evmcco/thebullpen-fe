@@ -8,14 +8,14 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import PlaidLink from './PlaidLink'
+import { useAuth0 } from "@auth0/auth0-react";
 
-export default function MaterialUITable() {
+export default function MaterialUITable(props) {
   const [holdings, setHoldings] = useState([])
 
   useEffect(() => {
     const getHoldings = async () => {
-      const response = await fetch('/holdings/user/6')
+      const response = await fetch(`/holdings/user/${props.username}`)
       const data = await response.json()
       setHoldings(data)
     }
@@ -36,11 +36,9 @@ export default function MaterialUITable() {
 
   const classes = useStyles();
 
-
   return (
     <>
-      <PlaidLink />
-      {holdings ? (
+      {holdings.length > 1 ? (
         <TableContainer className={classes.tableContainer} >
           <Table aria-label="simple table">
             <TableHead className={classes.headerRow}>

@@ -2,10 +2,11 @@ import React from "react";
 
 import MaterialUITable from "./MaterialUITable"
 
-const HoldingsTable = () => {
+const HoldingsTable = (props) => {
+  console.log("PROPS", props)
   return (
     <>
-      <MaterialUITable />
+      <MaterialUITable username={props.username} />
     </>
   )
 }

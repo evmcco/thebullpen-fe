@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { usePlaidLink } from 'react-plaid-link';
+import { useAuth0 } from "@auth0/auth0-react";
 
 import Button from '@material-ui/core/Button';
 
@@ -8,6 +9,23 @@ const PlaidLink = () => {
   const [linkToken, setLinkToken] = useState('')
   const [publicToken, setPublicToken] = useState('')
   const [itemState, setItemState] = useState({})
+
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
+  const saveAccessToken = async () => {
+    const response = await fetch('/users/update_user_metadata', {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userId: user.sub,
+        plaid_access_token: itemState.accessToken
+      })
+    })
+    return response
+  }
 
   const onSuccess = React.useCallback((publicToken) => {
     // send public_token to server
@@ -36,12 +54,10 @@ const PlaidLink = () => {
       });
     };
     setToken();
+    saveAccessToken()
   }, []);
 
-  const config = {
-    token: linkToken,
-    onSuccess,
-  };
+
 
   const generateLinkToken = async () => {
     const createLinkTokenUrl = 'plaid/create_link_token'
@@ -51,6 +67,11 @@ const PlaidLink = () => {
     const data = await response.json()
     setLinkToken(data.link_token)
   }
+
+  const config = {
+    token: linkToken,
+    onSuccess,
+  };
 
   const { open, ready, error } = usePlaidLink(config);
 

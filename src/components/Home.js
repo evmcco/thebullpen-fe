@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import HoldingsTable from "./HoldingsTable"
 import TopNav from "./TopNav"
 
-const Main = () => {
+import { useAuth0 } from "@auth0/auth0-react";
+
+
+
+const Home = () => {
   return (
     <>
       <TopNav />
-      <HoldingsTable />
+      <h1>Welcome to The Bullpen!</h1>
     </>
   )
 }
 
-export default Main
+
+export default Home
 
