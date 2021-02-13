@@ -1,18 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-
 import TopNav from './TopNav.js'
 import PlaidLink from './PlaidLink'
 
 const UserSetup = () => {
+  const [userMetadata, setUserMetadata] = useState({})
   const [usernameInput, setUsernameInput] = useState('')
-
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const [usernameSaved, setusernameSaved] = useState(false)
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,16 +24,17 @@ const UserSetup = () => {
 
   const classes = useStyles();
 
-  if (isLoading) {
-    return <div>Loading ...</div>;
-  }
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
-  let user_metadata = {}
-  if (user["https://thebullpen.app/user/user_metadata"]) { user_metadata = user["https://thebullpen.app/user/user_metadata"] }
+  useEffect(() => {
+    if (user["https://thebullpen.app/user/user_metadata"].username) {
+      setUserMetadata(user["https://thebullpen.app/user/user_metadata"])
+    }
+    console.log("USER METADATA", userMetadata)
+  }, [userMetadata]);
 
   const handleUsernameSubmit = async (e) => {
     e.preventDefault()
-    console.log("USERNAME INPUT", usernameInput)
     const response = await fetch('/users/update_user_metadata', {
       method: "POST",
       headers: {
@@ -46,23 +46,31 @@ const UserSetup = () => {
         username: usernameInput
       })
     })
-    console.log("USERNAME SAVE RESPONSE", response)
-    return response
+    const data = await response.json()
+    setUserMetadata(data.user_metadata)
+  }
+
+  if (isLoading) {
+    return <div>Loading ...</div>;
   }
 
   //submit username form and Plaid Link
   return (
     <>
-      {isAuthenticated && !user_metadata.username && (
+      {isAuthenticated && !userMetadata.username && (
         <form className={classes.root} noValidate autoComplete="off" onSubmit={e => { handleUsernameSubmit(e) }}>
           <TextField id="standard-basic" label="Username" onChange={e => setUsernameInput(e.target.value)} />
           <br />
           <Button type="submit" color="primary" variant="contained">Reserve Username</Button>
         </form>
-
       )}
-      {isAuthenticated && !user_metadata.plaid_access_token && (
-        <PlaidLink />
+      {isAuthenticated && userMetadata.username && (
+        <form className={classes.root} noValidate autoComplete="off" onSubmit={e => { handleUsernameSubmit(e) }}>
+          <TextField disabled id="standard-basic" label="Username" defaultValue={userMetadata.username} onChange={e => setUsernameInput(e.target.value)} />
+        </form>
+      )}
+      {isAuthenticated && userMetadata.username && !userMetadata.plaid_access_token && (
+        <PlaidLink userMetadata={userMetadata} />
       )}
     </>
   );

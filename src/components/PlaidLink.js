@@ -1,18 +1,24 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { usePlaidLink } from 'react-plaid-link';
 import { useAuth0 } from "@auth0/auth0-react";
 
 import Button from '@material-ui/core/Button';
 
+import { requestPlaidHoldings } from "../services/plaid.js"
 
-const PlaidLink = () => {
+const PlaidLink = (props) => {
   const [linkToken, setLinkToken] = useState('')
-  const [publicToken, setPublicToken] = useState('')
   const [itemState, setItemState] = useState({})
+
+  useEffect(() => {
+    if (!linkToken) {
+      generateLinkToken()
+    }
+  }, [linkToken])
 
   const { user, isAuthenticated, isLoading } = useAuth0();
 
-  const saveAccessToken = async () => {
+  const saveAccessToken = async (access_token) => {
     const response = await fetch('/users/update_user_metadata', {
       method: "POST",
       headers: {
@@ -21,7 +27,7 @@ const PlaidLink = () => {
       },
       body: JSON.stringify({
         userId: user.sub,
-        plaid_access_token: itemState.accessToken
+        plaid_access_token: access_token
       })
     })
     return response
@@ -29,8 +35,8 @@ const PlaidLink = () => {
 
   const onSuccess = React.useCallback((publicToken) => {
     // send public_token to server
-    const setToken = async () => {
-      const setTokenUrl = 'plaid/set_access_token'
+    const setTokenSaveTokenRequestHoldings = async () => {
+      const setTokenUrl = '/plaid/set_access_token'
       const response = await fetch(setTokenUrl, {
         method: "POST",
         headers: {
@@ -52,12 +58,12 @@ const PlaidLink = () => {
         accessToken: data.access_token,
         isItemAccess: true,
       });
+      saveAccessToken(data.access_token)
+      requestPlaidHoldings(props.userMetadata.username, data.access_token)
     };
-    setToken();
-    saveAccessToken()
+    setTokenSaveTokenRequestHoldings();
+    //TODO send username and access_token to API for Plaid data fetching
   }, []);
-
-
 
   const generateLinkToken = async () => {
     const createLinkTokenUrl = 'plaid/create_link_token'
@@ -65,7 +71,8 @@ const PlaidLink = () => {
       method: "POST"
     })
     const data = await response.json()
-    setLinkToken(data.link_token)
+    await setLinkToken(data.link_token)
+    open()
   }
 
   const config = {
@@ -77,10 +84,7 @@ const PlaidLink = () => {
 
   return (
     <>
-      <h1>Link your Brokerage Account:</h1>
-      <Button onClick={() => generateLinkToken()} color="primary" variant="contained">
-        Generate Link Token
-      </Button>
+      <h2>Link your Brokerage Account:</h2>
       <Button onClick={() => open()} disabled={!ready} color="primary" variant="contained">
         Connect a bank account
       </Button>
