@@ -19,7 +19,7 @@ const PlaidLink = (props) => {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
   const saveAccessToken = async (access_token) => {
-    const response = await fetch('/users/update_user_metadata', {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/users/update_user_metadata`, {
       method: "POST",
       headers: {
         'Accept': 'application/json',
@@ -36,7 +36,7 @@ const PlaidLink = (props) => {
   const onSuccess = React.useCallback((publicToken) => {
     // send public_token to server
     const setTokenSaveTokenRequestHoldings = async () => {
-      const setTokenUrl = '/plaid/set_access_token'
+      const setTokenUrl = `${process.env.REACT_APP_API_URL}/plaid/set_access_token`
       const response = await fetch(setTokenUrl, {
         method: "POST",
         headers: {
@@ -66,7 +66,7 @@ const PlaidLink = (props) => {
   }, []);
 
   const generateLinkToken = async () => {
-    const createLinkTokenUrl = 'plaid/create_link_token'
+    const createLinkTokenUrl = `${process.env.REACT_APP_API_URL}/plaid/create_link_token`
     const response = await fetch(createLinkTokenUrl, {
       method: "POST"
     })

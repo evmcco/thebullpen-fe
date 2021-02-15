@@ -34,7 +34,7 @@ const UserSetup = () => {
   }, [userMetadata]);
 
   const saveUsername = async (username) => {
-    const response = await fetch('/users/username/save', {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/users/username/save`, {
       method: "POST",
       headers: {
         'Accept': 'application/json',
@@ -48,7 +48,7 @@ const UserSetup = () => {
   }
 
   const doesUsernameExist = async (username) => {
-    const response = await fetch(`/users/username/exists/${username}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/users/username/exists/${username}`, {
       method: "GET",
     })
     const data = await response.json()
@@ -61,7 +61,7 @@ const UserSetup = () => {
     const exists = await doesUsernameExist(usernameInput)
     if (!exists) {
       saveUsername(usernameInput)
-      const response = await fetch('/users/update_user_metadata', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/users/update_user_metadata`, {
         method: "POST",
         headers: {
           'Accept': 'application/json',

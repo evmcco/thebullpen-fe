@@ -15,7 +15,8 @@ export default function MaterialUITable(props) {
 
   useEffect(() => {
     const getHoldings = async () => {
-      const response = await fetch(`/holdings/user/${props.username}`)
+      console.log("HOLDINGS URL", `${process.env.REACT_APP_API_URL}/holdings/user/${props.username}`)
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/holdings/user/${props.username}`)
       const data = await response.json()
       setHoldings(data)
     }
