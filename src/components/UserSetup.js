@@ -28,7 +28,7 @@ const UserSetup = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
   useEffect(() => {
-    if (user["https://thebullpen.app/user/user_metadata"].username) {
+    if (user["https://thebullpen.app/user/user_metadata"] && user["https://thebullpen.app/user/user_metadata"].username) {
       setUserMetadata(user["https://thebullpen.app/user/user_metadata"])
     }
   }, [userMetadata]);
