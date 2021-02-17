@@ -74,7 +74,7 @@ const UserSetup = () => {
       })
       if (response.status = 200) {
         const data = await response.json()
-        setUserMetadata(data.user_metadata)
+        // setUserMetadata(data.user_metadata)
         saveUsername(usernameInput)
       }
     }
