@@ -58,9 +58,9 @@ const UserSetup = () => {
 
   const handleUsernameSubmit = async (e) => {
     e.preventDefault()
+    console.log("USERNAME INPUT", usernameInput)
     const exists = await doesUsernameExist(usernameInput)
     if (!exists) {
-      saveUsername(usernameInput)
       const response = await fetch(`${process.env.REACT_APP_API_URL}/users/update_user_metadata`, {
         method: "POST",
         headers: {
@@ -72,8 +72,11 @@ const UserSetup = () => {
           username: usernameInput
         })
       })
-      const data = await response.json()
-      setUserMetadata(data.user_metadata)
+      if (response.status = 200) {
+        const data = await response.json()
+        setUserMetadata(data.user_metadata)
+        saveUsername(usernameInput)
+      }
     }
   }
 
