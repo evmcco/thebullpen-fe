@@ -1,24 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 import TopNav from './TopNav.js'
-import UserSetup from './UserSetup'
+import PlaidLink from './PlaidLink.js'
 
 import Button from '@material-ui/core/Button';
 
 import { requestPlaidHoldings } from "../services/plaid.js"
 
 const Profile = () => {
+  const [accessTokens, setAccessTokens] = useState([])
+
   const { user, isAuthenticated, isLoading } = useAuth0();
+
+  const getAccessTokens = async (username) => {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/users/get_access_tokens/${username}`)
+    const data = await response.json()
+    setAccessTokens(data)
+  }
+
+  useEffect(async () => {
+    if (user) {
+      await getAccessTokens(user["https://thebullpen.app/username"])
+    }
+  }, [])
 
   if (isLoading) {
     return <div>Loading ...</div>;
   }
-
-  let user_metadata = {}
-  if (user["https://thebullpen.app/user/user_metadata"]) { user_metadata = user["https://thebullpen.app/user/user_metadata"] }
-
-
 
   return (
     isAuthenticated && (
@@ -27,11 +36,16 @@ const Profile = () => {
         <div>
           <img src={user.picture} alt={user.name} />
           <br />
-          {user_metadata.username && user_metadata.plaid_access_token && <Button onClick={() => requestPlaidHoldings(user_metadata.username, user_metadata.plaid_access_token)} variant="contained" color="secondary">Refresh Holdings Data</Button>}
           <h2>Name: {user.name}</h2>
           <p>Email Address: {user.email}</p>
+          <p>Username: {user["https://thebullpen.app/username"]}</p>
         </div>
-        <UserSetup />
+        <PlaidLink username={user["https://thebullpen.app/username"]} />
+        {/* TODO only show button if user has access_token, eventually display all Items with separate buttons (for testing) */}
+        <br />
+        {!!accessTokens[0] &&
+          <Button onClick={() => requestPlaidHoldings(user["https://thebullpen.app/username"], accessTokens[0].access_token)} variant="contained" color="secondary">Refresh Holdings Data</Button>
+        }
       </>
     )
   );

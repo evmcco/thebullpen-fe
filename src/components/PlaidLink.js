@@ -16,17 +16,15 @@ const PlaidLink = (props) => {
     }
   }, [linkToken])
 
-  const { user, isAuthenticated, isLoading } = useAuth0();
-
   const saveAccessToken = async (access_token) => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/users/update_user_metadata`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/users/save_access_token`, {
       method: "POST",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        userId: user.sub,
+        username: props.username,
         plaid_access_token: access_token
       })
     })
@@ -59,7 +57,7 @@ const PlaidLink = (props) => {
         isItemAccess: true,
       });
       saveAccessToken(data.access_token)
-      requestPlaidHoldings(props.userMetadata.username, data.access_token)
+      requestPlaidHoldings(props.username, data.access_token)
     };
     setTokenSaveTokenRequestHoldings();
     //TODO send username and access_token to API for Plaid data fetching
