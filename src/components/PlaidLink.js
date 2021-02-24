@@ -16,7 +16,7 @@ const PlaidLink = (props) => {
     }
   }, [linkToken])
 
-  const saveAccessToken = async (access_token) => {
+  const saveAccessToken = async (access_token, item_id) => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/users/save_access_token`, {
       method: "POST",
       headers: {
@@ -25,7 +25,8 @@ const PlaidLink = (props) => {
       },
       body: JSON.stringify({
         username: props.username,
-        plaid_access_token: access_token
+        plaid_access_token: access_token,
+        item_id: item_id
       })
     })
     return response
@@ -56,7 +57,7 @@ const PlaidLink = (props) => {
         accessToken: data.access_token,
         isItemAccess: true,
       });
-      saveAccessToken(data.access_token)
+      saveAccessToken(data.access_token, data.item_id)
       requestPlaidHoldings(props.username, data.access_token)
     };
     setTokenSaveTokenRequestHoldings();
