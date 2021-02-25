@@ -45,6 +45,7 @@ export default function MaterialUITable(props) {
               <TableRow>
                 <TableCell>Name</TableCell>
                 <TableCell align="right">Ticker</TableCell>
+                <TableCell align="right">% Change</TableCell>
                 <TableCell align="right">Current Price</TableCell>
                 <TableCell align="right">Quantity</TableCell>
                 <TableCell align="right">Market Value</TableCell>
@@ -55,7 +56,8 @@ export default function MaterialUITable(props) {
               {holdings.map((holding) => (
                 <TableRow key={holding.id}>
                   <TableCell component="th" scope="row">{holding.name}</TableCell>
-                  <TableCell align="right" >{holding.ticker_symbol}</TableCell>
+                  <TableCell align="right">{holding.ticker_symbol}</TableCell>
+                  <TableCell align="right">{!!holding.quote.changePercent ? holding.quote.changePercent : null}</TableCell>
                   <TableCell align="right">{holding.institution_price}</TableCell>
                   <TableCell align="right">{holding.quantity}</TableCell>
                   <TableCell align="right">{holding.institution_value}</TableCell>
