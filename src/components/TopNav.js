@@ -19,8 +19,16 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  headerBar: {
+    backgroundColor: '#ffd600',
+    color: '#424242',
+  },
   menuButton: {
     marginRight: theme.spacing(2),
+  },
+  menu: {
+    backgroundColor: '#424242',
+    color: '#fafafa',
   },
   title: {
     flexGrow: 1,
@@ -44,7 +52,7 @@ export default function TopNav() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar className={classes.headerBar} position="static">
         <Toolbar>
           <div>
             <IconButton onClick={handleClick} edge="start" className={classes.menuButton} color="inherit" aria-label="menu" aria-controls="simple-menu" aria-haspopup="true">

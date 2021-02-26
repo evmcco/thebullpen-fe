@@ -30,7 +30,14 @@ export default function MaterialUITable(props) {
       margin: '5%',
     },
     headerRow: {
-      background: 'lightgrey',
+      background: '#616161',
+      color: '#fafafa',
+    },
+    headerRowCell: {
+      color: '#fafafa'
+    },
+    tableRowCell: {
+      color: '#fafafa'
     }
   }));
 
@@ -43,25 +50,25 @@ export default function MaterialUITable(props) {
           <Table aria-label="simple table">
             <TableHead className={classes.headerRow}>
               <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell align="right">Ticker</TableCell>
-                <TableCell align="right">% Change</TableCell>
-                <TableCell align="right">Current Price</TableCell>
-                <TableCell align="right">Quantity</TableCell>
-                <TableCell align="right">Market Value</TableCell>
-                <TableCell align="right">Cost Basis</TableCell>
+                <TableCell className={classes.headerRowCell}>Name</TableCell>
+                <TableCell align="right" className={classes.headerRowCell}>Ticker</TableCell>
+                <TableCell align="right" className={classes.headerRowCell}>% Change</TableCell>
+                <TableCell align="right" className={classes.headerRowCell}>Current Price</TableCell>
+                <TableCell align="right" className={classes.headerRowCell}>Quantity</TableCell>
+                <TableCell align="right" className={classes.headerRowCell}>Market Value</TableCell>
+                <TableCell align="right" className={classes.headerRowCell}>Cost Basis</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {holdings.map((holding) => (
                 <TableRow key={holding.id}>
-                  <TableCell component="th" scope="row">{holding.name}</TableCell>
-                  <TableCell align="right">{holding.ticker_symbol}</TableCell>
-                  <TableCell align="right">{!!holding.quote ? `${(Number(holding.quote.changePercent) * 100).toFixed(2)}%` : null}</TableCell>
-                  <TableCell align="right">{holding.institution_price}</TableCell>
-                  <TableCell align="right">{holding.quantity}</TableCell>
-                  <TableCell align="right">{holding.institution_value}</TableCell>
-                  <TableCell align="right">{holding.cost_basis}</TableCell>
+                  <TableCell component="th" scope="row" className={classes.tableRowCell}>{holding.name}</TableCell>
+                  <TableCell align="right" className={classes.tableRowCell}>{holding.ticker_symbol}</TableCell>
+                  <TableCell align="right" className={classes.tableRowCell}>{!!holding.quote ? `${(Number(holding.quote.changePercent) * 100).toFixed(2)}%` : null}</TableCell>
+                  <TableCell align="right" className={classes.tableRowCell}>{holding.institution_price}</TableCell>
+                  <TableCell align="right" className={classes.tableRowCell}>{holding.quantity}</TableCell>
+                  <TableCell align="right" className={classes.tableRowCell}>{holding.institution_value}</TableCell>
+                  <TableCell align="right" className={classes.tableRowCell}>{holding.cost_basis}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

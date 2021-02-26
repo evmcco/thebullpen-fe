@@ -20,10 +20,15 @@ export default function TrendingBullpens() {
 
   const useStyles = makeStyles({
     root: {
+      backgroundColor: '#424242',
+      color: '#fafafa',
       margin: 50,
       maxWidth: 500,
       minWidth: 275,
     },
+    trendingBullpenLink: {
+      color: '#f5f5f5'
+    }
   });
 
   const classes = useStyles();
@@ -34,7 +39,7 @@ export default function TrendingBullpens() {
         <h1>Trending Bullpens</h1>
         {trendingBullpens.length > 0 ? (
           trendingBullpens.map((bullpen) => (
-            <Link to={`/p/${bullpen.username}`}><p>{bullpen.username}</p></Link>
+            <Link className={classes.trendingBullpenLink} to={`/p/${bullpen.username}`}><p>{bullpen.username}</p></Link>
           ))
         ) : (
             <h1>Loading...</h1>
