@@ -42,7 +42,7 @@ export default function TrendingBullpens() {
             <Link className={classes.trendingBullpenLink} to={`/p/${bullpen.username}`}><p>{bullpen.username}</p></Link>
           ))
         ) : (
-            <h1>Loading...</h1>
+            <p>Loading...</p>
           )}
       </CardContent>
     </Card>

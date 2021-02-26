@@ -80,12 +80,22 @@ export default function MaterialUITable(props) {
               {holdings.map((holding) => (
                 <TableRow key={holding.id}>
                   {/* <TableCell component="th" scope="row" className={classes.tableRowCell}>{holding.name}</TableCell> */}
-                  <TableCell className={classes.tableRowCell}><a className={classes.tableRowCellLink} target="_blank" href={`https://finance.yahoo.com/quote/${holding.ticker_symbol}`}>{holding.ticker_symbol}</a></TableCell>
+                  <TableCell className={classes.tableRowCell}>
+                    {(holding.type == 'etf' || holding.type == 'equity') ?
+                      <a
+                        className={classes.tableRowCellLink}
+                        target="_blank"
+                        href={`https://finance.yahoo.com/quote/${holding.ticker_symbol}`}
+                      >
+                        {holding.ticker_symbol}
+                      </a> :
+                      holding.ticker_symbol}
+                  </TableCell>
                   <TableCell align="right" className={holding.quote?.changePercent > 0 ? classes.tableRowCellGreen : holding.quote?.changePercent < 0 ? classes.tableRowCellRed : classes.tableRowCell}>{!!holding.quote ? `${(Number(holding.quote.changePercent) * 100).toFixed(2)}%` : null}</TableCell>
                   <TableCell align="right" className={classes.tableRowCell}>{!!holding.quote?.latestPrice ? holding.quote.latestPrice : holding.institution_price}</TableCell>
                   <TableCell align="right" className={classes.tableRowCell}>{holding.quantity}</TableCell>
                   <TableCell align="right" className={classes.tableRowCell}>{!!holding.quote?.latestPrice ? (Number(holding.quantity) * holding.quote.latestPrice).toFixed(2) : holding.institution_value}</TableCell>
-                  <TableCell align="right" className={classes.tableRowCell}>{Number(holding.cost_basis).toFixed(2)}</TableCell>
+                  <TableCell align="right" className={classes.tableRowCell}>{!!holding.cost_basis && Number(holding.cost_basis).toFixed(2)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -93,7 +103,7 @@ export default function MaterialUITable(props) {
         </TableContainer>
       )
         : (
-          <h1>Loading...</h1>
+          <p>Loading...</p>
         )
       }
     </>
