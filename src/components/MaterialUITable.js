@@ -47,6 +47,9 @@ export default function MaterialUITable(props) {
     tableRowCell: {
       color: '#fafafa'
     },
+    tableRowCellLink: {
+      color: '#fafafa'
+    },
     tableRowCellGreen: {
       color: '#4caf50'
     },
@@ -65,7 +68,7 @@ export default function MaterialUITable(props) {
             <TableHead className={classes.headerRow}>
               <TableRow>
                 {/* <TableCell className={classes.headerRowCell}>Name</TableCell> */}
-                <TableCell align="right" className={classes.headerRowCell}>Ticker</TableCell>
+                <TableCell className={classes.headerRowCell}>Ticker</TableCell>
                 <TableCell align="right" className={classes.headerRowCell}>% Change</TableCell>
                 <TableCell align="right" className={classes.headerRowCell}>Current Price</TableCell>
                 <TableCell align="right" className={classes.headerRowCell}>Quantity</TableCell>
@@ -77,7 +80,7 @@ export default function MaterialUITable(props) {
               {holdings.map((holding) => (
                 <TableRow key={holding.id}>
                   {/* <TableCell component="th" scope="row" className={classes.tableRowCell}>{holding.name}</TableCell> */}
-                  <TableCell align="right" className={classes.tableRowCell}>{holding.ticker_symbol}</TableCell>
+                  <TableCell className={classes.tableRowCell}><a className={classes.tableRowCellLink} target="_blank" href={`https://finance.yahoo.com/quote/${holding.ticker_symbol}`}>{holding.ticker_symbol}</a></TableCell>
                   <TableCell align="right" className={holding.quote?.changePercent > 0 ? classes.tableRowCellGreen : holding.quote?.changePercent < 0 ? classes.tableRowCellRed : classes.tableRowCell}>{!!holding.quote ? `${(Number(holding.quote.changePercent) * 100).toFixed(2)}%` : null}</TableCell>
                   <TableCell align="right" className={classes.tableRowCell}>{!!holding.quote?.latestPrice ? holding.quote.latestPrice : holding.institution_price}</TableCell>
                   <TableCell align="right" className={classes.tableRowCell}>{holding.quantity}</TableCell>
