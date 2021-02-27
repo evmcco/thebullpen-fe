@@ -12,15 +12,17 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 export default function MaterialUITable(props) {
   const [holdings, setHoldings] = useState([])
+  const [totalPortfolioValue, setTotalPortfolioValue] = useState(0)
 
   useEffect(() => {
     const getHoldings = async () => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/holdings/user/${props.username}`)
       const data = await response.json()
+      getTotalPortfolioValue(data)
       data.sort((a, b) => {
-        if (a.type == 'cash') {
+        if (a.type == 'cash' || a.type == 'other') {
           return 1
-        } else if (b.type == 'cash') {
+        } else if (b.type == 'cash' || b.type == 'other') {
           return -1
         } else {
           return (a.ticker_symbol < b.ticker_symbol) ? -1 : (a.ticker_symbol > b.ticker_symbol) ? 1 : 0
@@ -31,6 +33,15 @@ export default function MaterialUITable(props) {
     getHoldings()
   }, []
   )
+
+  const getTotalPortfolioValue = (h) => {
+    const reducer = (accumulator, currentValue) => {
+      const holdingPrice = !!currentValue.quote?.latestPrice ? currentValue.quote.latestPrice : Number(currentValue.close_price)
+      const totalHoldingValue = holdingPrice * Number(currentValue.quantity)
+      return Number(accumulator) + totalHoldingValue
+    }
+    setTotalPortfolioValue(h.reduce(reducer, 0).toFixed(2))
+  }
 
   const useStyles = makeStyles((theme) => ({
     tableContainer: {
@@ -71,6 +82,7 @@ export default function MaterialUITable(props) {
                 <TableCell className={classes.headerRowCell}>Ticker</TableCell>
                 <TableCell align="right" className={classes.headerRowCell}>% Change</TableCell>
                 <TableCell align="right" className={classes.headerRowCell}>Current Price</TableCell>
+                <TableCell align="right" className={classes.headerRowCell}>Portfolio Weight</TableCell>
                 <TableCell align="right" className={classes.headerRowCell}>Quantity</TableCell>
                 <TableCell align="right" className={classes.headerRowCell}>Market Value</TableCell>
                 <TableCell align="right" className={classes.headerRowCell}>Cost Basis</TableCell>
@@ -89,12 +101,13 @@ export default function MaterialUITable(props) {
                       >
                         {holding.ticker_symbol}
                       </a> :
-                      holding.ticker_symbol}
+                      !!holding.unofficial_currency_code ? holding.unofficial_currency_code : holding.ticker_symbol}
                   </TableCell>
                   <TableCell align="right" className={holding.quote?.changePercent > 0 ? classes.tableRowCellGreen : holding.quote?.changePercent < 0 ? classes.tableRowCellRed : classes.tableRowCell}>{!!holding.quote ? `${(Number(holding.quote.changePercent) * 100).toFixed(2)}%` : null}</TableCell>
-                  <TableCell align="right" className={classes.tableRowCell}>{!!holding.quote?.latestPrice ? holding.quote.latestPrice : holding.institution_price}</TableCell>
+                  <TableCell align="right" className={classes.tableRowCell}>{!!holding.quote?.latestPrice ? holding.quote.latestPrice : holding.close_price}</TableCell>
+                  <TableCell align="right" className={classes.tableRowCell}>{(((!!holding.quote?.latestPrice ? (Number(holding.quantity) * holding.quote.latestPrice).toFixed(2) : (Number(holding.quantity) * Number(holding.close_price)).toFixed(2)) / totalPortfolioValue) * 100).toFixed(2)}%</TableCell>
                   <TableCell align="right" className={classes.tableRowCell}>{holding.quantity}</TableCell>
-                  <TableCell align="right" className={classes.tableRowCell}>{!!holding.quote?.latestPrice ? (Number(holding.quantity) * holding.quote.latestPrice).toFixed(2) : holding.institution_value}</TableCell>
+                  <TableCell align="right" className={classes.tableRowCell}>{!!holding.quote?.latestPrice ? (Number(holding.quantity) * holding.quote.latestPrice).toFixed(2) : (Number(holding.quantity) * Number(holding.close_price)).toFixed(2)}</TableCell>
                   <TableCell align="right" className={classes.tableRowCell}>{!!holding.cost_basis && Number(holding.cost_basis).toFixed(2)}</TableCell>
                 </TableRow>
               ))}
