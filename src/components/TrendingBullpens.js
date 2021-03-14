@@ -12,7 +12,6 @@ export default function TrendingBullpens() {
     const getTrendingBullpens = async () => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/bullpens/trending`)
       const data = await response.json()
-      console.log("trending bullpens response", data)
       setTrendingBullpens(data)
     }
     getTrendingBullpens()

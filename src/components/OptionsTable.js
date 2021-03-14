@@ -43,7 +43,7 @@ export default function OptionsTable(props) {
         <>
           <TableContainer className={classes.tableContainer} >
             <h1>Options</h1>
-            <Table aria-label="simple table">
+            <Table size="small" aria-label="options table">
               <TableHead className={classes.headerRow}>
                 <TableRow>
                   <TableCell className={classes.headerRowCell}>Ticker</TableCell>
@@ -51,14 +51,13 @@ export default function OptionsTable(props) {
                   <TableCell align="right" className={classes.headerRowCell}>Expiration Date</TableCell>
                   <TableCell align="right" className={classes.headerRowCell}>Put/Call</TableCell>
                   <TableCell align="right" className={classes.headerRowCell}>Strike Price</TableCell>
-                  <TableCell align="right" className={classes.headerRowCell}>Quantity</TableCell>
                   <TableCell align="right" className={classes.headerRowCell}>Cost Basis</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {props.holdings.map((holding) => (
                   <TableRow key={holding.id}>
-                    <TableCell className={classes.tableRowCell}>
+                    <TableCell id="ticker" className={classes.tableRowCell}>
                       {
                         <a
                           className={classes.tableRowCellLink}
@@ -68,12 +67,11 @@ export default function OptionsTable(props) {
                           {holding.parsedTicker[1]}
                         </a>}
                     </TableCell>
-                    <TableCell align="right" className={holding.quote?.changePercent > 0 ? classes.tableRowCellGreen : holding.quote?.changePercent < 0 ? classes.tableRowCellRed : classes.tableRowCell}>{!!holding.quote ? `${(Number(holding.quote.changePercent) * 100).toFixed(2)}%` : null}</TableCell>
-                    <TableCell align="right" className={classes.tableRowCell}>{`${holding.parsedTicker[4]}/${holding.parsedTicker[5]}/20${holding.parsedTicker[3]}`}</TableCell>
-                    <TableCell align="right" className={classes.tableRowCell}>{holding.parsedTicker[6]}</TableCell>
-                    <TableCell align="right" className={classes.tableRowCell}>${(Number(holding.parsedTicker[7]) / 1000).toFixed(2)}</TableCell>
-                    <TableCell align="right" className={classes.tableRowCell}>{Number(holding.quantity) / 100}</TableCell>
-                    <TableCell align="right" className={classes.tableRowCell}>{!!holding.cost_basis && Number(holding.cost_basis).toFixed(2)}</TableCell>
+                    <TableCell id="% change" align="right" className={holding.quote?.changePercent > 0 ? classes.tableRowCellGreen : holding.quote?.changePercent < 0 ? classes.tableRowCellRed : classes.tableRowCell}>{!!holding.quote ? `${(Number(holding.quote.changePercent) * 100).toFixed(2)}%` : null}</TableCell>
+                    <TableCell id="expiration date" align="right" className={classes.tableRowCell}>{`${holding.parsedTicker[4]}/${holding.parsedTicker[5]}/20${holding.parsedTicker[3]}`}</TableCell>
+                    <TableCell id="put/call" align="right" className={classes.tableRowCell}>{holding.parsedTicker[6]}</TableCell>
+                    <TableCell id="strike price" align="right" className={classes.tableRowCell}>${(Number(holding.parsedTicker[7]) / 1000).toFixed(2)}</TableCell>
+                    <TableCell align="right" className={classes.tableRowCell}>{!!holding.cost_basis && !!holding.quantity && (Number(holding.cost_basis) / Number(holding.quantity)).toFixed(2)}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

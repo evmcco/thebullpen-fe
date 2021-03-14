@@ -42,7 +42,7 @@ export default function HoldingsTable(props) {
       {props.holdings && props.holdings.length > 0 ? (
         <TableContainer className={classes.tableContainer} >
           <h1>Equities, Crypto, and Cash</h1>
-          <Table aria-label="simple table">
+          <Table size="small" aria-label="holdings table">
             <TableHead className={classes.headerRow}>
               <TableRow>
                 {/* <TableCell className={classes.headerRowCell}>Name</TableCell> */}
@@ -50,16 +50,14 @@ export default function HoldingsTable(props) {
                 <TableCell align="right" className={classes.headerRowCell}>% Change</TableCell>
                 <TableCell align="right" className={classes.headerRowCell}>Current Price</TableCell>
                 <TableCell align="right" className={classes.headerRowCell}>Portfolio Weight</TableCell>
-                <TableCell align="right" className={classes.headerRowCell}>Quantity</TableCell>
-                <TableCell align="right" className={classes.headerRowCell}>Market Value</TableCell>
-                <TableCell align="right" className={classes.headerRowCell}>Cost Basis</TableCell>
+                <TableCell align="right" className={classes.headerRowCell}>Average Cost</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {props.holdings.map((holding) => (
                 <TableRow key={holding.id}>
                   {/* <TableCell component="th" scope="row" className={classes.tableRowCell}>{holding.name}</TableCell> */}
-                  <TableCell className={classes.tableRowCell}>
+                  <TableCell id="ticker" className={classes.tableRowCell}>
                     {(holding.type == 'etf' || holding.type == 'equity') ?
                       <a
                         className={classes.tableRowCellLink}
@@ -70,12 +68,10 @@ export default function HoldingsTable(props) {
                       </a> :
                       !!holding.unofficial_currency_code ? holding.unofficial_currency_code : holding.ticker_symbol}
                   </TableCell>
-                  <TableCell align="right" className={holding.quote?.changePercent > 0 ? classes.tableRowCellGreen : holding.quote?.changePercent < 0 ? classes.tableRowCellRed : classes.tableRowCell}>{!!holding.quote ? `${(Number(holding.quote.changePercent) * 100).toFixed(2)}%` : null}</TableCell>
-                  <TableCell align="right" className={classes.tableRowCell}>{!!holding.quote?.latestPrice ? holding.quote.latestPrice : holding.close_price}</TableCell>
-                  <TableCell align="right" className={classes.tableRowCell}>{(((!!holding.quote?.latestPrice ? (Number(holding.quantity) * holding.quote.latestPrice).toFixed(2) : (Number(holding.quantity) * Number(holding.close_price)).toFixed(2)) / props.totalPortfolioValue) * 100).toFixed(2)}%</TableCell>
-                  <TableCell align="right" className={classes.tableRowCell}>{holding.quantity}</TableCell>
-                  <TableCell align="right" className={classes.tableRowCell}>{!!holding.quote?.latestPrice ? (Number(holding.quantity) * holding.quote.latestPrice).toFixed(2) : (Number(holding.quantity) * Number(holding.close_price)).toFixed(2)}</TableCell>
-                  <TableCell align="right" className={classes.tableRowCell}>{!!holding.cost_basis && Number(holding.cost_basis).toFixed(2)}</TableCell>
+                  <TableCell id="change" align="right" className={holding.quote?.changePercent > 0 ? classes.tableRowCellGreen : holding.quote?.changePercent < 0 ? classes.tableRowCellRed : classes.tableRowCell}>{!!holding.quote ? `${(Number(holding.quote.changePercent) * 100).toFixed(2)}%` : null}</TableCell>
+                  <TableCell id="current price" align="right" className={classes.tableRowCell}>{!!holding.quote?.latestPrice ? holding.quote.latestPrice : holding.close_price}</TableCell>
+                  <TableCell id="weight" align="right" className={classes.tableRowCell}>{(((!!holding.quote?.latestPrice ? (Number(holding.quantity) * holding.quote.latestPrice).toFixed(2) : (Number(holding.quantity) * Number(holding.close_price))) / props.totalPortfolioValue) * 100).toFixed(2)}%</TableCell>
+                  <TableCell id="average cost" align="right" className={classes.tableRowCell}>{!!holding.cost_basis && !!holding.quantity && (Number(holding.cost_basis) / Number(holding.quantity)).toFixed(3)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
