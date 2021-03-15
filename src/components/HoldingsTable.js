@@ -35,6 +35,12 @@ export default function HoldingsTable(props) {
     },
   }));
 
+  const removeCur = (holding) => {
+    if (holding.startsWith('CUR:')) {
+      return holding.substring(4)
+    }
+  }
+
   const classes = useStyles();
 
   return (
@@ -49,8 +55,9 @@ export default function HoldingsTable(props) {
                 <TableCell className={classes.headerRowCell}>Ticker</TableCell>
                 <TableCell align="right" className={classes.headerRowCell}>% Change</TableCell>
                 <TableCell align="right" className={classes.headerRowCell}>Current Price</TableCell>
-                <TableCell align="right" className={classes.headerRowCell}>Portfolio Weight</TableCell>
                 <TableCell align="right" className={classes.headerRowCell}>Average Cost</TableCell>
+                <TableCell align="right" className={classes.headerRowCell}>P/L %</TableCell>
+                <TableCell align="right" className={classes.headerRowCell}>Portfolio Weight</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -58,7 +65,7 @@ export default function HoldingsTable(props) {
                 <TableRow key={holding.id}>
                   {/* <TableCell component="th" scope="row" className={classes.tableRowCell}>{holding.name}</TableCell> */}
                   <TableCell id="ticker" className={classes.tableRowCell}>
-                    {(holding.type == 'etf' || holding.type == 'equity') ?
+                    {((holding.type == 'etf' || holding.type == 'equity') && holding.ticker_symbol != 'CUR:BTC') ?
                       <a
                         className={classes.tableRowCellLink}
                         target="_blank"
@@ -66,12 +73,13 @@ export default function HoldingsTable(props) {
                       >
                         {holding.ticker_symbol}
                       </a> :
-                      !!holding.unofficial_currency_code ? holding.unofficial_currency_code : holding.ticker_symbol}
+                      removeCur(holding.ticker_symbol)}
                   </TableCell>
                   <TableCell id="change" align="right" className={holding.quote?.changePercent > 0 ? classes.tableRowCellGreen : holding.quote?.changePercent < 0 ? classes.tableRowCellRed : classes.tableRowCell}>{!!holding.quote ? `${(Number(holding.quote.changePercent) * 100).toFixed(2)}%` : null}</TableCell>
                   <TableCell id="current price" align="right" className={classes.tableRowCell}>{!!holding.quote?.latestPrice ? holding.quote.latestPrice : holding.close_price}</TableCell>
-                  <TableCell id="weight" align="right" className={classes.tableRowCell}>{(((!!holding.quote?.latestPrice ? (Number(holding.quantity) * holding.quote.latestPrice).toFixed(2) : (Number(holding.quantity) * Number(holding.close_price))) / props.totalPortfolioValue) * 100).toFixed(2)}%</TableCell>
-                  <TableCell id="average cost" align="right" className={classes.tableRowCell}>{!!holding.cost_basis && !!holding.quantity && (Number(holding.cost_basis) / Number(holding.quantity)).toFixed(3)}</TableCell>
+                  <TableCell id="average cost" align="right" className={classes.tableRowCell}>{!!holding.cost_basis && !!holding.quantity ? (Number(holding.cost_basis) / Number(holding.quantity)).toFixed(3) : holding.ticker_symbol == 'CUR:USD' ? 1 : null}</TableCell>
+                  <TableCell id="profit" align="right" className={holding.profit > 0 ? classes.tableRowCellGreen : holding.profit < 0 ? classes.tableRowCellRed : classes.tableRowCell}>{!!holding.profit ? `${holding.profit}%` : null}</TableCell>
+                  <TableCell id="weight" align="right" className={classes.tableRowCell}>{!!holding.quote?.latestPrice ? ((((Number(holding.quantity) * holding.quote.latestPrice) / props.totalPortfolioValue) * 100).toFixed(2) + '%') : holding.ticker_symbol == 'CUR:USD' ? ((holding.quantity / props.totalPortfolioValue) * 100).toFixed(2) + '%' : null}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

@@ -18,9 +18,9 @@ const Portfolio = ({ match }) => {
       const data = await response.json()
       getTotalPortfolioValue(data)
       data.sort((a, b) => {
-        if (a.type == 'cash' || a.type == 'other') {
+        if (a.type == 'cash' || a.type == 'other' || a.ticker_symbol == 'CUR:BTC') {
           return 1
-        } else if (b.type == 'cash' || b.type == 'other') {
+        } else if (b.type == 'cash' || b.type == 'other' || b.ticker_symbol == 'CUR:BTC') {
           return -1
         } else {
           return (a.ticker_symbol < b.ticker_symbol) ? -1 : (a.ticker_symbol > b.ticker_symbol) ? 1 : 0
@@ -44,6 +44,9 @@ const Portfolio = ({ match }) => {
 
   const getTotalPortfolioValue = (h) => {
     const reducer = (accumulator, currentValue) => {
+      if (currentValue.ticker_symbol == 'CUR:USD') {
+        return Number(accumulator) + currentValue.quantity
+      }
       const holdingPrice = !!currentValue.quote?.latestPrice ? currentValue.quote.latestPrice : Number(currentValue.close_price)
       const totalHoldingValue = holdingPrice * Number(currentValue.quantity)
       return Number(accumulator) + totalHoldingValue

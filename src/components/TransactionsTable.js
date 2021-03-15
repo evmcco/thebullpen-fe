@@ -49,6 +49,7 @@ export default function TransactionsTable(props) {
                 <TableCell align="right" className={classes.headerRowCell}>Date</TableCell>
                 <TableCell align="right" className={classes.headerRowCell}>Direction</TableCell>
                 <TableCell align="right" className={classes.headerRowCell}>Price</TableCell>
+                <TableCell align="right" className={classes.headerRowCell}>Current Price</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -68,6 +69,7 @@ export default function TransactionsTable(props) {
                   <TableCell id="date" align="right" className={classes.tableRowCell}>{!!transaction.date && transaction.date}</TableCell>
                   <TableCell id="direction" align="right" className={transaction.txn_type == 'buy' ? classes.tableRowCellGreen : transaction.txn_type == 'sell' ? classes.tableRowCellRed : classes.tableRowCell}>{!!transaction.txn_type && transaction.txn_type}</TableCell>
                   <TableCell id="price" align="right" className={classes.tableRowCell}>{!!transaction.price && Number(transaction.price).toFixed(3)}</TableCell>
+                  <TableCell id="current price" align="right" className={classes.tableRowCell}>{!!transaction.quote?.latestPrice ? transaction.quote.latestPrice : transaction.close_price}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
