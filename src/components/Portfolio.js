@@ -45,7 +45,7 @@ const Portfolio = ({ match }) => {
   const getTotalPortfolioValue = (h) => {
     const reducer = (accumulator, currentValue) => {
       if (currentValue.ticker_symbol == 'CUR:USD') {
-        return Number(accumulator) + currentValue.quantity
+        return Number(accumulator) + Number(currentValue.quantity)
       }
       const holdingPrice = !!currentValue.quote?.latestPrice ? currentValue.quote.latestPrice : Number(currentValue.close_price)
       const totalHoldingValue = holdingPrice * Number(currentValue.quantity)
