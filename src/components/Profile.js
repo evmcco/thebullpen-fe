@@ -42,14 +42,15 @@ const Profile = () => {
         </div>
         <PlaidLink username={user["https://thebullpen.app/username"]} />
         {/* TODO only show button if user has access_token, eventually display all Items with separate buttons (for testing) */}
-        {!!accessTokens[0] && accessTokens.map(token => {
-          return (
-            <p>{token.access_token}</p>
-          );
-        })}
         <br />
-        {!!accessTokens[0] &&
-          <Button onClick={() => requestPlaidHoldings(user["https://thebullpen.app/username"], accessTokens[0].access_token)} variant="contained" color="secondary">Refresh Holdings Data</Button>
+        {!!accessTokens.length &&
+          <Button onClick={() => accessTokens.forEach((accessToken) => {
+            requestPlaidHoldings(
+              accessToken.item_id,
+              user["https://thebullpen.app/username"],
+              accessToken.access_token)
+          })}
+            variant="contained" color="secondary">Refresh Holdings Data</Button>
         }
       </>
     )
