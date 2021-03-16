@@ -65,7 +65,7 @@ export default function HoldingsTable(props) {
                 <TableRow key={holding.id}>
                   {/* <TableCell component="th" scope="row" className={classes.tableRowCell}>{holding.name}</TableCell> */}
                   <TableCell id="ticker" className={classes.tableRowCell}>
-                    {((holding.type == 'etf' || holding.type == 'equity') && holding.ticker_symbol != 'CUR:BTC') ?
+                    {((holding.type == 'etf' || holding.type == 'equity' || holding.type == 'mutual fund') && holding.ticker_symbol != 'CUR:BTC') ?
                       <a
                         className={classes.tableRowCellLink}
                         target="_blank"
