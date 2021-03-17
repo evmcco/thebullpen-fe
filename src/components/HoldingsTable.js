@@ -47,7 +47,7 @@ export default function HoldingsTable(props) {
     <>
       {props.holdings && props.holdings.length > 0 ? (
         <TableContainer className={classes.tableContainer} >
-          <h1>Equities, Crypto, and Cash</h1>
+          <h1>Equities</h1>
           <Table size="small" aria-label="holdings table">
             <TableHead className={classes.headerRow}>
               <TableRow>

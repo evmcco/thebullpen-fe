@@ -74,7 +74,7 @@ export default function TopNav() {
             </Menu>
           </div>
           <Typography variant="h6" className={classes.title}>
-            The Bullpen 🐂 📈
+            Bullpen 🐂 📈
           </Typography>
           {!isAuthenticated ? <LoginButton /> : <LogoutButton />}
         </Toolbar>

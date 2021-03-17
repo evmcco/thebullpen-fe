@@ -23,7 +23,8 @@ const Home = () => {
   return (
     <>
       <TopNav />
-      <h1 className={classes.heading}>Welcome to The Bullpen!</h1>
+      <h1 className={classes.heading}>Bullpen</h1>
+      <h2 className={classes.heading}>Stampeding toward the Moon since 2021</h2>
       <TrendingBullpens />
     </>
   )
