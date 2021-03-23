@@ -49,9 +49,10 @@ export default function OptionsTable(props) {
                   <TableCell className={classes.headerRowCell}>Ticker</TableCell>
                   <TableCell align="right" className={classes.headerRowCell}>Ticker % Change</TableCell>
                   <TableCell align="right" className={classes.headerRowCell}>Expiration Date</TableCell>
+                  <TableCell align="right" className={classes.headerRowCell}>Short/Long</TableCell>
                   <TableCell align="right" className={classes.headerRowCell}>Put/Call</TableCell>
                   <TableCell align="right" className={classes.headerRowCell}>Strike Price</TableCell>
-                  <TableCell align="right" className={classes.headerRowCell}>Cost Basis</TableCell>
+                  <TableCell align="right" className={classes.headerRowCell}>Average Cost</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -69,7 +70,8 @@ export default function OptionsTable(props) {
                     </TableCell>
                     <TableCell id="% change" align="right" className={holding.quote?.changePercent > 0 ? classes.tableRowCellGreen : holding.quote?.changePercent < 0 ? classes.tableRowCellRed : classes.tableRowCell}>{!!holding.quote ? `${(Number(holding.quote.changePercent) * 100).toFixed(2)}%` : null}</TableCell>
                     <TableCell id="expiration date" align="right" className={classes.tableRowCell}>{`${holding.parsedTicker[4]}/${holding.parsedTicker[5]}/20${holding.parsedTicker[3]}`}</TableCell>
-                    <TableCell id="put/call" align="right" className={classes.tableRowCell}>{holding.parsedTicker[6]}</TableCell>
+                    <TableCell id="short/long" align="right" className={classes.tableRowCell}>{holding.quantity > 0 ? 'Long' : holding.quantity < 0 ? 'Short' : null}</TableCell>
+                    <TableCell id="put/call" align="right" className={classes.tableRowCell}>{holding.parsedTicker[6] == 'P' ? 'Put' : holding.parsedTicker[6] == 'C' ? 'Call' : null}</TableCell>
                     <TableCell id="strike price" align="right" className={classes.tableRowCell}>${(Number(holding.parsedTicker[7]) / 1000).toFixed(2)}</TableCell>
                     <TableCell align="right" className={classes.tableRowCell}>{!!holding.cost_basis && !!holding.quantity && (Number(holding.cost_basis) / Number(holding.quantity)).toFixed(2)}</TableCell>
                   </TableRow>
