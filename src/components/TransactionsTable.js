@@ -56,7 +56,7 @@ export default function TransactionsTable(props) {
               {props.transactions.map((transaction) => (
                 <TableRow key={transaction.id}>
                   <TableCell id="ticker" className={classes.tableRowCell}>
-                    {(transaction.security_type == 'etf' || transaction.security_type == 'equity') ?
+                    {(transaction.type == 'etf' || transaction.type == 'equity') ?
                       <a
                         className={classes.tableRowCellLink}
                         target="_blank"
