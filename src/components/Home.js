@@ -14,6 +14,7 @@ const Home = () => {
 
   const useStyles = makeStyles({
     heading: {
+      paddingTop: '64px',
       textAlign: 'center',
     }
   });
@@ -23,8 +24,10 @@ const Home = () => {
   return (
     <>
       <TopNav />
-      <h1 className={classes.heading}>Bullpen</h1>
-      <h2 className={classes.heading}>Stampeding toward the Moon since 2021</h2>
+      <div className={classes.heading}>
+        <h1>Bullpen</h1>
+        <h2>Stampeding toward the Moon since 2021</h2>
+      </div>
       <TrendingBullpens />
     </>
   )

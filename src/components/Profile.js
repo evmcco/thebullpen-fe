@@ -5,10 +5,20 @@ import TopNav from './TopNav.js'
 import PlaidLink from './PlaidLink.js'
 
 import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+
 
 import { requestPlaidHoldings } from "../services/plaid.js"
 
 const Profile = () => {
+  const useStyles = makeStyles({
+    profileDataContainer: {
+      paddingTop: '64px',
+      margin: '5%'
+    }
+  });
+
+  const classes = useStyles();
   const [accessTokens, setAccessTokens] = useState([])
 
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -33,25 +43,25 @@ const Profile = () => {
     isAuthenticated && (
       <>
         <TopNav />
-        <div>
+        <div className={classes.profileDataContainer}>
           <img src={user.picture} alt={user.name} />
           <br />
-          <h2>Name: {user.name}</h2>
-          <p>Email Address: {user.email}</p>
-          <p>Username: {user["https://thebullpen.app/username"]}</p>
+          <h2>Username: {user["https://thebullpen.app/username"]}</h2>
+          <h2>Email Address: {user.email}</h2>
+          <PlaidLink username={user["https://thebullpen.app/username"]} />
+
+          {/* TODO only show button if user has access_token, eventually display all Items with separate buttons (for testing) */}
+          <br />
+          {!!accessTokens.length &&
+            <Button onClick={() => accessTokens.forEach((accessToken) => {
+              requestPlaidHoldings(
+                accessToken.item_id,
+                user["https://thebullpen.app/username"],
+                accessToken.access_token)
+            })}
+              variant="contained" color="secondary">Refresh Holdings Data</Button>
+          }
         </div>
-        <PlaidLink username={user["https://thebullpen.app/username"]} />
-        {/* TODO only show button if user has access_token, eventually display all Items with separate buttons (for testing) */}
-        <br />
-        {!!accessTokens.length &&
-          <Button onClick={() => accessTokens.forEach((accessToken) => {
-            requestPlaidHoldings(
-              accessToken.item_id,
-              user["https://thebullpen.app/username"],
-              accessToken.access_token)
-          })}
-            variant="contained" color="secondary">Refresh Holdings Data</Button>
-        }
       </>
     )
   );

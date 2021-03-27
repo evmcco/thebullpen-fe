@@ -5,11 +5,19 @@ import OptionsTable from "./OptionsTable"
 import TransactionsTable from "./TransactionsTable"
 import UserInfo from "./UserInfo"
 import TopNav from "./TopNav"
+import { makeStyles } from '@material-ui/core/styles';
+
 
 const Portfolio = ({ match }) => {
+  const useStyles = makeStyles((theme) => ({
+    portfolioContainer: {
+      paddingTop: '64px'
+    }
+  }));
+
+  const classes = useStyles();
   const [holdings, setHoldings] = useState([])
   const [totalPortfolioValue, setTotalPortfolioValue] = useState(0)
-
   const [transactions, setTransactions] = useState([])
 
   useEffect(() => {
@@ -42,6 +50,9 @@ const Portfolio = ({ match }) => {
   }, []
   )
 
+
+
+
   const getTotalPortfolioValue = (h) => {
     const reducer = (accumulator, currentValue) => {
       if (currentValue.ticker_symbol == 'CUR:USD') {
@@ -56,10 +67,12 @@ const Portfolio = ({ match }) => {
   return (
     <>
       <TopNav />
-      <UserInfo username={match.params.username} />
-      <HoldingsTable username={match.params.username} holdings={holdings.filter((holding) => { return holding.type != "derivative" })} totalPortfolioValue={totalPortfolioValue} />
-      <OptionsTable username={match.params.username} holdings={holdings.filter((holding) => { return holding.type == "derivative" })} totalPortfolioValue={totalPortfolioValue} />
-      <TransactionsTable username={match.params.username} transactions={transactions} />
+      <div className={classes.portfolioContainer}>
+        <UserInfo username={match.params.username} />
+        <HoldingsTable username={match.params.username} holdings={holdings.filter((holding) => { return holding.type != "derivative" })} totalPortfolioValue={totalPortfolioValue} />
+        <OptionsTable username={match.params.username} holdings={holdings.filter((holding) => { return holding.type == "derivative" })} totalPortfolioValue={totalPortfolioValue} />
+        <TransactionsTable username={match.params.username} transactions={transactions} />
+      </div>
     </>
   )
 }

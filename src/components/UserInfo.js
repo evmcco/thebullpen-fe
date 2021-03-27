@@ -6,8 +6,10 @@ import { makeStyles } from '@material-ui/core/styles';
 const UserInfo = (props) => {
   const useStyles = makeStyles((theme) => ({
     header: {
-      maxWidth: '90%',
-      margin: '5%',
+    },
+    headerText: {
+      fontSize: '2em',
+      padding: '15px 5% 0 5%',
     }
   }));
 
@@ -15,7 +17,7 @@ const UserInfo = (props) => {
 
   return (
     <div className={classes.header}>
-      <h1><strong>{props.username}'s bullpen</strong></h1>
+      <div className={classes.headerText}>{props.username}'s bullpen</div>
     </div>
   )
 }

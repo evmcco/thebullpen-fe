@@ -18,10 +18,13 @@ import LogoutButton from './LogoutButton'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    position: 'fixed',
+    top: '0',
+    width: '100%'
   },
   headerBar: {
-    backgroundColor: '#ffd600',
-    color: '#424242',
+    backgroundColor: '#14213d',
+    borderBottom: 'solid 1px'
   },
   menuButton: {
     marginRight: theme.spacing(2),
