@@ -5,16 +5,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import CardContent from '@material-ui/core/CardContent';
 import Card from '@material-ui/core/Card';
 
-export default function TrendingBullpens() {
-  const [trendingBullpens, setTrendingBullpens] = useState([])
+export default function TrendingGroups() {
+  const [trendingGroups, setTrendingGroups] = useState([])
 
   useEffect(() => {
-    const getTrendingBullpens = async () => {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/bullpens/trending`)
+    const getTrendingGroups = async () => {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/groups/all`)
       const data = await response.json()
-      setTrendingBullpens(data)
+      setTrendingGroups(data)
     }
-    getTrendingBullpens()
+    getTrendingGroups()
   }, [])
 
   const useStyles = makeStyles({
@@ -33,7 +33,7 @@ export default function TrendingBullpens() {
       color: '#ffab00',
       marginTop: 0
     },
-    trendingBullpenLink: {
+    trendingGroupsLink: {
       color: '#f5f5f5'
     }
   });
@@ -43,10 +43,10 @@ export default function TrendingBullpens() {
   return (
     <Card className={classes.root}>
       <CardContent className={classes.content}>
-        <h2 className={classes.title}>Trending Bullpens</h2>
-        {trendingBullpens.length > 0 ? (
-          trendingBullpens.map((bullpen) => (
-            <Link className={classes.trendingBullpenLink} to={`/p/${bullpen.username}`}><p>{bullpen.username}</p></Link>
+        <h2 className={classes.title}>Trending Groups</h2>
+        {trendingGroups.length > 0 ? (
+          trendingGroups.map((group) => (
+            <Link className={classes.trendingGroupsLink} to={`/g/${group.id}`}><p>{group.name}</p></Link>
           ))
         ) : (
           <p>Loading...</p>
