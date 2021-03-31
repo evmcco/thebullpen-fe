@@ -12,15 +12,6 @@ export default function GroupHome({ match }) {
   const [groupDetails, setGroupDetails] = useState([])
 
   useEffect(() => {
-    const getGroupUsers = async () => {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/groups/members/${match.params.groupId}`)
-      const data = await response.json()
-      setGroupUsers(data)
-    }
-    getGroupUsers()
-  }, [])
-
-  useEffect(() => {
     const getGroupDetails = async () => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/groups/details/${match.params.groupId}`)
       const data = await response.json()
@@ -29,8 +20,18 @@ export default function GroupHome({ match }) {
     getGroupDetails()
   }, [])
 
+  useEffect(() => {
+    const getGroupUsers = async () => {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/groups/members/${match.params.groupId}`)
+      const data = await response.json()
+      setGroupUsers(data)
+    }
+    getGroupUsers()
+  }, [])
+
   const useStyles = makeStyles({
     heading: {
+      height: 115,
       paddingTop: '64px',
       textAlign: 'center',
     },
@@ -57,24 +58,26 @@ export default function GroupHome({ match }) {
   return (
     <>
       <TopNav />
-      <div className={classes.main}>
-        <div className={classes.heading}>
-          <h1>{groupDetails.name}</h1>
-          <h2>{groupDetails.description}</h2>
+      {!!groupDetails && !!groupUsers &&
+        <div className={classes.main}>
+          <div className={classes.heading}>
+            <h1>{groupDetails.name}</h1>
+            <h2>{groupDetails.description}</h2>
+          </div>
+          <Card className={classes.root}>
+            <CardContent className={classes.content}>
+              <h2 className={classes.title}>Users</h2>
+              {groupUsers.length > 0 ? (
+                groupUsers.map((user) => (
+                  <Link className={classes.trendingGroupsLink} to={`/p/${user.username}`}><p>{user.username}</p></Link>
+                ))
+              ) : (
+                <p>Loading...</p>
+              )}
+            </CardContent>
+          </Card>
         </div>
-        <Card className={classes.root}>
-          <CardContent className={classes.content}>
-            <h2 className={classes.title}>Users</h2>
-            {groupUsers.length > 0 ? (
-              groupUsers.map((user) => (
-                <Link className={classes.trendingGroupsLink} to={`/p/${user.username}`}><p>{user.username}</p></Link>
-              ))
-            ) : (
-              <p>Loading...</p>
-            )}
-          </CardContent>
-        </Card>
-      </div>
+      }
     </>
   )
 }
