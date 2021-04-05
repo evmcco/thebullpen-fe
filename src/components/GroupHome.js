@@ -35,45 +35,53 @@ export default function GroupHome({ match }) {
     getGroupUsers()
   }, [])
 
-  const useStyles = makeStyles({
+  const useStyles = makeStyles((theme) => ({
+    main: {
+      backgroundColor: theme.palette.grey[900],
+      height: '100vh',
+      paddingTop: '64px'
+    },
     headerCard: {
-      backgroundColor: '#424242',
-      color: '#fafafa',
+      backgroundColor: theme.palette.grey[800],
+      color: theme.palette.grey[50],
       minHeight: 173,
-      margin: "84px 20px 20px 20px"
+      margin: 20
     },
     heading: {
       textAlign: 'left',
     },
     root: {
-      backgroundColor: '#424242',
-      color: '#fafafa',
+      backgroundColor: theme.palette.grey[800],
+      color: theme.palette.grey[50],
       margin: 20,
       maxWidth: 600,
       minWidth: 300,
     },
     title: {
       borderBottom: 'solid 1px',
-      color: '#ffab00',
+      color: theme.palette.lilac,
       marginTop: 0
+    },
+    description: {
+      color: theme.palette.grey[50]
     },
     trendingGroupsLink: {
       color: '#f5f5f5'
     },
-  });
+  }));
 
   const classes = useStyles();
 
   return (
-    <>
+    <div className={classes.main}>
       {!!groupDetails && !!groupUsers &&
-        <div className={classes.main}>
+        <div>
           <TopNav />
           <Card className={classes.headerCard}>
             <CardContent>
               <div className={classes.heading}>
                 <h1 className={classes.title}>{groupDetails.name}</h1>
-                <p>{groupDetails.description}</p>
+                <p className={classes.description}>{groupDetails.description}</p>
                 {!!isAuthenticated && <GroupJoinLeave username={user["https://thebullpen.app/username"]} groupId={match.params.groupId} />}
               </div>
             </CardContent>
@@ -92,7 +100,7 @@ export default function GroupHome({ match }) {
           </Card>
         </div>
       }
-    </>
+    </div>
   )
 }
 

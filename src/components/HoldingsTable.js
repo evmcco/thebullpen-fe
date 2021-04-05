@@ -14,8 +14,8 @@ import Card from '@material-ui/core/Card';
 export default function HoldingsTable(props) {
   const useStyles = makeStyles((theme) => ({
     card: {
-      backgroundColor: '#424242',
-      color: '#fafafa',
+      backgroundColor: theme.palette.grey[800],
+      color: theme.palette.grey[50],
       margin: '1em 5% 0 5%',
       maxWidth: '90%',
     },
@@ -23,21 +23,20 @@ export default function HoldingsTable(props) {
     },
     tableTitle: {
       borderBottom: 'solid 1px',
-      color: '#ffab00',
+      color: theme.palette.grey[50],
       marginTop: 0
     },
     headerRow: {
-      background: '#616161',
-      color: '#fafafa',
+      background: theme.palette.navy,
     },
     headerRowCell: {
-      color: '#fafafa'
+      color: theme.palette.grey[50]
     },
     tableRowCell: {
-      color: '#fafafa'
+      color: theme.palette.grey[50]
     },
     tableRowCellLink: {
-      color: '#fafafa'
+      color: theme.palette.grey[50]
     },
     tableRowCellGreen: {
       color: '#4caf50'

@@ -17,10 +17,10 @@ export default function TrendingBullpens() {
     getTrendingBullpens()
   }, [])
 
-  const useStyles = makeStyles({
+  const useStyles = makeStyles((theme) => ({
     root: {
-      backgroundColor: '#424242',
-      color: '#fafafa',
+      backgroundColor: theme.palette.grey[800],
+      color: theme.palette.grey[50],
       margin: 20,
       maxWidth: 600,
       minWidth: 300,
@@ -28,15 +28,21 @@ export default function TrendingBullpens() {
     },
     content: {
     },
-    title: {
-      borderBottom: 'solid 1px',
-      color: '#ffab00',
-      marginTop: 0
+    titleBorder: {
+      background: 'rgb(0, 117, 128)',
+      background: 'linear-gradient(90deg, rgba(10,34,64,1) 0%, rgba(0,117,128,1) 100%)',
+      height: 3,
+      width: '100%'
     },
-    trendingBullpenLink: {
-      color: '#f5f5f5'
+    title: {
+      color: theme.palette.grey[50],
+      marginTop: 0,
+      marginBottom: 3
+    },
+    link: {
+      color: theme.palette.grey[50],
     }
-  });
+  }));
 
   const classes = useStyles();
 
@@ -44,9 +50,11 @@ export default function TrendingBullpens() {
     <Card className={classes.root}>
       <CardContent className={classes.content}>
         <h2 className={classes.title}>Trending Bullpens</h2>
+        <div className={classes.titleBorder}>
+        </div>
         {trendingBullpens.length > 0 ? (
           trendingBullpens.map((bullpen) => (
-            <Link className={classes.trendingBullpenLink} to={`/p/${bullpen.username}`}><p>{bullpen.username}</p></Link>
+            <Link className={classes.link} to={`/p/${bullpen.username}`}><p>{bullpen.username}</p></Link>
           ))
         ) : (
           <p>Loading...</p>

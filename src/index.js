@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 
 import { Auth0Provider } from "@auth0/auth0-react"
 
+import Palette from "./materials/Palette"
+
 ReactDOM.render(
   <Auth0Provider
     domain="thebullpen.us.auth0.com"
@@ -13,7 +15,9 @@ ReactDOM.render(
     redirectUri={window.location.origin}
   >
     <React.StrictMode>
-      <App />
+      <Palette>
+        <App />
+      </Palette>
     </React.StrictMode>
   </Auth0Provider>,
   document.getElementById('root')

@@ -23,8 +23,9 @@ const useStyles = makeStyles((theme) => ({
     width: '100%'
   },
   headerBar: {
-    backgroundColor: '#14213d',
-    borderBottom: 'solid 1px'
+    backgroundColor: theme.palette.lilac,
+    borderBottom: 'solid 1px',
+    color: theme.palette.grey[900]
   },
   menuButton: {
     marginRight: theme.spacing(2),

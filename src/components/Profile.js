@@ -11,12 +11,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import { requestPlaidHoldings } from "../services/plaid.js"
 
 const Profile = () => {
-  const useStyles = makeStyles({
+  const useStyles = makeStyles((theme) => ({
     profileDataContainer: {
-      paddingTop: '64px',
-      margin: '5%'
+      backgroundColor: theme.palette.grey[900],
+      height: '100vh',
+      padding: '84px 5% 0 5%'
     }
-  });
+  }));
 
   const classes = useStyles();
   const [accessTokens, setAccessTokens] = useState([])

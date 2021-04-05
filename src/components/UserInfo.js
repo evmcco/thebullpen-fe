@@ -1,6 +1,7 @@
 import React from "react";
 
 import { makeStyles } from '@material-ui/core/styles';
+import Palette from "../materials/Palette";
 
 
 const UserInfo = (props) => {
@@ -8,6 +9,7 @@ const UserInfo = (props) => {
     header: {
     },
     headerText: {
+      color: theme.palette.grey[50],
       fontSize: '2em',
       padding: '15px 5% 0 5%',
     }

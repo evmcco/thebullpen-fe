@@ -5,16 +5,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import CardContent from '@material-ui/core/CardContent';
 import Card from '@material-ui/core/Card';
 
-export default function TrendingGroups() {
-  const [trendingGroups, setTrendingGroups] = useState([])
+export default function UserGroupsList(props) {
+  const [myGroups, setMyGroups] = useState([])
 
   useEffect(() => {
-    const getTrendingGroups = async () => {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/groups/all`)
+    const getMyGroups = async () => {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/groups/user/all/${props.username}`)
       const data = await response.json()
-      setTrendingGroups(data)
+      setMyGroups(data)
     }
-    getTrendingGroups()
+    getMyGroups()
   }, [])
 
   const useStyles = makeStyles((theme) => ({
@@ -49,11 +49,11 @@ export default function TrendingGroups() {
   return (
     <Card className={classes.root}>
       <CardContent className={classes.content}>
-        <h2 className={classes.title}>Trending Groups</h2>
+        <h2 className={classes.title}>{props.title}</h2>
         <div className={classes.titleBorder}>
         </div>
-        {trendingGroups.length > 0 ? (
-          trendingGroups.map((group) => (
+        {myGroups.length > 0 ? (
+          myGroups.map((group) => (
             <Link className={classes.link} to={`/g/${group.id}`}><p>{group.name}</p></Link>
           ))
         ) : (

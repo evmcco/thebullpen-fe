@@ -12,10 +12,21 @@ import CardContent from '@material-ui/core/CardContent';
 import Card from '@material-ui/core/Card';
 
 export default function TransactionsTable(props) {
+  const [transactions, setTransactions] = useState([])
+
+  useEffect(() => {
+    const getTransactions = async () => {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/transactions/user/${props.username}`)
+      const data = await response.json()
+      setTransactions(data)
+    }
+    getTransactions()
+  }, []
+  )
+
   const useStyles = makeStyles((theme) => ({
     card: {
-      backgroundColor: '#424242',
-      color: '#fafafa',
+      backgroundColor: theme.palette.grey[800],
       margin: '1em 5% 0 5%',
       maxWidth: '90%',
     },
@@ -23,21 +34,20 @@ export default function TransactionsTable(props) {
     },
     tableTitle: {
       borderBottom: 'solid 1px',
-      color: '#ffab00',
+      color: theme.palette.grey[50],
       marginTop: 0
     },
     headerRow: {
-      background: '#616161',
-      color: '#fafafa',
+      background: theme.palette.navy,
     },
     headerRowCell: {
-      color: '#fafafa'
+      color: theme.palette.grey[50]
     },
     tableRowCell: {
-      color: '#fafafa'
+      color: theme.palette.grey[50]
     },
     tableRowCellLink: {
-      color: '#fafafa'
+      color: theme.palette.grey[50]
     },
     tableRowCellGreen: {
       color: '#4caf50'
@@ -51,7 +61,7 @@ export default function TransactionsTable(props) {
 
   return (
     <>
-      {props.transactions && props.transactions.length > 0 ? (
+      {transactions && transactions.length > 0 ? (
         <Card className={classes.card}>
           <CardContent>
             <TableContainer className={classes.tableContainer} >
@@ -67,7 +77,7 @@ export default function TransactionsTable(props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {props.transactions.map((transaction) => (
+                  {transactions.map((transaction) => (
                     <TableRow key={transaction.id}>
                       <TableCell id="ticker" className={classes.tableRowCell}>
                         {(transaction.type == 'etf' || transaction.type == 'equity') ?
