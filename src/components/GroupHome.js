@@ -9,6 +9,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 import TopNav from "./TopNav"
 import GroupJoinLeave from "./GroupJoinLeave"
+import GroupCommonHoldings from "./GroupCommonHoldings"
+import GroupRecentTransactions from "./GroupRecentTransactions"
 
 export default function GroupHome({ match }) {
   const [groupUsers, setGroupUsers] = useState([])
@@ -59,7 +61,7 @@ export default function GroupHome({ match }) {
     },
     title: {
       borderBottom: 'solid 1px',
-      color: theme.palette.lilac,
+      color: theme.palette.grey[50],
       marginTop: 0
     },
     description: {
@@ -98,6 +100,8 @@ export default function GroupHome({ match }) {
               )}
             </CardContent>
           </Card>
+          <GroupCommonHoldings groupId={match.params.groupId} />
+          <GroupRecentTransactions groupId={match.params.groupId} />
         </div>
       }
     </div>
