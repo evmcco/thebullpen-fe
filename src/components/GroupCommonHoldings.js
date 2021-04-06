@@ -41,15 +41,24 @@ export default function GroupCommonHoldings(props) {
     },
     holdingCard: {
       backgroundColor: theme.palette.grey[900],
+      height: 64,
       margin: '8px 0',
-      maxWidth: 300,
-      padding: '8px 8px 0 8px'
+      maxWidth: 600,
+      minWidth: 300,
     },
     holdingCardGrid: {
-      height: '100%'
+      height: '60px',
+      padding: 8
+    },
+    holdingCardLeftGrid: {
+      width: '75%',
     },
     ticker: {
       color: theme.palette.grey[50]
+    },
+    name: {
+      color: theme.palette.grey[700],
+      fontSize: 12
     },
     count: {
       color: theme.palette.grey[700]
@@ -67,12 +76,13 @@ export default function GroupCommonHoldings(props) {
         {holdings.length > 0 ? (
           holdings.map((holding) => (
             <Card className={classes.holdingCard}>
-              <CardContent>
-                <Grid clasName={classes.holdingCardGrid} container direction="row" justify="space-between" alignItems="center">
+              <Grid className={classes.holdingCardGrid} container direction="row" justify="space-between" alignItems="center">
+                <Grid className={classes.holdingCardLeftGrid} container direction="column" justify="center" alignItems="flex-start">
                   <div className={classes.ticker}>{holding.ticker_symbol}</div>
-                  <div className={classes.count}>{holding.count}</div>
+                  <div className={classes.name}>{holding.name.length > 30 ? `${holding.name.substring(0, 30)}...` : holding.name}</div>
                 </Grid>
-              </CardContent>
+                <div className={classes.count}>{holding.count}</div>
+              </Grid>
             </Card>
 
           ))

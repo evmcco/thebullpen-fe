@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import CardContent from '@material-ui/core/CardContent';
 import Card from '@material-ui/core/Card';
+import Grid from '@material-ui/core/Grid';
+
 
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -88,20 +90,22 @@ export default function GroupHome({ match }) {
               </div>
             </CardContent>
           </Card>
-          <Card className={classes.root}>
-            <CardContent className={classes.content}>
-              <h2 className={classes.title}>Members</h2>
-              {groupUsers.length > 0 ? (
-                groupUsers.map((user) => (
-                  <Link className={classes.trendingGroupsLink} to={`/p/${user.username}`}><p>{user.username}</p></Link>
-                ))
-              ) : (
-                <p>Loading...</p>
-              )}
-            </CardContent>
-          </Card>
-          <GroupCommonHoldings groupId={match.params.groupId} />
-          <GroupRecentTransactions groupId={match.params.groupId} />
+          <Grid container direction="row" justify="space-around" alignItems="flex-start">
+            <Card className={classes.root}>
+              <CardContent className={classes.content}>
+                <h2 className={classes.title}>Members</h2>
+                {groupUsers.length > 0 ? (
+                  groupUsers.map((user) => (
+                    <Link className={classes.trendingGroupsLink} to={`/p/${user.username}`}><p>{user.username}</p></Link>
+                  ))
+                ) : (
+                  <p>Loading...</p>
+                )}
+              </CardContent>
+            </Card>
+            <GroupCommonHoldings groupId={match.params.groupId} />
+            <GroupRecentTransactions groupId={match.params.groupId} />
+          </Grid>
         </div>
       }
     </div>

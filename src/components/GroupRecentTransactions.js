@@ -41,23 +41,29 @@ export default function GroupRecentTransactions(props) {
     },
     holdingCard: {
       backgroundColor: theme.palette.grey[900],
+      height: 64,
       margin: '8px 0',
-      maxWidth: 300,
-      padding: '8px 8px 0 8px'
+      maxWidth: 600,
+      minWidth: 300,
     },
     holdingCardGrid: {
-      height: '100%'
+      height: '60px',
+      padding: 8
     },
     ticker: {
       color: theme.palette.grey[50]
     },
     holdingCardGridBottomRow: {
       color: theme.palette.grey[700],
+      padding: 0,
       width: '100%'
     },
-    date: {
-      color: theme.palette.grey[700]
-    }
+    green: {
+      color: '#4caf50'
+    },
+    red: {
+      color: '#f44336'
+    },
   }));
 
   const classes = useStyles();
@@ -71,15 +77,13 @@ export default function GroupRecentTransactions(props) {
         {transactions.length > 0 ? (
           transactions.map((transaction) => (
             <Card className={classes.holdingCard}>
-              <CardContent>
-                <Grid clasName={classes.holdingCardGrid} container direction="column" justify="space-between" alignItems="stretch">
-                  <div className={classes.ticker}>{transaction.ticker_symbol}/{transaction.type}</div>
-                  <Grid className={classes.holdingCardGridBottomRow} container direction="row" justify="space-between" alignItems="center">
-                    <div>{transaction.date}</div>
-                    <div>{transaction.username}</div>
-                  </Grid>
+              <Grid className={classes.holdingCardGrid} container direction="column" justify="space-between" alignItems="stretch">
+                <div className={classes.ticker}>{transaction.ticker_symbol}/<span className={transaction.type == 'buy' ? classes.green : classes.red}>{transaction.type}</span></div>
+                <Grid className={classes.holdingCardGridBottomRow} container direction="row" justify="space-between" alignItems="center">
+                  <div>{transaction.username}</div>
+                  <div>{transaction.date}</div>
                 </Grid>
-              </CardContent>
+              </Grid>
             </Card>
 
           ))
