@@ -28,16 +28,10 @@ export default function TrendingBullpens() {
     },
     content: {
     },
-    titleBorder: {
-      background: 'rgb(0, 117, 128)',
-      background: 'linear-gradient(90deg, rgba(10,34,64,1) 0%, rgba(0,117,128,1) 100%)',
-      height: 3,
-      width: '100%'
-    },
     title: {
+      borderBottom: 'solid 1px',
       color: theme.palette.grey[50],
-      marginTop: 0,
-      marginBottom: 3
+      marginTop: 0
     },
     link: {
       color: theme.palette.grey[50],
@@ -50,8 +44,6 @@ export default function TrendingBullpens() {
     <Card className={classes.root}>
       <CardContent className={classes.content}>
         <h2 className={classes.title}>Trending Bullpens</h2>
-        <div className={classes.titleBorder}>
-        </div>
         {trendingBullpens.length > 0 ? (
           trendingBullpens.map((bullpen) => (
             <Link className={classes.link} to={`/p/${bullpen.username}`}><p>{bullpen.username}</p></Link>

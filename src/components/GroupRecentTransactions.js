@@ -28,16 +28,10 @@ export default function GroupRecentTransactions(props) {
     },
     content: {
     },
-    titleBorder: {
-      background: 'rgb(0, 117, 128)',
-      background: 'linear-gradient(90deg, rgba(10,34,64,1) 0%, rgba(0,117,128,1) 100%)',
-      height: 3,
-      width: '100%'
-    },
     title: {
+      borderBottom: 'solid 1px',
       color: theme.palette.grey[50],
-      marginTop: 0,
-      marginBottom: 3
+      marginTop: 0
     },
     holdingCard: {
       backgroundColor: theme.palette.grey[900],
@@ -72,8 +66,6 @@ export default function GroupRecentTransactions(props) {
     <Card className={classes.root}>
       <CardContent className={classes.content}>
         <h2 className={classes.title}>Recent Transactions</h2>
-        <div className={classes.titleBorder}>
-        </div>
         {transactions.length > 0 ? (
           transactions.map((transaction) => (
             <Card className={classes.holdingCard}>

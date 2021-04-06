@@ -26,18 +26,10 @@ export default function UserGroupsList(props) {
       minWidth: 300,
       paddingBottom: '16px'
     },
-    content: {
-    },
-    titleBorder: {
-      background: 'rgb(0, 117, 128)',
-      background: 'linear-gradient(90deg, rgba(10,34,64,1) 0%, rgba(0,117,128,1) 100%)',
-      height: 3,
-      width: '100%'
-    },
     title: {
+      borderBottom: 'solid 1px',
       color: theme.palette.grey[50],
-      marginTop: 0,
-      marginBottom: 3
+      marginTop: 0
     },
     link: {
       color: theme.palette.grey[50],
@@ -50,8 +42,6 @@ export default function UserGroupsList(props) {
     <Card className={classes.root}>
       <CardContent className={classes.content}>
         <h2 className={classes.title}>{props.title}</h2>
-        <div className={classes.titleBorder}>
-        </div>
         {myGroups.length > 0 ? (
           myGroups.map((group) => (
             <Link className={classes.link} to={`/g/${group.id}`}><p>{group.name}</p></Link>

@@ -108,7 +108,7 @@ const Portfolio = ({ match }) => {
       <div className={classes.portfolioContainer}>
         <UserInfo username={match.params.username} />
         <AppBar className={classes.tabBar} position="static">
-          <StyledTabs value={tabValue} onChange={handleChange} aria-label="simple tabs example">
+          <StyledTabs value={tabValue} onChange={handleChange}>
             <Tab label="Holdings" />
             <Tab label="Transactions" />
             <Tab label="Groups" />
