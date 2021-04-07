@@ -64,8 +64,12 @@ const Portfolio = ({ match }) => {
       if (currentValue.ticker_symbol == 'CUR:USD') {
         return Number(accumulator) + Number(currentValue.quantity)
       }
+      if (currentValue.type === 'derivative') {
+        return Number(accumulator)
+      }
       const holdingPrice = !!currentValue.quote?.latestPrice ? currentValue.quote.latestPrice : Number(currentValue.close_price)
       const totalHoldingValue = holdingPrice * Number(currentValue.quantity)
+      console.log(`${currentValue.ticker_symbol}: price=${holdingPrice} quantity=${currentValue.quantity} totalValue=${totalHoldingValue}`)
       return Number(accumulator) + totalHoldingValue
     }
     setTotalPortfolioValue(h.reduce(reducer, 0).toFixed(2))
