@@ -1,8 +1,8 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { usePlaidLink } from 'react-plaid-link';
-import { useAuth0 } from "@auth0/auth0-react";
 
 import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { requestPlaidHoldings } from "../services/plaid.js"
 
@@ -61,7 +61,6 @@ const PlaidLink = (props) => {
       requestPlaidHoldings(props.username, data.access_token)
     };
     setTokenSaveTokenRequestHoldings();
-    //TODO send username and access_token to API for Plaid data fetching
   }, []);
 
   const generateLinkToken = async () => {
@@ -81,11 +80,19 @@ const PlaidLink = (props) => {
 
   const { open, ready, error } = usePlaidLink(config);
 
+  const useStyles = makeStyles((theme) => ({
+    button: {
+      backgroundColor: theme.palette.teal,
+      color: theme.palette.grey[50],
+    }
+  }));
+
+  const classes = useStyles();
+
   return (
     <>
-      <h2>Link your Brokerage Account:</h2>
-      <Button onClick={() => open()} disabled={!ready} color="primary" variant="contained">
-        Connect a bank account
+      <Button onClick={() => open()} disabled={!ready} className={classes.button} variant="contained">
+        Connect your brokerage account
       </Button>
     </>
   );

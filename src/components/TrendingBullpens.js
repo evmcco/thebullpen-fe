@@ -46,7 +46,7 @@ export default function TrendingBullpens() {
         <h2 className={classes.title}>Trending Bullpens</h2>
         {trendingBullpens.length > 0 ? (
           trendingBullpens.map((bullpen) => (
-            <Link className={classes.link} to={`/p/${bullpen.username}`}><p>{bullpen.username}</p></Link>
+            <Link key={bullpen.username} className={classes.link} to={`/p/${bullpen.username}`}><p>{bullpen.username}</p></Link>
           ))
         ) : (
           <p>Loading...</p>

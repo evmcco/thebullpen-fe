@@ -46,7 +46,7 @@ export default function TrendingGroups() {
         <h2 className={classes.title}>Trending Groups</h2>
         {trendingGroups.length > 0 ? (
           trendingGroups.map((group) => (
-            <Link className={classes.link} to={`/g/${group.id}`}><p>{group.name}</p></Link>
+            <Link key={group.name} className={classes.link} to={`/g/${group.id}`}><p>{group.name}</p></Link>
           ))
         ) : (
           <p>Loading...</p>

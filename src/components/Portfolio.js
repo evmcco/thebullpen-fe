@@ -5,7 +5,6 @@ import OptionsTable from "./OptionsTable"
 import TransactionsTable from "./TransactionsTable"
 import UserGroupsList from "./UserGroupsList"
 import UserInfo from "./UserInfo"
-import TopNav from "./TopNav"
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -69,7 +68,6 @@ const Portfolio = ({ match }) => {
       }
       const holdingPrice = !!currentValue.quote?.latestPrice ? currentValue.quote.latestPrice : Number(currentValue.close_price)
       const totalHoldingValue = holdingPrice * Number(currentValue.quantity)
-      console.log(`${currentValue.ticker_symbol}: price=${holdingPrice} quantity=${currentValue.quantity} totalValue=${totalHoldingValue}`)
       return Number(accumulator) + totalHoldingValue
     }
     setTotalPortfolioValue(h.reduce(reducer, 0).toFixed(2))
@@ -91,7 +89,6 @@ const Portfolio = ({ match }) => {
     portfolioContainer: {
       backgroundColor: theme.palette.grey[900],
       height: '100%',
-      paddingTop: '64px',
     },
     tabBar: {
       backgroundColor: theme.palette.grey[900],
@@ -108,7 +105,6 @@ const Portfolio = ({ match }) => {
 
   return (
     <>
-      <TopNav />
       <div className={classes.portfolioContainer}>
         <UserInfo username={match.params.username} />
         <AppBar className={classes.tabBar} position="static">

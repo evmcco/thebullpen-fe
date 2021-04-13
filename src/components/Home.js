@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 
-import TopNav from "./TopNav"
 import UserGroupsList from "./UserGroupsList"
 import TrendingBullpens from "./TrendingBullpens"
 import TrendingGroups from "./TrendingGroups"
@@ -24,7 +23,6 @@ const Home = () => {
     },
     heading: {
       color: theme.palette.grey[50],
-      paddingTop: '64px',
       textAlign: 'center',
     },
     subheading: {
@@ -36,7 +34,6 @@ const Home = () => {
 
   return (
     <div className={classes.body}>
-      <TopNav />
       <div className={classes.heading}>
         <h1>Bullpen</h1>
         <h2 className={classes.subheading}>Stampeding toward the Moon since 2021</h2>

@@ -11,7 +11,6 @@ import Tab from '@material-ui/core/Tab';
 
 import { useAuth0 } from "@auth0/auth0-react";
 
-import TopNav from "./TopNav"
 import GroupJoinLeave from "./GroupJoinLeave"
 import GroupCommonHoldings from "./GroupCommonHoldings"
 import GroupRecentTransactions from "./GroupRecentTransactions"
@@ -80,7 +79,6 @@ export default function GroupHome({ match }) {
     main: {
       backgroundColor: theme.palette.grey[900],
       height: '100vh',
-      paddingTop: '64px'
     },
     tabBar: {
       backgroundColor: theme.palette.grey[900],
@@ -123,8 +121,6 @@ export default function GroupHome({ match }) {
     <div className={classes.main}>
       {!!groupDetails && !!groupUsers &&
         <div>
-          <TopNav />
-
           <Card className={classes.headerCard}>
             <CardContent>
               <div className={classes.heading}>
@@ -147,7 +143,7 @@ export default function GroupHome({ match }) {
                 <h2 className={classes.title}>Members</h2>
                 {groupUsers.length > 0 ? (
                   groupUsers.map((user) => (
-                    <Link className={classes.memberLink} to={`/p/${user.username}`}><p>{user.username}</p></Link>
+                    <Link key={user.username} className={classes.memberLink} to={`/p/${user.username}`}><p>{user.username}</p></Link>
                   ))
                 ) : (
                   <p>Loading...</p>

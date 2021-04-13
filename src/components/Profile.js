@@ -15,7 +15,7 @@ const Profile = () => {
     profileDataContainer: {
       backgroundColor: theme.palette.grey[900],
       height: '100vh',
-      padding: '84px 5% 0 5%'
+      padding: '0 5% 0 5%'
     }
   }));
 
