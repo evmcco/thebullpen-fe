@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import HoldingsTable from "./HoldingsTable"
+import HoldingsCards from "./HoldingsCards"
 import OptionsTable from "./OptionsTable"
 import TransactionsTable from "./TransactionsTable"
 import UserGroupsList from "./UserGroupsList"
@@ -42,7 +43,6 @@ const Portfolio = ({ match }) => {
     const getHoldings = async () => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/holdings/user/${match.params.username}`)
       const data = await response.json()
-      getTotalPortfolioValue(data)
       data.sort((a, b) => {
         if (a.type == 'cash' || a.type == 'other' || a.ticker_symbol == 'CUR:BTC') {
           return 1
@@ -57,21 +57,6 @@ const Portfolio = ({ match }) => {
     getHoldings()
   }, []
   )
-
-  const getTotalPortfolioValue = (h) => {
-    const reducer = (accumulator, currentValue) => {
-      if (currentValue.ticker_symbol == 'CUR:USD') {
-        return Number(accumulator) + Number(currentValue.quantity)
-      }
-      if (currentValue.type === 'derivative') {
-        return Number(accumulator)
-      }
-      const holdingPrice = !!currentValue.quote?.latestPrice ? currentValue.quote.latestPrice : Number(currentValue.close_price)
-      const totalHoldingValue = holdingPrice * Number(currentValue.quantity)
-      return Number(accumulator) + totalHoldingValue
-    }
-    setTotalPortfolioValue(h.reduce(reducer, 0).toFixed(2))
-  }
 
   const StyledTabs = withStyles((theme) => ({
     indicator: {
@@ -114,12 +99,14 @@ const Portfolio = ({ match }) => {
             <Tab label="Groups" />
           </StyledTabs>
         </AppBar>
-        <TabPanel value={tabValue} index={0}>
-          <>
-            <HoldingsTable username={match.params.username} holdings={holdings.filter((holding) => { return holding.type != "derivative" })} totalPortfolioValue={totalPortfolioValue} />
-            <OptionsTable username={match.params.username} holdings={holdings.filter((holding) => { return holding.type == "derivative" })} totalPortfolioValue={totalPortfolioValue} />
-          </>
-        </TabPanel>
+        {holdings.length > 0 &&
+          <TabPanel value={tabValue} index={0}>
+            <>
+              <HoldingsCards username={match.params.username} holdings={holdings.filter((holding) => { return holding.type != "derivative" })} />
+              <OptionsTable username={match.params.username} holdings={holdings.filter((holding) => { return holding.type == "derivative" })} totalPortfolioValue={totalPortfolioValue} />
+            </>
+          </TabPanel>
+        }
         <TabPanel value={tabValue} index={1}>
           <TransactionsTable username={match.params.username} />
         </TabPanel>
