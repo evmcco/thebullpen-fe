@@ -9,44 +9,52 @@ export default function HoldingsCards(props) {
   const useStyles = makeStyles((theme) => ({
     card: {
       backgroundColor: theme.palette.navy,
+      borderRadius: 20,
+      boxShadow: '0px 0px 10px 0px black',
       color: theme.palette.grey[50],
-      margin: '1em 5% 0 5%',
-      maxWidth: '90%',
+      margin: '1em auto',
+      maxWidth: 850
     },
     holdingCard: {
-      backgroundColor: theme.palette.purple,
-      height: 64,
-      margin: '8px 0',
-      maxWidth: 600,
-      minWidth: 300,
+      backgroundColor: 'rgb(71,48,120)',
+      height: 80,
+      margin: '8px auto',
+      maxWidth: 400,
+      minWidth: 250
     },
     holdingCardGrid: {
-      height: 64,
-      padding: 8
+      height: 80,
+      padding: 12
     },
     gridItemLeft: {
       backgroundColor: theme.palette.navy,
       borderRadius: 5,
       color: theme.palette.common.white,
-      fontSize: 13,
-      height: 48,
+      fontSize: 15,
+      height: 56,
       textAlign: 'center',
-      width: 48
+      width: 56
     },
     tickerLink: {
       color: theme.palette.common.white,
       fontWeight: 'bold',
       textDecoration: 'none'
     },
-    gridItemMid: {
+    gridContainerMid: {
       color: theme.palette.common.white,
+      fontWeight: 'bold',
       fontSize: 13,
-      height: '100%',
+      height: 56,
       width: '40%'
+    },
+    gridMid: {
+      height: '100%',
+      width: '100%'
     },
     gridItemRight: {
       backgroundColor: theme.palette.navy,
       borderRadius: 7,
+      fontSize: 15,
       fontWeight: 'bold',
       width: '30%',
     },
@@ -79,11 +87,11 @@ export default function HoldingsCards(props) {
                       </a>
                     </Grid>
                   </div>
-                  <div className={classes.gridItemMid}>
-                    <Grid className={classes.subGrid} container direction="column" justify="space-around" alignItems="flex-start">
+                  <div className={classes.gridContainerMid}>
+                    <Grid className={classes.gridMid} container direction="column" justify="space-around" alignItems="flex-start">
                       <div>${holding.currentPrice}</div>
-                      <div className={classes.weight}>{holding.weight} wt.</div>
-                      <div className={classes.profit}>{holding.profit}</div>
+                      <div>{holding.weight} wt</div>
+                      <div>{holding.profit}</div>
                     </Grid>
                   </div>
                   <div className={classes.gridItemRight}>
