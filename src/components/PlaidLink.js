@@ -66,7 +66,12 @@ const PlaidLink = (props) => {
   const generateLinkToken = async () => {
     const createLinkTokenUrl = `${process.env.REACT_APP_API_URL}/plaid/create_link_token`
     const response = await fetch(createLinkTokenUrl, {
-      method: "POST"
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ user_id: props.username })
     })
     const data = await response.json()
     await setLinkToken(data.link_token)

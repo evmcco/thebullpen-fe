@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TopNav() {
-  const [isLinked, setIsLinked] = useState()
+  const [isLinked, setIsLinked] = useState(true)
+  const [isClicked, setIsClicked] = useState(false)
 
   const { user, isAuthenticated, isLoading } = useAuth0();
 
@@ -38,11 +39,11 @@ export default function TopNav() {
 
   return (
     <>
-      {!isLinked &&
+      {!isLinked && !isClicked &&
         <div className={classes.root}>
           <AppBar className={classes.headerBar} position="static">
             <div>
-              <Link className={classes.profileLink} to="/profile">Connect your brokerage account to complete setup!</Link>
+              <Link className={classes.profileLink} to="/profile" onClick={() => setIsClicked(true)}>Connect your brokerage account to complete setup!</Link>
             </div>
           </AppBar>
         </div>

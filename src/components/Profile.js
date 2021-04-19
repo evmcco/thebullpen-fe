@@ -43,7 +43,6 @@ const Profile = () => {
   return (
     isAuthenticated && (
       <>
-        <TopNav />
         <div className={classes.profileDataContainer}>
           <img src={user.picture} alt={user.name} />
           <br />
