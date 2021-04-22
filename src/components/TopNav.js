@@ -7,6 +7,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Box from '@material-ui/core/Box';
+
+import logo from "../assets/bullpenLogo.png"
 
 import { Link } from "react-router-dom";
 
@@ -26,18 +29,22 @@ const useStyles = makeStyles((theme) => ({
   },
   headerBar: {
     backgroundColor: theme.palette.lilac,
-    borderBottom: 'solid 1px',
     color: theme.palette.grey[900]
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    flexGrow: 1
   },
   menu: {
     backgroundColor: '#424242',
     color: '#fafafa',
   },
-  title: {
-    flexGrow: 1,
+  logoContainer: {
+    flexGrow: 5,
+    display: 'flex',
+    height: '30px',
+  },
+  logo: {
+    height: '30px'
   },
 }));
 
@@ -61,7 +68,7 @@ export default function TopNav(props) {
       <div className={classes.root}>
         <AppBar className={classes.headerBar} position="static">
           <Toolbar>
-            <div>
+            <div className={classes.menuContainer}>
               <IconButton onClick={handleClick} edge="start" className={classes.menuButton} color="inherit" aria-label="menu" aria-controls="simple-menu" aria-haspopup="true">
                 <MenuIcon />
               </IconButton>
@@ -80,15 +87,19 @@ export default function TopNav(props) {
                 </Link>}
               </Menu>
             </div>
-            <Typography variant="h6" className={classes.title}>
-              Bullpen 🐂 📈
-          </Typography>
-            {!isAuthenticated ? <LoginButton /> : <LogoutButton />}
+            <Box justifyContent="center" className={classes.logoContainer}>
+              <Link to="/">
+                <img className={classes.logo} src={logo} />
+              </Link>
+            </Box>
+            <div className={classes.authButtonContainer}>
+              {!isAuthenticated ? <LoginButton /> : <LogoutButton />}
+            </div>
           </Toolbar>
         </AppBar>
         {isAuthenticated && <TopNavLinkBanner />}
-      </div>
-      {props.children}
-    </div>
+      </div >
+      { props.children}
+    </div >
   );
 }

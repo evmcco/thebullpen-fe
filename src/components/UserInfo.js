@@ -11,7 +11,8 @@ const UserInfo = (props) => {
     headerText: {
       color: theme.palette.grey[50],
       fontSize: '2em',
-      padding: '15px 5% 0 5%',
+      padding: '15px 5%',
+      textAlign: 'center'
     }
   }));
 
@@ -19,7 +20,7 @@ const UserInfo = (props) => {
 
   return (
     <div className={classes.header}>
-      <div className={classes.headerText}>{props.username}'s bullpen</div>
+      <div className={classes.headerText}>{props.username}</div>
     </div>
   )
 }

@@ -9,6 +9,8 @@ import TopNav from "./components/TopNav"
 
 function App() {
   const styles = {
+    maxWidth: 1000,
+    margin: '0 auto',
     paddingTop: '100px',
   }
   return (

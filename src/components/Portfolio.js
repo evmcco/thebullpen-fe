@@ -4,6 +4,7 @@ import HoldingsTable from "./HoldingsTable"
 import HoldingsCards from "./HoldingsCards"
 import OptionsTable from "./OptionsTable"
 import TransactionsTable from "./TransactionsTable"
+import TransactionsCards from "./TransactionsCards"
 import UserGroupsList from "./UserGroupsList"
 import UserInfo from "./UserInfo"
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -108,7 +109,7 @@ const Portfolio = ({ match }) => {
           </TabPanel>
         }
         <TabPanel value={tabValue} index={1}>
-          <TransactionsTable username={match.params.username} />
+          <TransactionsCards username={match.params.username} />
         </TabPanel>
         <TabPanel className={classes.groupsContainer} value={tabValue} index={2}>
           <UserGroupsList username={match.params.username} title={"Groups"} />
