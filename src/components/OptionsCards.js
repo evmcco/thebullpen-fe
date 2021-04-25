@@ -3,7 +3,7 @@ import React from "react";
 import CardsList from "../containers/CardsList"
 import InfoCard from "../containers/InfoCard"
 
-export default function HoldingsCards(props) {
+export default function OptionsCards(props) {
   return (
     props.holdings && props.holdings.length > 0 ? (
       <CardsList>
@@ -11,8 +11,8 @@ export default function HoldingsCards(props) {
           return (
             <InfoCard
               left={holding.ticker_symbol}
-              mid={[holding.currentPrice, `${holding.weight} wt.`, holding.profit]}
-              right={{ data: holding.change + '%', color: (holding.change > 0 ? 'green' : holding.change < 0 ? 'red' : 'white') }}
+              mid={[`${holding.longshort} ${holding.putcall}`, "exp. " + holding.expirationDate, "str. " + holding.strikePrice]}
+              right={{ data: holding.tickerChange + '%', color: (holding.tickerChange > 0 ? 'green' : holding.tickerChange < 0 ? 'red' : 'white') }}
               key={index}
             />
           )

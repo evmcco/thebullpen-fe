@@ -73,9 +73,9 @@ export default function InfoCard(props) {
             <a
               className={classes.tickerLink}
               target="_blank"
-              href={props.left.href}
+              href={`https://finance.yahoo.com/quote/${props.left}`}
             >
-              {props.left.data}
+              {props.left}
             </a>
           </Grid>
         </div>

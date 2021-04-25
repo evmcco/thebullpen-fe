@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-import HoldingsTable from "./HoldingsTable"
 import HoldingsCards from "./HoldingsCards"
 import OptionsTable from "./OptionsTable"
-import TransactionsTable from "./TransactionsTable"
+import OptionsCards from "./OptionsCards"
 import TransactionsCards from "./TransactionsCards"
 import UserGroupsList from "./UserGroupsList"
 import UserInfo from "./UserInfo"
@@ -32,8 +31,7 @@ function TabPanel(props) {
 }
 
 const Portfolio = ({ match }) => {
-  const [holdings, setHoldings] = useState([])
-  const [totalPortfolioValue, setTotalPortfolioValue] = useState(0)
+  const [holdings, setHoldings] = useState(null)
   const [tabValue, setTabValue] = React.useState(0);
 
   const handleChange = (event, tabValue) => {
@@ -44,15 +42,6 @@ const Portfolio = ({ match }) => {
     const getHoldings = async () => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/holdings/user/${match.params.username}`)
       const data = await response.json()
-      data.sort((a, b) => {
-        if (a.type == 'cash' || a.type == 'other' || a.ticker_symbol == 'CUR:BTC') {
-          return 1
-        } else if (b.type == 'cash' || b.type == 'other' || b.ticker_symbol == 'CUR:BTC') {
-          return -1
-        } else {
-          return (a.ticker_symbol < b.ticker_symbol) ? -1 : (a.ticker_symbol > b.ticker_symbol) ? 1 : 0
-        }
-      })
       setHoldings(data)
     }
     getHoldings()
@@ -100,11 +89,11 @@ const Portfolio = ({ match }) => {
             <Tab label="Groups" />
           </StyledTabs>
         </AppBar>
-        {holdings.length > 0 &&
+        {holdings &&
           <TabPanel value={tabValue} index={0}>
             <>
-              <HoldingsCards username={match.params.username} holdings={holdings.filter((holding) => { return holding.type != "derivative" })} />
-              <OptionsTable username={match.params.username} holdings={holdings.filter((holding) => { return holding.type == "derivative" })} totalPortfolioValue={totalPortfolioValue} />
+              {holdings.equities?.length > 0 && <HoldingsCards username={match.params.username} holdings={holdings.equities} />}
+              {holdings.derivatives?.length > 0 && <OptionsCards username={match.params.username} holdings={holdings.derivatives} />}
             </>
           </TabPanel>
         }
