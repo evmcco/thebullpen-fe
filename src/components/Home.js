@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import UserGroupsList from "./UserGroupsList"
 import TrendingBullpens from "./TrendingBullpens"
 import TrendingGroups from "./TrendingGroups"
-
+import UnderConstruction from "./UnderConstruction"
 
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -31,28 +31,30 @@ const Home = () => {
   }));
 
   const classes = useStyles();
-
   return (
-    <div className={classes.body}>
-      <div className={classes.heading}>
-        <h1>Bullpen</h1>
-        <h2 className={classes.subheading}>Stampeding toward the Moon since 2021</h2>
-      </div>
-      <div className={classes.root} >
-        <Grid container spacing={3} direction="row" justify="center">
-          {isAuthenticated &&
+
+    isAuthenticated ?
+      <div className={classes.body} >
+        <div className={classes.heading}>
+          <h1>Bullpen</h1>
+          <h2 className={classes.subheading}>Stampeding toward the Moon since 2021</h2>
+        </div>
+        <div className={classes.root} >
+          <Grid container spacing={3} direction="row" justify="center">
+            {isAuthenticated &&
+              <Grid item xs={12} sm={6}>
+                <UserGroupsList username={user["https://thebullpen.app/username"]} title={"My Groups"} />
+              </Grid>}
             <Grid item xs={12} sm={6}>
-              <UserGroupsList username={user["https://thebullpen.app/username"]} title={"My Groups"} />
-            </Grid>}
-          <Grid item xs={12} sm={6}>
-            <TrendingBullpens />
+              <TrendingBullpens />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TrendingGroups />
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TrendingGroups />
-          </Grid>
-        </Grid>
-      </div>
-    </div>
+        </div>
+      </div >
+      : <UnderConstruction />
   )
 }
 
