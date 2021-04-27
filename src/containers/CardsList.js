@@ -12,6 +12,9 @@ export default function CardsList(props) {
       color: theme.palette.grey[50],
       margin: '1em auto',
       width: '90%'
+    },
+    header: {
+      textAlign: "center"
     }
   }));
 
@@ -20,6 +23,7 @@ export default function CardsList(props) {
   return (
     <Card className={classes.cardContainer}>
       <CardContent>
+        {!!props.title && <h1 className={classes.header}>{props.title}</h1>}
         {props.children}
       </CardContent >
     </Card >

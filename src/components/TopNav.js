@@ -9,7 +9,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Box from '@material-ui/core/Box';
 
-import logo from "../assets/bullpenLogo.png"
+import logo from "../assets/bullpenLogoNavy.png"
 
 import { Link } from "react-router-dom";
 
