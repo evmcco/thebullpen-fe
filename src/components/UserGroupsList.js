@@ -33,6 +33,7 @@ export default function UserGroupsList(props) {
     },
     link: {
       color: theme.palette.grey[50],
+      textDecoration: 'none'
     }
   }));
 
@@ -44,7 +45,7 @@ export default function UserGroupsList(props) {
         <h2 className={classes.title}>{props.title}</h2>
         {myGroups.length > 0 ? (
           myGroups.map((group) => (
-            <Link className={classes.link} to={`/g/${group.id}`}><p>{group.name}</p></Link>
+            <Link key={group.id} className={classes.link} to={`/g/${group.id}`}><p>{group.name}</p></Link>
           ))
         ) : (
           <p>Loading...</p>

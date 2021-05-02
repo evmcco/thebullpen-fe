@@ -53,10 +53,10 @@ export default function InfoCard(props) {
       width: '30%',
     },
     green: {
-      color: theme.palette.teal
+      color: theme.palette.positive
     },
     red: {
-      color: '#f44336'
+      color: theme.palette.negative
     },
     white: {
       color: theme.palette.common.white

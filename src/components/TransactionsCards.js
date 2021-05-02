@@ -60,9 +60,10 @@ export default function TransactionsCards(props) {
         {
           options.length && (
             <CardsList title="Options">
-              {options.map((transaction) => {
+              {options.map((transaction, index) => {
                 return (
                   <InfoCard
+                    key={index}
                     left={transaction.parsedTicker[1]}
                     mid={[transaction.date, Number(transaction.price).toFixed(2), 'cur. ' + (!!transaction.quote?.latestPrice ? transaction.quote.latestPrice : transaction.close_price)]}
                     right={{ data: parseOptionsTxn(transaction), color: (transaction.txn_type == 'buy' ? 'green' : transaction.txn_type == 'sell' ? 'red' : 'white') }}

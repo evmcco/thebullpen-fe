@@ -111,7 +111,8 @@ export default function GroupHome({ match }) {
       color: theme.palette.grey[50]
     },
     memberLink: {
-      color: '#f5f5f5'
+      color: '#f5f5f5',
+      textDecoration: 'none'
     }
   }));
 

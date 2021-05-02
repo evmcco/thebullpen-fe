@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import UserGroupsList from "./UserGroupsList"
 import TrendingBullpens from "./TrendingBullpens"
+import Leaderboard from "./Leaderboard"
 import TrendingGroups from "./TrendingGroups"
 import UnderConstruction from "./UnderConstruction"
 
@@ -43,13 +44,13 @@ const Home = () => {
           </div>
           <div className={classes.root} >
             <Grid container spacing={3} direction="row" justify="center">
+              <Grid item xs={12} sm={6}>
+                <Leaderboard />
+              </Grid>
               {isAuthenticated &&
                 <Grid item xs={12} sm={6}>
                   <UserGroupsList username={user["https://thebullpen.app/username"]} title={"My Groups"} />
                 </Grid>}
-              <Grid item xs={12} sm={6}>
-                <TrendingBullpens />
-              </Grid>
               <Grid item xs={12} sm={6}>
                 <TrendingGroups />
               </Grid>

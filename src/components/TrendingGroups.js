@@ -35,6 +35,7 @@ export default function TrendingGroups() {
     },
     link: {
       color: theme.palette.grey[50],
+      textDecoration: 'none'
     }
   }));
 

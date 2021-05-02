@@ -1,5 +1,7 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import red from '@material-ui/core/colors/red';
+import green from '@material-ui/core/colors/green';
 
 const theme = createMuiTheme({
   palette: {
@@ -8,7 +10,9 @@ const theme = createMuiTheme({
     teal: '#007580',
     green: '#c2d500',
     purple: '#993dbb',
-    cream: '#f0e78f'
+    cream: '#f0e78f',
+    positive: green[500],
+    negative: red[500]
   },
 });
 
