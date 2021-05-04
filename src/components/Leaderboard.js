@@ -73,6 +73,10 @@ export default function Leaderboard() {
       backgroundColor: theme.palette.negative,
       fontWeight: 'bold'
     },
+    lilac: {
+      backgroundColor: theme.palette.lilac,
+      fontWeight: 'bold'
+    }
   }));
 
   const classes = useStyles();
@@ -97,7 +101,7 @@ export default function Leaderboard() {
                   <p className={classes.place}>{index + 1}</p>
                   <p><Link className={classes.link} to={`/p/${user.username}`}>{user.username}</Link></p>
                 </Grid>
-                <p className={`${classes.performance} ${user.performance > 0 ? classes.green : user.performance < 0 ? classes.red : null}`}>{Number(user.performance).toFixed(2)}%</p>
+                <p className={`${classes.performance} ${index === 0 ? classes.lilac : user.performance > 0 ? classes.green : user.performance < 0 ? classes.red : null}`}>{Number(user.performance).toFixed(2)}%</p>
               </Grid>
             ))}
           </>

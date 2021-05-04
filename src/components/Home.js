@@ -1,7 +1,6 @@
 import React from "react";
 
 import UserGroupsList from "./UserGroupsList"
-import TrendingBullpens from "./TrendingBullpens"
 import Leaderboard from "./Leaderboard"
 import TrendingGroups from "./TrendingGroups"
 import UnderConstruction from "./UnderConstruction"
@@ -38,10 +37,10 @@ const Home = () => {
     return (
       isAuthenticated ?
         <div className={classes.body} >
-          <div className={classes.heading}>
+          {/* <div className={classes.heading}>
             <h1>Bullpen</h1>
             <h2 className={classes.subheading}>Stampeding toward the Moon since 2021</h2>
-          </div>
+          </div> */}
           <div className={classes.root} >
             <Grid container spacing={3} direction="row" justify="center">
               <Grid item xs={12} sm={6}>
@@ -50,9 +49,9 @@ const Home = () => {
               {isAuthenticated &&
                 <Grid item xs={12} sm={6}>
                   <UserGroupsList username={user["https://thebullpen.app/username"]} title={"My Groups"} />
+                  <TrendingGroups />
                 </Grid>}
               <Grid item xs={12} sm={6}>
-                <TrendingGroups />
               </Grid>
             </Grid>
           </div>

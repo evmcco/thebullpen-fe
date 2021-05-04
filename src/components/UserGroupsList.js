@@ -7,12 +7,14 @@ import Card from '@material-ui/core/Card';
 
 export default function UserGroupsList(props) {
   const [myGroups, setMyGroups] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const getMyGroups = async () => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/groups/user/all/${props.username}`)
       const data = await response.json()
       setMyGroups(data)
+      setLoading(false)
     }
     getMyGroups()
   }, [])
@@ -38,20 +40,25 @@ export default function UserGroupsList(props) {
   }));
 
   const classes = useStyles();
-
-  return (
-    <Card className={classes.root}>
-      <CardContent className={classes.content}>
-        <h2 className={classes.title}>{props.title}</h2>
-        {myGroups.length > 0 ? (
-          myGroups.map((group) => (
-            <Link key={group.id} className={classes.link} to={`/g/${group.id}`}><p>{group.name}</p></Link>
-          ))
-        ) : (
-          <p>Loading...</p>
-        )}
-      </CardContent>
-    </Card>
-  )
+  if (!loading) {
+    return (
+      <Card className={classes.root}>
+        <CardContent className={classes.content}>
+          <h2 className={classes.title}>{props.title}</h2>
+          {myGroups.length > 0 ? (
+            myGroups.map((group) => (
+              <Link key={group.id} className={classes.link} to={`/g/${group.id}`}><p>{group.name}</p></Link>
+            ))
+          ) : (
+            <p>You don't belong to any groups yet.</p>
+          )}
+        </CardContent>
+      </Card>
+    )
+  } else {
+    return <Card className={classes.root}>
+      <CardContent className={classes.content}><p>Loading...</p></CardContent>
+      </Card>
+  }
 }
 
