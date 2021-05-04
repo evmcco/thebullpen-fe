@@ -46,12 +46,9 @@ const Home = () => {
               <Grid item xs={12} sm={6}>
                 <Leaderboard />
               </Grid>
-              {isAuthenticated &&
-                <Grid item xs={12} sm={6}>
-                  <UserGroupsList username={user["https://thebullpen.app/username"]} title={"My Groups"} />
-                  <TrendingGroups />
-                </Grid>}
               <Grid item xs={12} sm={6}>
+                {isAuthenticated && <UserGroupsList username={user["https://thebullpen.app/username"]} title={"My Groups"} />}
+                <TrendingGroups />
               </Grid>
             </Grid>
           </div>
