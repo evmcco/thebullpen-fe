@@ -8,6 +8,7 @@ import Card from '@material-ui/core/Card';
 export default function UserGroupsList(props) {
   const [myGroups, setMyGroups] = useState([])
   const [loading, setLoading] = useState(true)
+  console.log(props.username)
 
   useEffect(() => {
     const getMyGroups = async () => {
@@ -50,7 +51,7 @@ export default function UserGroupsList(props) {
               <Link key={group.id} className={classes.link} to={`/g/${group.id}`}><p>{group.name}</p></Link>
             ))
           ) : (
-            <p>You don't belong to any groups yet.</p>
+            <p>{props.title === "My Groups" ? "You don't " : <><strong>{props.username}</strong> doesn't</> } belong to any groups yet.</p>
           )}
         </CardContent>
       </Card>
