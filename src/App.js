@@ -15,14 +15,13 @@ function App() {
   }
   return (
     <Router>
-      <TopNav>
-        <div style={styles}>
-          <Route path="/" exact component={Home} />
-          <Route path="/profile" exact component={Profile} />
-          <Route path="/p/:username?" component={Portfolio} />
-          <Route path="/g/:groupId?" component={GroupHome} />
-        </div>
-      </TopNav>
+      <TopNav />
+      <div style={styles}>
+        <Route path="/" exact component={Home} />
+        <Route path="/profile" exact component={Profile} />
+        <Route path="/p/:username?" component={Portfolio} />
+        <Route path="/g/:groupId?" component={GroupHome} />
+      </div>
     </Router>
   );
 }
