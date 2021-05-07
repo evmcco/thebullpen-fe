@@ -44,26 +44,29 @@ export default function TransactionsCards(props) {
     return (
       <>
         {
-          equities.length && (
+          (equities.length > 0) &&
             <CardsList title="Equities">
-              {equities.map((transaction) => {
+              {equities.map((transaction, index) => {
+                console.log(transaction)
+
                 return (
                   <InfoCard
+                    key={`${transaction.date}-${transaction.ticker_symbol}-${index}`}
                     left={removeCur(transaction.ticker_symbol)}
                     mid={[transaction.date, Number(transaction.price).toFixed(2), 'cur. ' + (!!transaction.quote?.latestPrice ? Number(transaction.quote.latestPrice).toFixed(2) : transaction.close_price)]}
                     right={{ data: transaction.txn_type, color: (transaction.txn_type == 'buy' ? 'green' : transaction.txn_type == 'sell' ? 'red' : 'white') }}
                   />
                 )
               })}
-            </CardsList>)
+            </CardsList>
         }
         {
-          options.length && (
-            <CardsList title="Options">
+          (options.length > 0) &&
+            <CardsList title="Options" className='OPTIONS'>
               {options.map((transaction, index) => {
                 return (
                   <InfoCard
-                    key={index}
+                    key={`${transaction.date}-${transaction.ticker_symbol}-${index}`}
                     left={transaction.parsedTicker[1]}
                     mid={[transaction.date, Number(transaction.price).toFixed(2), 'cur. ' + (!!transaction.quote?.latestPrice ? transaction.quote.latestPrice : transaction.close_price)]}
                     right={{ data: parseOptionsTxn(transaction), color: (transaction.txn_type == 'buy' ? 'green' : transaction.txn_type == 'sell' ? 'red' : 'white') }}
@@ -71,7 +74,7 @@ export default function TransactionsCards(props) {
                 )
               })
               }
-            </CardsList>)
+            </CardsList>
         }
       </>
     )
