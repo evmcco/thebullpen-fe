@@ -8,7 +8,6 @@ import Card from '@material-ui/core/Card';
 export default function UserGroupsList(props) {
   const [myGroups, setMyGroups] = useState([])
   const [loading, setLoading] = useState(true)
-  console.log(props.username)
 
   useEffect(() => {
     const getMyGroups = async () => {
