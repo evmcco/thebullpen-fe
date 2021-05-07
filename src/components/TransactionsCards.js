@@ -47,8 +47,6 @@ export default function TransactionsCards(props) {
           (equities.length > 0) &&
             <CardsList title="Equities">
               {equities.map((transaction, index) => {
-                console.log(transaction)
-
                 return (
                   <InfoCard
                     key={`${transaction.date}-${transaction.ticker_symbol}-${index}`}
