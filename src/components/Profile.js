@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
-import TopNav from './TopNav.js'
 import PlaidLink from './PlaidLink.js'
+import ZaboConnect from './ZaboConnect'
 
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -49,7 +49,7 @@ const Profile = () => {
           <h2>Username: {user["https://thebullpen.app/username"]}</h2>
           <h2>Email Address: {user.email}</h2>
           <PlaidLink username={user["https://thebullpen.app/username"]} />
-
+          <ZaboConnect />
           {/* TODO only show button if user has access_token, eventually display all Items with separate buttons (for testing) */}
           <br />
           {!!accessTokens.length &&

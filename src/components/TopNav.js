@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TopNav(props) {
+export default function TopNav() {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -99,7 +99,6 @@ export default function TopNav(props) {
         </AppBar>
         {isAuthenticated && <TopNavLinkBanner />}
       </div >
-      { props.children}
     </div >
   );
 }
