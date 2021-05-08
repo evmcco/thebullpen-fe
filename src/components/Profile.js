@@ -49,7 +49,7 @@ const Profile = () => {
           <h2>Username: {user["https://thebullpen.app/username"]}</h2>
           <h2>Email Address: {user.email}</h2>
           <PlaidLink username={user["https://thebullpen.app/username"]} />
-          <ZaboConnect />
+          <ZaboConnect username={user["https://thebullpen.app/username"]} />
           {/* TODO only show button if user has access_token, eventually display all Items with separate buttons (for testing) */}
           <br />
           {!!accessTokens.length &&

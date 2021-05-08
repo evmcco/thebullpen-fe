@@ -4,7 +4,7 @@ import Zabo from 'zabo-sdk-js'
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
-const ZaboConnect = () => {
+const ZaboConnect = (props) => {
   const [zabo, setZabo] = useState(null)
 
   useEffect(() => {
@@ -26,9 +26,25 @@ const ZaboConnect = () => {
 
   const classes = useStyles();
 
+  const saveAccountId = async (account, username) => {
+    const url = `${process.env.REACT_APP_API_URL}/zabo/save_account_id`
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        ...account,
+        username
+      })
+    })
+  }
+
   const handleClick = () => {
     zabo.connect().onConnection((account) => {
       console.log(account)
+      saveAccountId(account, props.username)
     }).onError(error => {
       console.error('account connection error:', error)
     })
