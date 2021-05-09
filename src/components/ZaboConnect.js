@@ -35,7 +35,7 @@ const ZaboConnect = (props) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        ...account,
+        account,
         username
       })
     })
