@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
@@ -80,9 +80,9 @@ const useStyles = makeStyles((theme) => ({
   drawerCustomStyle: {
     backgroundColor: theme.palette.lilac,
     color: theme.palette.grey[900],
-    // top: '64px',
     border: 'none',
     boxShadow: '0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)',
+    overflow: 'hidden'
   },
   links: {
     color: theme.palette.grey[900],
@@ -94,7 +94,6 @@ export default function MiniDrawer() {
   const { logout } = useAuth0();
 
   const classes = useStyles();
-  const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {

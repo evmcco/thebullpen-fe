@@ -18,7 +18,7 @@ function App() {
     maxWidth: 1000,
     margin: '0 auto',
     paddingTop: '100px',
-    paddingLeft: '57px',
+    paddingLeft: isAuthenticated ? '57px' : 0,
   }
   return (
     <Router>

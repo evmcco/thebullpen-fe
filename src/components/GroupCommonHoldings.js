@@ -38,7 +38,7 @@ export default function GroupCommonHoldings(props) {
       height: 64,
       margin: '8px 0',
       maxWidth: 600,
-      minWidth: 300,
+      // minWidth: 300,
     },
     holdingCardGrid: {
       height: '60px',
