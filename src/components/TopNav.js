@@ -44,10 +44,11 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     height: '30px',
+  },
+  logoLink: {
     marginLeft: '57px'
   },
-  logoNoLeftMargin: {
-    height: '30px',
+  logoLinkNoLeftMargin: {
     marginLeft: 0
   },
   authButtonContainer: {
@@ -66,8 +67,8 @@ export default function TopNav() {
         <AppBar className={classes.headerBar} position="static">
           <Toolbar>
             <Box justifyContent="center" className={classes.logoContainer}>
-              <Link to="/">
-                <img className={ isAuthenticated ? classes.logo : classes.logoNoLeftMargin } src={logo} />
+              <Link to="/" className={isAuthenticated ? classes.logoLink : classes.logoLinkNoLeftMargin}>
+                <img className={ classes.logo } src={logo} />
               </Link>
             </Box>
             <div className={classes.authButtonContainer}>
