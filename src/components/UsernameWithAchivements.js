@@ -43,8 +43,8 @@ export default function UsernameWithAchivements(props) {
 
   return (
     <>
-      <span title={tooltip}>{image} </span>
       <span>{props.username}</span>
+      <span title={tooltip}> {image}</span>
     </>
   )
 }
