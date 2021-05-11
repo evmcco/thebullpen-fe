@@ -42,7 +42,7 @@ const Home = () => {
             <h2 className={classes.subheading}>Stampeding toward the Moon since 2021</h2>
           </div> */}
           <div className={classes.root} >
-            <Grid container spacing={3} direction="row" justify="center">
+            <Grid container direction="row" justify="center">
               <Grid item xs={12} sm={6}>
                 <Leaderboard />
               </Grid>

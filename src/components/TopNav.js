@@ -9,7 +9,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Box from '@material-ui/core/Box';
 
-import logo from "../assets/bullpenLogoNavy.png"
+import logo from "../assets/bullpenLogoLilac.png"
 
 import { Link } from "react-router-dom";
 
@@ -28,8 +28,9 @@ const useStyles = makeStyles((theme) => ({
     width: '100%'
   },
   headerBar: {
-    backgroundColor: theme.palette.lilac,
-    color: theme.palette.grey[900]
+    backgroundColor: theme.palette.grey[900],
+    color: theme.palette.lilac,
+    boxShadow: 'none'
   },
   menuButton: {
     flexGrow: 1
@@ -42,10 +43,19 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 5,
     display: 'flex',
     height: '30px',
+    position: 'absolute',
+    top: 17,
+    left: 0,
+    right: 0,
   },
   logo: {
-    height: '30px'
+    height: '30px',
+    marginLeft: '57px',
+
   },
+  authButtonContainer: {
+    marginLeft: 'auto',
+  }
 }));
 
 export default function TopNav() {
@@ -68,7 +78,7 @@ export default function TopNav() {
       <div className={classes.root}>
         <AppBar className={classes.headerBar} position="static">
           <Toolbar>
-            <div className={classes.menuContainer}>
+            {/* <div className={classes.menuContainer}>
               <IconButton onClick={handleClick} edge="start" className={classes.menuButton} color="inherit" aria-label="menu" aria-controls="simple-menu" aria-haspopup="true">
                 <MenuIcon />
               </IconButton>
@@ -86,14 +96,14 @@ export default function TopNav() {
                   <MenuItem onClick={handleClose}>Profile</MenuItem>
                 </Link>}
               </Menu>
-            </div>
+            </div> */}
             <Box justifyContent="center" className={classes.logoContainer}>
               <Link to="/">
                 <img className={classes.logo} src={logo} />
               </Link>
             </Box>
             <div className={classes.authButtonContainer}>
-              {!isAuthenticated ? <LoginButton /> : <LogoutButton />}
+              {!isAuthenticated && <LoginButton />}
             </div>
           </Toolbar>
         </AppBar>
