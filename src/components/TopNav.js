@@ -46,7 +46,10 @@ const useStyles = makeStyles((theme) => ({
     height: '30px',
   },
   logoLink: {
-    marginLeft: '57px'
+    marginLeft: '57px',
+    [theme.breakpoints.down('xs')]: {
+      marginLeft: '40px',
+    },
   },
   logoLinkNoLeftMargin: {
     marginLeft: 0
