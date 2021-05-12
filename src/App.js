@@ -22,7 +22,7 @@ function App() {
       paddingTop: '100px',
       paddingLeft: isAuthenticated ? '57px' : 0,
       [theme.breakpoints.down('xs')]: {
-        paddingLeft: '40px',
+        paddingLeft: isAuthenticated ? '40px' : 0,
       },
     }
   }))

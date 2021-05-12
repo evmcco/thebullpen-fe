@@ -11,7 +11,6 @@ export default function CardsList(props) {
       backgroundColor: theme.palette.grey[900],
       color: theme.palette.grey[50],
       margin: '1em auto',
-      width: '90%'
     },
     header: {
       textAlign: "center"

@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     height: '30px',
     position: 'absolute',
-    top: 17,
+    top: 13,
     left: 0,
     right: 0,
   },

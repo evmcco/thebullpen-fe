@@ -14,7 +14,7 @@ export default function InfoCard(props) {
       height: 80,
       margin: '8px auto',
       maxWidth: 400,
-      minWidth: 250
+      // minWidth: 250
     },
     holdingCardGrid: {
       height: 80,

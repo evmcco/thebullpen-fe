@@ -45,7 +45,8 @@ const GroupJoinLeave = (props) => {
       backgroundColor: '#14213d',
       color: '#fafafa',
       height: 36,
-      width: 100
+      width: 100,
+      position: 'inherit'
     }
   });
 

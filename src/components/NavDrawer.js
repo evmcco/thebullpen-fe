@@ -100,6 +100,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   chevronButton: {
+    color: theme.palette.grey[900],
     [theme.breakpoints.down('xs')]: {
       padding: '5px',
     },
