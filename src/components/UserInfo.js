@@ -3,6 +3,8 @@ import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Palette from "../materials/Palette";
 
+import UsernameWithAchivements from "./UsernameWithAchivements"
+
 
 const UserInfo = (props) => {
   const useStyles = makeStyles((theme) => ({
@@ -20,7 +22,7 @@ const UserInfo = (props) => {
 
   return (
     <div className={classes.header}>
-      <div className={classes.headerText}>{props.username}</div>
+      <div className={classes.headerText}><UsernameWithAchivements username={props.username} /></div>
     </div>
   )
 }

@@ -14,6 +14,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import GroupJoinLeave from "./GroupJoinLeave"
 import GroupCommonHoldings from "./GroupCommonHoldings"
 import GroupRecentTransactions from "./GroupRecentTransactions"
+import UsernameWithAchivements from "./UsernameWithAchivements"
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -144,7 +145,7 @@ export default function GroupHome({ match }) {
                 <h2 className={classes.title}>Members</h2>
                 {groupUsers.length > 0 ? (
                   groupUsers.map((user) => (
-                    <Link key={user.username} className={classes.memberLink} to={`/p/${user.username}`}><p>{user.username}</p></Link>
+                    <Link key={user.username} className={classes.memberLink} to={`/p/${user.username}`}><p><UsernameWithAchivements username={user.username} /></p></Link>
                   ))
                 ) : (
                   <p>Loading...</p>
