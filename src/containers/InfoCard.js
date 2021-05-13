@@ -43,7 +43,12 @@ export default function InfoCard(props) {
     },
     gridMid: {
       height: '100%',
-      width: '100%'
+      width: '100%',
+      flexWrap: 'nowrap',
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '.9em',
+      },
+
     },
     gridItemRight: {
       backgroundColor: theme.palette.grey[900],

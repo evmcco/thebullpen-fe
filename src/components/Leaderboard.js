@@ -45,7 +45,8 @@ export default function Leaderboard() {
     },
     grid: {
       height: 36,
-      paddingRight: 8
+      paddingRight: 8,
+      flexWrap: 'nowrap',
     },
     place: {
       marginRight: 18,
@@ -53,7 +54,8 @@ export default function Leaderboard() {
       width: 15
     },
     leftGrid: {
-      width: '65%'
+      width: '65%',
+      flexWrap: 'nowrap',
     },
     link: {
       color: theme.palette.grey[50],
