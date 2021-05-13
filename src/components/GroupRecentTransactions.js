@@ -23,9 +23,9 @@ export default function GroupRecentTransactions(props) {
     root: {
       backgroundColor: theme.palette.grey[800],
       color: theme.palette.grey[50],
-      margin: 20,
+      margin: '20px 15px',
       maxWidth: 600,
-      minWidth: 300,
+      // minWidth: 300,
       paddingBottom: '16px'
     },
     content: {

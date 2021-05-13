@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.lilac,
     boxShadow: 'none'
   },
+  toolBar: {
+    minHeight: '56px'
+  },
   menuButton: {
     flexGrow: 1
   },
@@ -38,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     height: '30px',
     position: 'absolute',
-    top: 17,
+    top: 13,
     left: 0,
     right: 0,
   },
@@ -46,7 +49,10 @@ const useStyles = makeStyles((theme) => ({
     height: '30px',
   },
   logoLink: {
-    marginLeft: '57px'
+    marginLeft: '57px',
+    [theme.breakpoints.down('xs')]: {
+      marginLeft: '40px',
+    },
   },
   logoLinkNoLeftMargin: {
     marginLeft: 0
@@ -65,7 +71,7 @@ export default function TopNav() {
     <div>
       <div className={classes.root}>
         <AppBar className={classes.headerBar} position="static">
-          <Toolbar>
+          <Toolbar className={classes.toolBar}>
             <Box justifyContent="center" className={classes.logoContainer}>
               <Link to="/" className={isAuthenticated ? classes.logoLink : classes.logoLinkNoLeftMargin}>
                 <img className={ classes.logo } src={logo} />

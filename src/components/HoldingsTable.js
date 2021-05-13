@@ -16,7 +16,7 @@ export default function HoldingsTable(props) {
     card: {
       backgroundColor: theme.palette.grey[800],
       color: theme.palette.grey[50],
-      margin: '1em 5% 0 5%',
+      margin: '20px 15px',
       maxWidth: '90%',
     },
     tableContainer: {

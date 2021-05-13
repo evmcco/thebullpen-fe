@@ -20,7 +20,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 const drawerWidth = 170;
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  navRoot: {
     display: 'flex',
     backgroundColor: theme.palette.grey[800],
   },
@@ -47,11 +47,17 @@ const useStyles = makeStyles((theme) => ({
   },
   drawer: {
     width: drawerWidth,
+    [theme.breakpoints.down('xs')]: {
+      width: '150px',
+    },
     flexShrink: 0,
     whiteSpace: 'nowrap',
   },
   drawerOpen: {
     width: drawerWidth,
+    [theme.breakpoints.down('xs')]: {
+      width: '150px',
+    },
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -64,8 +70,8 @@ const useStyles = makeStyles((theme) => ({
     }),
     overflowX: 'hidden',
     width: theme.spacing(7) + 1,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(7) + 1,
+    [theme.breakpoints.down('xs')]: {
+      width: theme.spacing(5),
     },
   },
   toolbar: {
@@ -87,6 +93,17 @@ const useStyles = makeStyles((theme) => ({
   links: {
     color: theme.palette.grey[900],
     textDecoration: 'none',
+  },
+  listItem: {
+    [theme.breakpoints.down('xs')]: {
+      paddingLeft: '8px',
+    },
+  },
+  chevronButton: {
+    color: theme.palette.grey[900],
+    [theme.breakpoints.down('xs')]: {
+      padding: '5px',
+    },
   }
 }));
 
@@ -105,7 +122,7 @@ export default function MiniDrawer() {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={clsx(classes.navRoot, 'nav-root')}>
       <Drawer
         variant="permanent"
         className={clsx(classes.drawer, {
@@ -113,28 +130,27 @@ export default function MiniDrawer() {
           [classes.drawerClose]: !open,
         })}
         classes={{
-          paper: clsx({
+          paper: clsx(classes.drawerCustomStyle, 'nav-drawer', {
             [classes.drawerOpen]: open,
             [classes.drawerClose]: !open,
-            [classes.drawerCustomStyle]: true
           }),
         }}
       >
         <div className={classes.toolbar}>
         {open ?
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawerClose} className={classes.chevronButton}>
             <ChevronLeftIcon />
           </IconButton>
           :
-          <IconButton onClick={handleDrawerOpen}>
+          <IconButton onClick={handleDrawerOpen} className={classes.chevronButton}>
             <ChevronRightIcon />
           </IconButton>
           }
         </div>
         <Divider />
         <List>
-          <Link to="/" className={classes.links}>
-            <ListItem button>
+          <Link to="/" className={classes.links} onClick={handleDrawerClose}>
+            <ListItem button className={classes.listItem}>
               <ListItemIcon style={{color: '#212121'}}>
                 <HomeIcon />
               </ListItemIcon>
@@ -142,8 +158,8 @@ export default function MiniDrawer() {
             </ListItem>
           </Link>
 
-          <Link to="/profile" className={classes.links}>
-            <ListItem button>
+          <Link to="/profile" className={classes.links} onClick={handleDrawerClose}>
+            <ListItem button className={classes.listItem}>
               <ListItemIcon style={{color: '#212121'}}>
                 <PersonIcon />
               </ListItemIcon>
@@ -154,7 +170,7 @@ export default function MiniDrawer() {
 
         <div style={{marginTop: 'auto'}}>
           <Divider />
-          <ListItem button onClick={() => logout({ returnTo: window.location.origin })}>
+          <ListItem button className={classes.listItem} onClick={() => logout({ returnTo: window.location.origin })}>
             <ListItemIcon style={{color: '#212121'}}>
               <ExitToAppIcon />
             </ListItemIcon>

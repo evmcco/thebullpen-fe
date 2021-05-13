@@ -19,7 +19,11 @@ const Home = () => {
       height: '100%'
     },
     root: {
-      flexGrow: 1
+      flexGrow: 1,
+      minWidth: 'calc(100% - 57px)',
+      [theme.breakpoints.down('xs')]: {
+        minWidth: 'calc(100% - 40px)',
+      },
     },
     heading: {
       color: theme.palette.grey[50],
@@ -43,10 +47,10 @@ const Home = () => {
           </div> */}
           <div className={classes.root} >
             <Grid container direction="row" justify="center">
-              <Grid item xs={12} sm={6}>
+              <Grid item sm={6} xs={12}>
                 <Leaderboard />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item sm={6} xs={12}>
                 {isAuthenticated && <UserGroupsList username={user["https://thebullpen.app/username"]} title={"My Groups"} />}
                 <TrendingGroups />
               </Grid>
