@@ -25,6 +25,16 @@ const Home = () => {
         minWidth: 'calc(100% - 40px)',
       },
     },
+    gridWrapper: {
+      [theme.breakpoints.down(720)]: {
+        flexDirection: 'column',
+      },
+    },
+    innerGrid: {
+      [theme.breakpoints.down(720)]: {
+        maxWidth: '100%',
+      },
+    },
     heading: {
       color: theme.palette.grey[50],
       textAlign: 'center',
@@ -46,11 +56,11 @@ const Home = () => {
             <h2 className={classes.subheading}>Stampeding toward the Moon since 2021</h2>
           </div> */}
           <div className={classes.root} >
-            <Grid container direction="row" justify="center">
-              <Grid item sm={6} xs={12}>
+            <Grid container direction="row" justify="center" className={classes.gridWrapper}>
+              <Grid item sm={6} xs={12} className={classes.innerGrid}>
                 <Leaderboard />
               </Grid>
-              <Grid item sm={6} xs={12}>
+              <Grid item sm={6} xs={12} className={classes.innerGrid}>
                 {isAuthenticated && <UserGroupsList username={user["https://thebullpen.app/username"]} title={"My Groups"} />}
                 <TrendingGroups />
               </Grid>
