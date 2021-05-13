@@ -20,10 +20,10 @@ function App() {
       maxWidth: 1000,
       margin: '0 auto',
       paddingTop: '100px',
-      paddingLeft: isAuthenticated ? '57px' : 0,
-      [theme.breakpoints.down('xs')]: {
-        paddingLeft: isAuthenticated ? '40px' : 0,
-      },
+      // paddingLeft: isAuthenticated ? '57px' : 0,
+      // [theme.breakpoints.down('xs')]: {
+      //   paddingLeft: isAuthenticated ? '40px' : 0,
+      // },
     }
   }))
   const classes = useStyles()
