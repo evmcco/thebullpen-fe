@@ -10,11 +10,15 @@ import GroupHome from "./components/GroupHome"
 
 import TopNav from "./components/TopNav"
 import NavDrawer from "./components/NavDrawer"
+import MobileNavDrawer from "./components/MobileNavDrawer"
+import useWindowDimensions from "./utils/useWindowDimensions"
 
 
 
 function App() {
+  const { width } = useWindowDimensions();
   const { user, isAuthenticated, isLoading } = useAuth0();
+
   const useStyles = makeStyles((theme) => ({
     appWrapper: {
       maxWidth: 1000,
@@ -22,7 +26,7 @@ function App() {
       paddingTop: '100px',
       paddingLeft: isAuthenticated ? '57px' : 0,
       [theme.breakpoints.down('xs')]: {
-        paddingLeft: isAuthenticated ? '40px' : 0,
+        paddingLeft: 0,
       },
     }
   }))
@@ -31,7 +35,7 @@ function App() {
   return (
     <Router>
       <TopNav />
-      {isAuthenticated && <NavDrawer />}
+      {isAuthenticated && (width >= 600 ? <NavDrawer /> : <MobileNavDrawer />)}
       <div className={classes.appWrapper}>
         <Route path="/" exact component={Home} />
         <Route path="/profile" exact component={Profile} />

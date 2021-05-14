@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   logoLink: {
     marginLeft: '57px',
     [theme.breakpoints.down('xs')]: {
-      marginLeft: '40px',
+      marginLeft: '0',
     },
   },
   logoLinkNoLeftMargin: {

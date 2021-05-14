@@ -6,14 +6,14 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import PersonIcon from '@material-ui/icons/Person';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import MenuOpenIcon from '@material-ui/icons/MenuOpen';
+import MenuIcon from '@material-ui/icons/Menu';
 
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -22,7 +22,8 @@ const drawerWidth = 170;
 const useStyles = makeStyles((theme) => ({
   navRoot: {
     display: 'flex',
-    backgroundColor: theme.palette.grey[800],
+    position: 'fixed',
+    zIndex: 9999,
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -58,19 +59,19 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('xs')]: {
       width: '150px',
     },
-    transition: theme.transitions.create('width', {
+    transition: theme.transitions.create('left', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    left: 0,
   },
   drawerClose: {
-    transition: theme.transitions.create('width', {
+    transition: theme.transitions.create('left', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: 'hidden',
-    width: theme.spacing(7) + 1,
-
+    left: -170,
   },
   toolbar: {
     display: 'flex',
@@ -94,9 +95,13 @@ const useStyles = makeStyles((theme) => ({
   },
   listItem: {
     '&:hover': {backgroundColor: 'rgb(217 183 226 / 10%)'},
+    paddingLeft: '8px',
   },
-  chevronButton: {
+  menuIconButton: {
+    zIndex: theme.zIndex.drawer + 2,
     color: theme.palette.lilac,
+    position: 'absolute',
+    paddingLeft: '8px',
   },
   icons: {
     color: theme.palette.lilac,
@@ -106,7 +111,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function MiniDrawer() {
+export default function MobileNavDrawer() {
   const { logout } = useAuth0();
 
   const classes = useStyles();
@@ -122,6 +127,17 @@ export default function MiniDrawer() {
 
   return (
     <div className={clsx(classes.navRoot, 'nav-root')}>
+      <div className={classes.toolbar}>
+        {!open ?
+          <IconButton onClick={handleDrawerOpen} className={classes.menuIconButton}>
+            <MenuIcon />
+          </IconButton>
+          :
+          <IconButton onClick={handleDrawerClose}className={classes.menuIconButton}>
+          <MenuOpenIcon />
+        </IconButton>
+        }
+      </div>
       <Drawer
         variant="permanent"
         className={clsx(classes.drawer, {
@@ -136,16 +152,8 @@ export default function MiniDrawer() {
         }}
       >
         <div className={classes.toolbar}>
-        {open ?
-          <IconButton onClick={handleDrawerClose} className={classes.chevronButton}>
-            <ChevronLeftIcon />
-          </IconButton>
-          :
-          <IconButton onClick={handleDrawerOpen} className={classes.chevronButton}>
-            <ChevronRightIcon />
-          </IconButton>
-          }
         </div>
+
         <Divider className={classes.divider}/>
         <List>
           <Link to="/" className={classes.links} onClick={handleDrawerClose}>
@@ -168,7 +176,7 @@ export default function MiniDrawer() {
         </List>
 
         <div style={{marginTop: 'auto'}}>
-          <Divider className={classes.divider}/>
+          <Divider className={classes.divider} />
           <ListItem button className={classes.listItem} onClick={() => logout({ returnTo: window.location.origin })}>
             <ListItemIcon className={classes.icons}>
               <ExitToAppIcon />
