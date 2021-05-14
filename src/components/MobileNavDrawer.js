@@ -94,34 +94,14 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
   },
   listItem: {
-    [theme.breakpoints.down('xs')]: {
-      paddingLeft: '8px',
-    },
+    '&:hover': {backgroundColor: 'rgb(217 183 226 / 10%)'},
+    paddingLeft: '8px',
   },
   menuIconButton: {
     zIndex: theme.zIndex.drawer + 2,
     color: theme.palette.lilac,
-    [theme.breakpoints.down('xs')]: {
-      padding: '5px',
-    },
-  },
-  menuButtonOpen: {
-    left: 110,
     position: 'absolute',
-
-    transition: theme.transitions.create('left', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButtonClosed: {
-    left: 5,
-    position: 'absolute',
-
-    transition: theme.transitions.create('left', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
+    paddingLeft: '8px',
   },
   icons: {
     color: theme.palette.lilac,
@@ -148,30 +128,16 @@ export default function MobileNavDrawer() {
   return (
     <div className={clsx(classes.navRoot, 'nav-root')}>
       <div className={classes.toolbar}>
-          {!open ?
-          <div className={clsx({
-            [classes.menuButtonOpen]: open,
-            [classes.menuButtonClosed]: !open,
-          })}>
-            <IconButton onClick={handleDrawerOpen}
-              className={classes.menuIconButton}
-            >
-              <MenuIcon />
-            </IconButton>
-            </div>
-            :
-            <div className={clsx({
-              [classes.menuButtonOpen]: open,
-              [classes.menuButtonClosed]: !open,
-            })}>
-            <IconButton onClick={handleDrawerClose}
-              className={classes.menuIconButton}
-            >
-            <MenuOpenIcon />
+        {!open ?
+          <IconButton onClick={handleDrawerOpen} className={classes.menuIconButton}>
+            <MenuIcon />
           </IconButton>
-          </div>
-          }
-        </div>
+          :
+          <IconButton onClick={handleDrawerClose}className={classes.menuIconButton}>
+          <MenuOpenIcon />
+        </IconButton>
+        }
+      </div>
       <Drawer
         variant="permanent"
         className={clsx(classes.drawer, {

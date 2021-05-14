@@ -70,9 +70,7 @@ const useStyles = makeStyles((theme) => ({
     }),
     overflowX: 'hidden',
     width: theme.spacing(7) + 1,
-    [theme.breakpoints.down('xs')]: {
-      width: theme.spacing(5),
-    },
+
   },
   toolbar: {
     display: 'flex',
@@ -95,15 +93,10 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
   },
   listItem: {
-    [theme.breakpoints.down('xs')]: {
-      paddingLeft: '8px',
-    },
+    '&:hover': {backgroundColor: 'rgb(217 183 226 / 10%)'},
   },
   chevronButton: {
     color: theme.palette.lilac,
-    [theme.breakpoints.down('xs')]: {
-      padding: '5px',
-    },
   },
   icons: {
     color: theme.palette.lilac,
