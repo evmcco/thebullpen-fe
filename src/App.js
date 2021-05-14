@@ -35,7 +35,7 @@ function App() {
   return (
     <Router>
       <TopNav />
-      {isAuthenticated && (width > 600 ? <NavDrawer /> : <MobileNavDrawer />)}
+      {isAuthenticated && (width >= 600 ? <NavDrawer /> : <MobileNavDrawer />)}
       <div className={classes.appWrapper}>
         <Route path="/" exact component={Home} />
         <Route path="/profile" exact component={Profile} />
