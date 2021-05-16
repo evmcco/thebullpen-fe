@@ -21,9 +21,8 @@ export default function GroupCommonHoldings(props) {
     root: {
       backgroundColor: theme.palette.grey[800],
       color: theme.palette.grey[50],
-      margin: 20,
+      margin: '20px 15px',
       maxWidth: 600,
-      minWidth: 300,
       paddingBottom: '16px'
     },
     content: {
@@ -38,7 +37,6 @@ export default function GroupCommonHoldings(props) {
       height: 64,
       margin: '8px 0',
       maxWidth: 600,
-      minWidth: 300,
     },
     holdingCardGrid: {
       height: '60px',

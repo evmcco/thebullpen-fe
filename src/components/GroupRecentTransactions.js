@@ -5,6 +5,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 
+import UsernameWithAchivements from "./UsernameWithAchivements"
+
 export default function GroupRecentTransactions(props) {
   const [transactions, setTransactions] = useState([])
 
@@ -21,9 +23,9 @@ export default function GroupRecentTransactions(props) {
     root: {
       backgroundColor: theme.palette.grey[800],
       color: theme.palette.grey[50],
-      margin: 20,
+      margin: '20px 15px',
       maxWidth: 600,
-      minWidth: 300,
+      // minWidth: 300,
       paddingBottom: '16px'
     },
     content: {
@@ -38,7 +40,7 @@ export default function GroupRecentTransactions(props) {
       height: 64,
       margin: '8px 0',
       maxWidth: 600,
-      minWidth: 300,
+      // minWidth: 300,
     },
     holdingCardGrid: {
       height: '60px',
@@ -72,7 +74,7 @@ export default function GroupRecentTransactions(props) {
               <Grid className={classes.holdingCardGrid} container direction="column" justify="space-between" alignItems="stretch">
                 <div className={classes.ticker}>{transaction.ticker_symbol}/<span className={transaction.type == 'buy' ? classes.green : classes.red}>{transaction.type}</span></div>
                 <Grid className={classes.holdingCardGridBottomRow} container direction="row" justify="space-between" alignItems="center">
-                  <div>{transaction.username}</div>
+                  <div><UsernameWithAchivements username={transaction.username} /></div>
                   <div>{transaction.date}</div>
                 </Grid>
               </Grid>

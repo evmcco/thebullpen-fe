@@ -1,4 +1,7 @@
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import { makeStyles } from '@material-ui/core/styles';
+
 
 import Home from "./components/Home"
 import Profile from "./components/Profile"
@@ -6,17 +9,34 @@ import Portfolio from "./components/Portfolio"
 import GroupHome from "./components/GroupHome"
 
 import TopNav from "./components/TopNav"
+import NavDrawer from "./components/NavDrawer"
+
+
 
 function App() {
-  const styles = {
-    maxWidth: 1000,
-    margin: '0 auto',
-    paddingTop: '100px',
-  }
+  const { user, isAuthenticated, isLoading } = useAuth0();
+  const useStyles = makeStyles((theme) => ({
+    appWrapper: {
+      maxWidth: 1000,
+      margin: '0 auto',
+      paddingTop: '100px',
+      paddingLeft: isAuthenticated ? '57px' : 0,
+      [theme.breakpoints.down('xs')]: {
+        paddingLeft: isAuthenticated ? '40px' : 0,
+      },
+    }
+  }))
+  const classes = useStyles()
+
   return (
     <Router>
       <TopNav />
+<<<<<<< HEAD
       <div style={styles}>
+=======
+      {isAuthenticated && <NavDrawer />}
+      <div className={classes.appWrapper}>
+>>>>>>> main
         <Route path="/" exact component={Home} />
         <Route path="/profile" exact component={Profile} />
         <Route path="/p/:username?" component={Portfolio} />

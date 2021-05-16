@@ -14,7 +14,7 @@ export default function HoldingsCards(props) {
                 left={holding.ticker_symbol}
                 mid={[holding.currentPrice, `${holding.weight} wt.`, holding.profit]}
                 right={{ data: holding.change + '%', color: (holding.change > 0 ? 'green' : holding.change < 0 ? 'red' : 'white') }}
-                key={index}
+                key={`${holding.ticker_symbol}-${holding.type}-${index}`}
               />
             )
           })}

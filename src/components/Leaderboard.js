@@ -6,6 +6,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 
+import UsernameWithAchivements from "./UsernameWithAchivements"
+
 export default function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState([])
 
@@ -22,9 +24,8 @@ export default function Leaderboard() {
     root: {
       backgroundColor: theme.palette.grey[800],
       color: theme.palette.grey[50],
-      margin: 20,
+      margin: '20px 15px',
       maxWidth: 600,
-      minWidth: 300,
       paddingBottom: '16px'
     },
     headerGrid: {
@@ -99,7 +100,11 @@ export default function Leaderboard() {
               <Grid key={user.username} className={classes.grid} container direction="row" justify="space-between" alignItems="center">
                 <Grid className={classes.leftGrid} container direction="row" justify="flex-start" alignItems="center">
                   <p className={classes.place}>{index + 1}</p>
-                  <p><Link className={classes.link} to={`/p/${user.username}`}>{user.username}</Link></p>
+                  <p>
+                    <Link className={classes.link} to={`/p/${user.username}`}>
+                      <UsernameWithAchivements username={user.username} />
+                    </Link>
+                  </p>
                 </Grid>
                 <p className={`${classes.performance} ${index === 0 ? classes.lilac : user.performance > 0 ? classes.green : user.performance < 0 ? classes.red : null}`}>{Number(user.performance).toFixed(2)}%</p>
               </Grid>

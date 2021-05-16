@@ -68,12 +68,16 @@ const Portfolio = ({ match }) => {
     tabBar: {
       backgroundColor: theme.palette.grey[900],
       color: theme.palette.grey[50],
-      margin: '8px 5% 0 5%',
-      width: '90%'
+      margin: '20px 15px',
+      width: 'calc(100% - 30px)',
+      position: 'sticky',
+      top: '55px',
     },
-    groupsContainer: {
-      marginLeft: 'calc(5% - 20px)'
-    }
+    tab: {
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '0.7rem'
+      },
+    },
   }));
 
   const classes = useStyles();
@@ -84,9 +88,9 @@ const Portfolio = ({ match }) => {
         <UserInfo username={match.params.username} />
         <AppBar className={classes.tabBar} position="static">
           <StyledTabs value={tabValue} onChange={handleChange}>
-            <Tab label="Holdings" />
-            <Tab label="Transactions" />
-            <Tab label="Groups" />
+            <Tab label="Holdings" className={classes.tab}/>
+            <Tab label="Transactions" className={classes.tab}/>
+            <Tab label="Groups" className={classes.tab}/>
           </StyledTabs>
         </AppBar>
         {holdings &&

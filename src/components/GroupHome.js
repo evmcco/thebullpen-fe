@@ -14,6 +14,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import GroupJoinLeave from "./GroupJoinLeave"
 import GroupCommonHoldings from "./GroupCommonHoldings"
 import GroupRecentTransactions from "./GroupRecentTransactions"
+import UsernameWithAchivements from "./UsernameWithAchivements"
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -83,14 +84,21 @@ export default function GroupHome({ match }) {
     tabBar: {
       backgroundColor: theme.palette.grey[900],
       color: theme.palette.grey[50],
-      margin: '8px 20px 0 20px',
-      width: 'calc(100% - 40px)'
+      margin: '20px 15px',
+      width: 'calc(100% - 30px)',
+      position: 'sticky',
+      top: '55px',
+    },
+    tab: {
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '0.7rem'
+      },
     },
     headerCard: {
       backgroundColor: theme.palette.grey[800],
       color: theme.palette.grey[50],
       minHeight: 173,
-      margin: 20
+      margin: '20px 15px'
     },
     heading: {
       textAlign: 'left',
@@ -98,9 +106,8 @@ export default function GroupHome({ match }) {
     root: {
       backgroundColor: theme.palette.grey[800],
       color: theme.palette.grey[50],
-      margin: 20,
+      margin: '20px 15px',
       maxWidth: 600,
-      minWidth: 300,
     },
     title: {
       borderBottom: 'solid 1px',
@@ -133,9 +140,9 @@ export default function GroupHome({ match }) {
           </Card>
           <AppBar className={classes.tabBar} position="static">
             <StyledTabs value={tabValue} onChange={handleChange}>
-              <Tab label="Members" />
-              <Tab label="Holdings" />
-              <Tab label="Transactions" />
+              <Tab label="Members" className={classes.tab}/>
+              <Tab label="Holdings" className={classes.tab}/>
+              <Tab label="Transactions" className={classes.tab}/>
             </StyledTabs>
           </AppBar>
           <TabPanel value={tabValue} index={0}>
@@ -144,7 +151,7 @@ export default function GroupHome({ match }) {
                 <h2 className={classes.title}>Members</h2>
                 {groupUsers.length > 0 ? (
                   groupUsers.map((user) => (
-                    <Link key={user.username} className={classes.memberLink} to={`/p/${user.username}`}><p>{user.username}</p></Link>
+                    <Link key={user.username} className={classes.memberLink} to={`/p/${user.username}`}><p><UsernameWithAchivements username={user.username} /></p></Link>
                   ))
                 ) : (
                   <p>Loading...</p>

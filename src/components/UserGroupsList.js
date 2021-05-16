@@ -23,9 +23,8 @@ export default function UserGroupsList(props) {
     root: {
       backgroundColor: theme.palette.grey[800],
       color: theme.palette.grey[50],
-      margin: 20,
+      margin: '20px 15px',
       maxWidth: 600,
-      minWidth: 300,
       paddingBottom: '16px'
     },
     title: {
@@ -50,7 +49,7 @@ export default function UserGroupsList(props) {
               <Link key={group.id} className={classes.link} to={`/g/${group.id}`}><p>{group.name}</p></Link>
             ))
           ) : (
-            <p>You don't belong to any groups yet.</p>
+            <p>{props.title === "My Groups" ? "You don't " : <><strong>{props.username}</strong> doesn't</> } belong to any groups yet.</p>
           )}
         </CardContent>
       </Card>
