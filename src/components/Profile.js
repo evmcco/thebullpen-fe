@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
-import PlaidLink from './PlaidLink.js'
+import PlaidLink from './PlaidLink'
 import ZaboConnect from './ZaboConnect'
+import ZaboAccounts from './ZaboAccounts'
 
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -52,6 +53,7 @@ const Profile = () => {
           <ZaboConnect username={user["https://thebullpen.app/username"]} />
           {/* TODO only show button if user has access_token, eventually display all Items with separate buttons (for testing) */}
           <br />
+          <ZaboAccounts username={user["https://thebullpen.app/username"]} />
           {!!accessTokens.length &&
             <Button onClick={() => accessTokens.forEach((accessToken) => {
               requestPlaidHoldings(

@@ -12,7 +12,6 @@ const ZaboConnect = (props) => {
       clientId: process.env.REACT_APP_ZABO_SANDBOX_CLIENT_ID,
       env: 'sandbox'
     }).then(zabo => {
-      console.log(zabo)
       setZabo(zabo)
     })
   }, [])

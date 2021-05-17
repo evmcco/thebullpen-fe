@@ -31,12 +31,8 @@ function App() {
   return (
     <Router>
       <TopNav />
-<<<<<<< HEAD
-      <div style={styles}>
-=======
       {isAuthenticated && <NavDrawer />}
       <div className={classes.appWrapper}>
->>>>>>> main
         <Route path="/" exact component={Home} />
         <Route path="/profile" exact component={Profile} />
         <Route path="/p/:username?" component={Portfolio} />
