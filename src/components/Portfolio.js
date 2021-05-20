@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from 'react-router-dom'
 
 import HoldingsCards from "./HoldingsCards"
 import OptionsTable from "./OptionsTable"
 import OptionsCards from "./OptionsCards"
 import TransactionsCards from "./TransactionsCards"
 import UserGroupsList from "./UserGroupsList"
+import UserFollowersList from "./UserFollowersList"
+import UserFollowingList from "./UserFollowingList"
 import UserInfo from "./UserInfo"
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
@@ -34,7 +37,10 @@ const Portfolio = ({ match }) => {
   const [holdings, setHoldings] = useState(null)
   const [tabValue, setTabValue] = React.useState(0);
 
-  const handleChange = (event, tabValue) => {
+  const [followers, setFollowers] = useState([])
+  const [following, setFollowing] = useState([])
+
+  const handleTabChange = (event, tabValue) => {
     setTabValue(tabValue);
   };
 
@@ -45,8 +51,41 @@ const Portfolio = ({ match }) => {
       setHoldings(data)
     }
     getHoldings()
-  }, []
+  }, [match.params.username]
   )
+
+  useEffect(() => {
+    const getUserFollowers = async () => {
+      const followersRes = await fetch(`${process.env.REACT_APP_API_URL}/follows/user_followers`, {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: match.params.username })
+      })
+      const followersData = await followersRes.json()
+      setFollowers(followersData)
+    }
+    getUserFollowers()
+
+  }, [match.params.username])
+  useEffect(() => {
+    const getUserFollows = async () => {
+      const followsRes = await fetch(`${process.env.REACT_APP_API_URL}/follows/user_follows`, {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: match.params.username })
+      })
+      const followsData = await followsRes.json()
+      setFollowing(followsData)
+    }
+    getUserFollows()
+
+  }, [match.params.username])
 
   const StyledTabs = withStyles((theme) => ({
     indicator: {
@@ -85,12 +124,14 @@ const Portfolio = ({ match }) => {
   return (
     <>
       <div className={classes.portfolioContainer}>
-        <UserInfo username={match.params.username} />
+        <UserInfo username={match.params.username} amtOfFollowers={followers.length} amtOfFollows={following.length} handleTabChange={handleTabChange}/>
         <AppBar className={classes.tabBar} position="static">
-          <StyledTabs value={tabValue} onChange={handleChange}>
+          <StyledTabs value={tabValue} onChange={handleTabChange}>
             <Tab label="Holdings" className={classes.tab}/>
             <Tab label="Transactions" className={classes.tab}/>
             <Tab label="Groups" className={classes.tab}/>
+            <Tab label="Followers" className={classes.tab}/>
+            <Tab label="Following" className={classes.tab}/>
           </StyledTabs>
         </AppBar>
         {holdings &&
@@ -106,6 +147,12 @@ const Portfolio = ({ match }) => {
         </TabPanel>
         <TabPanel className={classes.groupsContainer} value={tabValue} index={2}>
           <UserGroupsList username={match.params.username} title={"Groups"} />
+        </TabPanel>
+        <TabPanel className={classes.groupsContainer} value={tabValue} index={3}>
+          <UserFollowersList followers={followers} title={"Followers"} />
+        </TabPanel>
+        <TabPanel className={classes.groupsContainer} value={tabValue} index={4}>
+          <UserFollowingList following={following} title={"Following"} />
         </TabPanel>
       </div>
     </>
