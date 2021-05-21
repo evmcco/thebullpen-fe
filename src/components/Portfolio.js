@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from 'react-router-dom'
+import { useAuth0 } from "@auth0/auth0-react";
 
 import HoldingsCards from "./HoldingsCards"
 import OptionsTable from "./OptionsTable"
@@ -39,6 +39,9 @@ const Portfolio = ({ match }) => {
 
   const [followers, setFollowers] = useState([])
   const [following, setFollowing] = useState([])
+
+  const { user } = useAuth0();
+
 
   const handleTabChange = (event, tabValue) => {
     setTabValue(tabValue);
@@ -149,10 +152,10 @@ const Portfolio = ({ match }) => {
           <UserGroupsList username={match.params.username} title={"Groups"} />
         </TabPanel>
         <TabPanel className={classes.groupsContainer} value={tabValue} index={3}>
-          <UserFollowersList followers={followers} title={"Followers"} />
+          <UserFollowersList followers={followers} title={"Followers"} username={match.params.username} auth0User={user} />
         </TabPanel>
         <TabPanel className={classes.groupsContainer} value={tabValue} index={4}>
-          <UserFollowingList following={following} title={"Following"} />
+          <UserFollowingList following={following} title={"Following"} username={match.params.username} auth0User={user} />
         </TabPanel>
       </div>
     </>

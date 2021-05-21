@@ -45,7 +45,7 @@ export default function UserFollowersList(props) {
                 </Link>
               ))
             ) : (
-              <p>{props.title === "Followers" ? "You don't " : <><strong>{props.username}</strong> doesn't</> } have any followers yet.</p>
+              <p>{props.auth0User === props.username ? "You don't " : <><strong>{props.username}</strong> doesn't</> } have any followers yet.</p>
             )}
           </div>
         </CardContent>

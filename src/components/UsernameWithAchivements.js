@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 export default function UsernameWithAchivements(props) {
-  console.log(props.username)
   const achievements = {
     "slimjc": [
       {
@@ -33,7 +32,6 @@ export default function UsernameWithAchivements(props) {
   const [tooltip, setTooltip] = useState(null)
 
   useEffect(() => {
-    console.log('calling UE')
     try {
       setImage(achievements[props.username] ? achievements[props.username][0].image : null)
       setTooltip(achievements[props.username] ? achievements[props.username][0].title : null)
