@@ -126,7 +126,7 @@ const Portfolio = ({ match }) => {
         backgroundColor: theme.palette.lilac,
       },
     },
-  }))((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
+  }))((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} variant="scrollable" scrollButtons="auto" />);
 
   const useStyles = makeStyles((theme) => ({
     portfolioContainer: {

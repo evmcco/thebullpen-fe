@@ -48,7 +48,6 @@ const UserInfo = (props) => {
     {loading ?
     <div className="loader-wrapper">
       <div className="loader" />
-
     </div>
       :
       <div className={classes.header}>
@@ -59,7 +58,6 @@ const UserInfo = (props) => {
           amtOfFollowers={props.followers.length}
           amtOfFollows={props.following.length}
           handleTabChange={props.handleTabChange}
-          loading={loading}
           dailyPerformance={dailyPerformance}
         />
       </div>}
