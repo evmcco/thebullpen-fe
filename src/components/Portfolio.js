@@ -9,8 +9,8 @@ import UserGroupsList from "./UserGroupsList"
 import UserFollowersList from "./UserFollowersList"
 import UserFollowingList from "./UserFollowingList"
 import UserInfo from "./UserInfo"
-import { makeStyles, withStyles } from '@material-ui/core/styles';
 
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -34,13 +34,19 @@ function TabPanel(props) {
 }
 
 const Portfolio = ({ match }) => {
+  const { user, isAuthenticated, isLoading } = useAuth0();
+  let auth0User = isAuthenticated ? user["https://thebullpen.app/username"] : null
+
   const [holdings, setHoldings] = useState(null)
   const [tabValue, setTabValue] = React.useState(0);
 
   const [followers, setFollowers] = useState([])
   const [following, setFollowing] = useState([])
 
-  const { user } = useAuth0();
+  const [isFollowing, setIsFollowing] = useState(null)
+
+  const [auth0Following, setAuth0Following] = useState([])
+
 
 
   const handleTabChange = (event, tabValue) => {
@@ -54,9 +60,9 @@ const Portfolio = ({ match }) => {
       setHoldings(data)
     }
     getHoldings()
-  }, [match.params.username]
-  )
+  }, [match.params.username])
 
+  // get followers of current portfolio
   useEffect(() => {
     const getUserFollowers = async () => {
       const followersRes = await fetch(`${process.env.REACT_APP_API_URL}/follows/user_followers`, {
@@ -72,9 +78,11 @@ const Portfolio = ({ match }) => {
     }
     getUserFollowers()
 
-  }, [match.params.username])
+  }, [match.params.username, isFollowing])
+
+  // get followees of current portfolio
   useEffect(() => {
-    const getUserFollows = async () => {
+    const getUserFollowees = async () => {
       const followsRes = await fetch(`${process.env.REACT_APP_API_URL}/follows/user_follows`, {
         method: "POST",
         headers: {
@@ -86,9 +94,27 @@ const Portfolio = ({ match }) => {
       const followsData = await followsRes.json()
       setFollowing(followsData)
     }
-    getUserFollows()
+    getUserFollowees()
 
   }, [match.params.username])
+
+  // get followees of logged in user
+  useEffect(() => {
+    const getAuth0Follows = async () => {
+      const followsRes = await fetch(`${process.env.REACT_APP_API_URL}/follows/user_follows`, {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: auth0User })
+      })
+      const followsData = await followsRes.json()
+      setAuth0Following(followsData)
+    }
+    getAuth0Follows()
+
+  }, [match.params.username, auth0User, isFollowing])
 
   const StyledTabs = withStyles((theme) => ({
     indicator: {
@@ -127,7 +153,7 @@ const Portfolio = ({ match }) => {
   return (
     <>
       <div className={classes.portfolioContainer}>
-        <UserInfo username={match.params.username} amtOfFollowers={followers.length} amtOfFollows={following.length} handleTabChange={handleTabChange}/>
+        <UserInfo username={match.params.username} followers={followers} following={following} isFollowing={isFollowing} setIsFollowing={setIsFollowing} auth0User={auth0User} auth0Following={auth0Following} handleTabChange={handleTabChange}/>
         <AppBar className={classes.tabBar} position="static">
           <StyledTabs value={tabValue} onChange={handleTabChange}>
             <Tab label="Holdings" className={classes.tab}/>

@@ -28,6 +28,9 @@ export default function UserFollowersList(props) {
     listContainer: {
       display: 'flex',
       flexDirection: 'column'
+    },
+    followers: {
+      margin: '8px 0',
     }
   }));
 
@@ -41,11 +44,13 @@ export default function UserFollowersList(props) {
             {props.followers.length > 0 ? (
               props.followers.map((follower) => (
                 <Link key={follower.follow_id} className={classes.link} to={`/p/${follower.follower_username}`}>
-                  <UsernameWithAchivements username={follower.follower_username} />
+                  <div className={classes.followers}>
+                    <UsernameWithAchivements username={follower.follower_username} />
+                  </div>
                 </Link>
               ))
             ) : (
-              <p>{props.auth0User === props.username ? "You don't " : <><strong>{props.username}</strong> doesn't</> } have any followers yet.</p>
+              <p className={classes.followers}>{props.auth0User === props.username ? "You don't " : <><strong>{props.username}</strong> doesn't</> } have any followers yet.</p>
             )}
           </div>
         </CardContent>

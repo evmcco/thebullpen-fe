@@ -42,10 +42,10 @@ export default function UsernameWithAchivements(props) {
 
 
   return (
-    <>
+    <div style={{position:'relative'}}>
       <span>{props.username}</span>
-      <span title={tooltip}> {image}</span>
-    </>
+      <span title={tooltip} style={{position: 'absolute', top: '50%', transform: 'translateY(-50%)'}}> {image}</span>
+    </div>
   )
 }
 

@@ -28,6 +28,9 @@ export default function UserFollowingList(props) {
     listContainer: {
       display: 'flex',
       flexDirection: 'column'
+    },
+    followees: {
+      margin: '8px 0',
     }
   }));
 
@@ -41,11 +44,13 @@ export default function UserFollowingList(props) {
             {props.following.length > 0 ? (
               props.following.map((followee) => (
                 <Link key={followee.follow_id} className={classes.link} to={`/p/${followee.followee_username}`}>
-                  <UsernameWithAchivements username={followee.followee_username} />
+                  <div className={classes.followees}>
+                    <UsernameWithAchivements username={followee.followee_username} />
+                  </div>
                 </Link>
               ))
             ) : (
-              <p>{props.auth0User === props.username ? "You aren't " : <><strong>{props.username}</strong> isn't</> } following anyone yet.</p>
+              <p className={classes.followees}>{props.auth0User === props.username ? "You aren't " : <><strong>{props.username}</strong> isn't</> } following anyone yet.</p>
             )}
           </div>
         </CardContent>
