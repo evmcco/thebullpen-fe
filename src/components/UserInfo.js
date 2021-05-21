@@ -48,6 +48,7 @@ const UserInfo = (props) => {
     {loading ?
     <div className="loader-wrapper">
       <div className="loader" />
+
     </div>
       :
       <div className={classes.header}>
