@@ -8,6 +8,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-y: scroll;
 }
 
 code {
@@ -16,6 +17,6 @@ code {
 }
 
 html {
-    background-color: #212121;
+  background-color: #212121;
   color: #fafafa;
 }
