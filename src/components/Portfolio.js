@@ -33,6 +33,38 @@ function TabPanel(props) {
   );
 }
 
+const StyledTabs = withStyles((theme) => ({
+  indicator: {
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+    '& > span': {
+      width: '100%',
+      backgroundColor: theme.palette.lilac,
+    },
+  },
+}))((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} variant="scrollable" scrollButtons="on" />);
+
+const useStyles = makeStyles((theme) => ({
+  portfolioContainer: {
+    backgroundColor: theme.palette.grey[900],
+    height: '100%',
+  },
+  tabBar: {
+    backgroundColor: theme.palette.grey[900],
+    color: theme.palette.grey[50],
+    margin: '20px 15px',
+    width: 'calc(100% - 30px)',
+    position: 'sticky',
+    top: '55px',
+  },
+  tab: {
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '0.7rem'
+    },
+  },
+}));
+
 const Portfolio = ({ match }) => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   let auth0User = isAuthenticated ? user["https://thebullpen.app/username"] : null
@@ -79,6 +111,7 @@ const Portfolio = ({ match }) => {
 
   }, [match.params.username, isFollowing])
 
+
   // get followees of current portfolio
   useEffect(() => {
     const getUserFollowees = async () => {
@@ -115,39 +148,15 @@ const Portfolio = ({ match }) => {
 
   }, [match.params.username, auth0User, isFollowing])
 
-  const StyledTabs = withStyles((theme) => ({
-    indicator: {
-      display: 'flex',
-      justifyContent: 'center',
-      backgroundColor: 'transparent',
-      '& > span': {
-        width: '100%',
-        backgroundColor: theme.palette.lilac,
-      },
-    },
-  }))((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} variant="scrollable" scrollButtons="on" />);
-
-  const useStyles = makeStyles((theme) => ({
-    portfolioContainer: {
-      backgroundColor: theme.palette.grey[900],
-      height: '100%',
-    },
-    tabBar: {
-      backgroundColor: theme.palette.grey[900],
-      color: theme.palette.grey[50],
-      margin: '20px 15px',
-      width: 'calc(100% - 30px)',
-      position: 'sticky',
-      top: '55px',
-    },
-    tab: {
-      [theme.breakpoints.down('xs')]: {
-        fontSize: '0.7rem'
-      },
-    },
-  }));
 
   const classes = useStyles();
+
+  function a11yProps(index) {
+    return {
+      id: `scrollable-force-tab-${index}`,
+      'aria-controls': `scrollable-force-tabpanel-${index}`,
+    };
+  }
 
   return (
     <>
@@ -155,11 +164,11 @@ const Portfolio = ({ match }) => {
         <UserInfo username={match.params.username} followers={followers} following={following} isFollowing={isFollowing} setIsFollowing={setIsFollowing} auth0User={auth0User} auth0Following={auth0Following} handleTabChange={handleTabChange}/>
         <AppBar className={classes.tabBar} position="static">
           <StyledTabs value={tabValue} onChange={handleTabChange}>
-            <Tab label="Holdings" className={classes.tab}/>
-            <Tab label="Transactions" className={classes.tab}/>
-            <Tab label="Groups" className={classes.tab}/>
-            <Tab label="Followers" className={classes.tab}/>
-            <Tab label="Following" className={classes.tab}/>
+            <Tab label="Holdings" className={classes.tab} {...a11yProps(0)}/>
+            <Tab label="Transactions" className={classes.tab} {...a11yProps(1)}/>
+            <Tab label="Groups" className={classes.tab} {...a11yProps(2)}/>
+            <Tab label="Followers" className={classes.tab} {...a11yProps(3)}/>
+            <Tab label="Following" className={classes.tab} {...a11yProps(4)}/>
           </StyledTabs>
         </AppBar>
         {holdings &&
