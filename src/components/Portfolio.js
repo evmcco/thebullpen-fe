@@ -48,7 +48,6 @@ const Portfolio = ({ match }) => {
   const [auth0Following, setAuth0Following] = useState([])
 
 
-
   const handleTabChange = (event, tabValue) => {
     setTabValue(tabValue);
   };
@@ -126,7 +125,7 @@ const Portfolio = ({ match }) => {
         backgroundColor: theme.palette.lilac,
       },
     },
-  }))((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} variant="scrollable" scrollButtons="auto" />);
+  }))((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} variant="scrollable" scrollButtons="on" />);
 
   const useStyles = makeStyles((theme) => ({
     portfolioContainer: {

@@ -11,6 +11,7 @@ import FollowButton from "./FollowButton"
 const UserInfo = (props) => {
   const [loading, setLoading] = useState(true)
   const [dailyPerformance, setDailyPerformance] = useState([])
+  const [profileUsername, setProfileUsername] = useState('')
 
   useEffect(() => {
     setLoading(true)
@@ -19,10 +20,14 @@ const UserInfo = (props) => {
       const data = await response.json()
       setDailyPerformance(data)
     }
-    getDailyPerformance()
-      .then(() => {
-        setLoading(false)
-      })
+    if (props.username) {
+      getDailyPerformance()
+        .then(() => {
+          setProfileUsername(props.username)
+          setLoading(false)
+        })
+
+    }
   }, [props.username])
 
   const useStyles = makeStyles((theme) => ({
@@ -48,14 +53,13 @@ const UserInfo = (props) => {
     {loading ?
     <div className="loader-wrapper">
       <div className="loader" />
-
     </div>
       :
       <div className={classes.header}>
-        <div className={classes.headerText}><UsernameWithAchivements username={props.username} /></div>
-        {props.username !== props.auth0User ? <FollowButton auth0Following={props.auth0Following} username={props.username} auth0User={props.auth0User} isFollowing={props.isFollowing} setIsFollowing={props.setIsFollowing} /> : null}
+        <div className={classes.headerText}><UsernameWithAchivements username={profileUsername} /></div>
+        {profileUsername !== props.auth0User ? <FollowButton auth0Following={props.auth0Following} username={profileUsername} auth0User={props.auth0User} isFollowing={props.isFollowing} setIsFollowing={props.setIsFollowing} /> : null}
         <UserStats
-          username={props.username}
+          username={profileUsername}
           amtOfFollowers={props.followers.length}
           amtOfFollows={props.following.length}
           handleTabChange={props.handleTabChange}
