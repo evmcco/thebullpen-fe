@@ -52,7 +52,7 @@ const UserStats = ({amtOfFollowers, amtOfFollows, handleTabChange, dailyPerforma
         </div>
 
         <div className={classes.statContainer}>
-          <h2 className={dailyPerformance > 0 ? classes.green : dailyPerformance < 0 ? classes.red : classes.marginZero}>{dailyPerformance > 0 ? '+' : null}{dailyPerformance}%</h2>
+          <h2 className={dailyPerformance > 0 ? classes.green : dailyPerformance < 0 ? classes.red : classes.marginZero}>{dailyPerformance > 0 ? '+' : null}{Number(dailyPerformance).toFixed(2)}%</h2>
           <p className={classes.subTitle}>today's return</p>
         </div>
 

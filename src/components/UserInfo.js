@@ -15,13 +15,13 @@ const UserInfo = (props) => {
 
   useEffect(() => {
     setLoading(true)
-    const getDailyPerformance = async () => {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/performance/daily/${props.username}`)
+    const getUserDailyPerformance = async () => {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/performance/today/${props.username}`)
       const data = await response.json()
-      setDailyPerformance(data)
+      setDailyPerformance(data.performance)
     }
     if (props.username) {
-      getDailyPerformance()
+      getUserDailyPerformance()
         .then(() => {
           setProfileUsername(props.username)
           setLoading(false)
