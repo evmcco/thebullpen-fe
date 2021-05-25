@@ -14,6 +14,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import PersonIcon from '@material-ui/icons/Person';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -88,6 +89,11 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '0px 2px 4px -1px rgb(217 183 226 / 40%), 0px 4px 5px 0px rgb(217 183 226 / 40%), 0px 1px 10px 0px rgb(217 183 226 / 30%)',
     overflow: 'hidden'
   },
+  linksList: {
+    display: 'flex',
+    flex: '1',
+    flexDirection: 'column'
+  },
   links: {
     color: theme.palette.lilac,
     textDecoration: 'none',
@@ -147,7 +153,7 @@ export default function MiniDrawer() {
           }
         </div>
         <Divider className={classes.divider}/>
-        <List>
+        <List className={classes.linksList}>
           <Link to="/" className={classes.links} onClick={handleDrawerClose}>
             <ListItem button className={classes.listItem}>
               <ListItemIcon className={classes.icons}>
@@ -165,9 +171,18 @@ export default function MiniDrawer() {
               <ListItemText primary={'Profile'} />
             </ListItem>
           </Link>
+
         </List>
 
         <div style={{marginTop: 'auto'}}>
+          <Link to={`/profile`} className={classes.links} onClick={handleDrawerClose}>
+            <ListItem button className={classes.listItem}>
+              <ListItemIcon className={classes.icons}>
+                <SettingsIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Settings'} />
+            </ListItem>
+          </Link>
           <Divider className={classes.divider}/>
           <ListItem button className={classes.listItem} onClick={() => logout({ returnTo: window.location.origin })}>
             <ListItemIcon className={classes.icons}>
