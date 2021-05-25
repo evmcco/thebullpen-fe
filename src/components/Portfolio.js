@@ -186,10 +186,10 @@ const Portfolio = ({ match }) => {
           <UserGroupsList username={match.params.username} title={"Groups"} />
         </TabPanel>
         <TabPanel className={classes.groupsContainer} value={tabValue} index={3}>
-          <UserFollowersList followers={followers} title={"Followers"} username={match.params.username} auth0User={user} />
+          <UserFollowersList followers={followers} title={"Followers"} username={match.params.username} auth0User={auth0User} />
         </TabPanel>
         <TabPanel className={classes.groupsContainer} value={tabValue} index={4}>
-          <UserFollowingList following={following} title={"Following"} username={match.params.username} auth0User={user} />
+          <UserFollowingList following={following} title={"Following"} username={match.params.username} auth0User={auth0User} />
         </TabPanel>
       </div>
     </>
