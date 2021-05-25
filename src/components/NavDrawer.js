@@ -107,7 +107,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MiniDrawer() {
-  const { logout } = useAuth0();
+  const { logout, user } = useAuth0();
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -157,7 +157,7 @@ export default function MiniDrawer() {
             </ListItem>
           </Link>
 
-          <Link to="/profile" className={classes.links} onClick={handleDrawerClose}>
+          <Link to={`/p/${user["https://thebullpen.app/username"]}`} className={classes.links} onClick={handleDrawerClose}>
             <ListItem button className={classes.listItem}>
               <ListItemIcon className={classes.icons}>
                 <PersonIcon />
