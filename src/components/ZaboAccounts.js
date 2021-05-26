@@ -56,7 +56,7 @@ export default function ZaboAccounts(props) {
   return (
     <Card className={classes.root}>
       <CardContent className={classes.content}>
-        <h2 className={classes.title}>Zabo Accounts</h2>
+        <h2 className={classes.title}>Crypto Accounts</h2>
         {zaboAccounts.length > 0 ? (
           zaboAccounts.map((account) => (
             <>

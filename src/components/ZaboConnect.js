@@ -52,7 +52,7 @@ const ZaboConnect = (props) => {
   return (
     <>
       <Button onClick={() => handleClick()} className={classes.button} variant="contained">
-        Connect your crypto account
+        Beta - Connect your crypto account
       </Button>
     </>
   );
