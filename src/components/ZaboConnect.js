@@ -9,7 +9,7 @@ const ZaboConnect = (props) => {
 
   useEffect(() => {
     Zabo.init({
-      clientId: process.env.REACT_APP_ZABO_SANDBOX_CLIENT_ID,
+      clientId: process.env.REACT_APP_ZABO_CLIENT_ID,
       env: 'live'
     }).then(zabo => {
       setZabo(zabo)
