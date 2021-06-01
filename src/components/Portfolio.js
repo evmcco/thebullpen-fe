@@ -121,7 +121,7 @@ const Portfolio = ({ match }) => {
       getAuth0Follows()
     }
 
-  }, [userDataMemo])
+  }, [userDataMemo.auth0User, userDataMemo.userProfile])
 
   // get followers of current profile
   useEffect(() => {
