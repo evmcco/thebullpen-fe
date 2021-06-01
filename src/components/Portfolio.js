@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 import HoldingsCards from "./HoldingsCards"
-import OptionsTable from "./OptionsTable"
 import OptionsCards from "./OptionsCards"
 import TransactionsCards from "./TransactionsCards"
 import UserGroupsList from "./UserGroupsList"
@@ -66,19 +65,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Portfolio = ({ match }) => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
   let auth0User = isAuthenticated ? user["https://thebullpen.app/username"] : null
 
   const [holdings, setHoldings] = useState(null)
   const [tabValue, setTabValue] = React.useState(0);
-
   const [followers, setFollowers] = useState([])
   const [following, setFollowing] = useState([])
-
   const [isFollowing, setIsFollowing] = useState(null)
-
   const [auth0Following, setAuth0Following] = useState([])
+  const [followId, setFollowId] = useState(null)
 
+  let userDataMemo = useMemo(() => {
+    return {
+      auth0User,
+      userProfile: match.params.username,
+      isFollowing
+    }
+  }, [auth0User, match.params.username, isFollowing])
 
   const handleTabChange = (event, tabValue) => {
     setTabValue(tabValue);
@@ -91,43 +95,6 @@ const Portfolio = ({ match }) => {
       setHoldings(data)
     }
     getHoldings()
-  }, [match.params.username])
-
-  // get followers of current portfolio
-  useEffect(() => {
-    const getUserFollowers = async () => {
-      const followersRes = await fetch(`${process.env.REACT_APP_API_URL}/follows/user_followers`, {
-        method: "POST",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username: match.params.username })
-      })
-      const followersData = await followersRes.json()
-      setFollowers(followersData)
-    }
-    getUserFollowers()
-
-  }, [match.params.username, isFollowing])
-
-
-  // get followees of current portfolio
-  useEffect(() => {
-    const getUserFollowees = async () => {
-      const followsRes = await fetch(`${process.env.REACT_APP_API_URL}/follows/user_follows`, {
-        method: "POST",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username: match.params.username })
-      })
-      const followsData = await followsRes.json()
-      setFollowing(followsData)
-    }
-    getUserFollowees()
-
   }, [match.params.username])
 
   // get followees of logged in user
@@ -143,10 +110,56 @@ const Portfolio = ({ match }) => {
       })
       const followsData = await followsRes.json()
       setAuth0Following(followsData)
-    }
-    getAuth0Follows()
 
-  }, [match.params.username, auth0User, isFollowing])
+      let index = followsData.findIndex(follow => {
+        return follow.followee_username === userDataMemo.userProfile
+      })
+      setIsFollowing(index >= 0 ? true : false)
+      setFollowId(followsData[index]?.follow_id)
+    }
+    if (userDataMemo.auth0User && (userDataMemo.auth0User !== userDataMemo.userProfile)) {
+      getAuth0Follows()
+    }
+
+  }, [userDataMemo])
+
+  // get followers of current profile
+  useEffect(() => {
+    const getUserFollowers = async () => {
+      const followersRes = await fetch(`${process.env.REACT_APP_API_URL}/follows/user_followers`, {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: userDataMemo.userProfile })
+      })
+      const followersData = await followersRes.json()
+      setFollowers(followersData)
+    }
+    if (userDataMemo.isFollowing !== null || (userDataMemo.userProfile === userDataMemo.auth0User)) {
+      getUserFollowers()
+    }
+
+  }, [userDataMemo])
+
+
+  // get followees of current profile
+  useEffect(() => {
+    const getUserFollowees = async () => {
+      const followsRes = await fetch(`${process.env.REACT_APP_API_URL}/follows/user_follows`, {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: match.params.username })
+      })
+      const followsData = await followsRes.json()
+      setFollowing(followsData)
+    }
+    getUserFollowees()
+  }, [match.params.username])
 
 
   const classes = useStyles();
@@ -161,7 +174,18 @@ const Portfolio = ({ match }) => {
   return (
     <>
       <div className={classes.portfolioContainer}>
-        <UserInfo username={match.params.username} followers={followers} following={following} isFollowing={isFollowing} setIsFollowing={setIsFollowing} auth0User={auth0User} auth0Following={auth0Following} handleTabChange={handleTabChange}/>
+        <UserInfo
+          username={match.params.username}
+          followers={followers}
+          following={following}
+          isFollowing={isFollowing}
+          setIsFollowing={setIsFollowing}
+          auth0User={auth0User}
+          auth0Following={auth0Following}
+          handleTabChange={handleTabChange}
+          followId={followId}
+          setFollowId={setFollowId}
+          />
         <AppBar className={classes.tabBar} position="static">
           <StyledTabs value={tabValue} onChange={handleTabChange}>
             <Tab label="Holdings" className={classes.tab} {...a11yProps(0)}/>
@@ -197,4 +221,3 @@ const Portfolio = ({ match }) => {
 }
 
 export default Portfolio
-
