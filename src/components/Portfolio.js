@@ -73,7 +73,6 @@ const Portfolio = ({ match }) => {
   const [followers, setFollowers] = useState([])
   const [following, setFollowing] = useState([])
   const [isFollowing, setIsFollowing] = useState(null)
-  const [auth0Following, setAuth0Following] = useState([])
   const [followId, setFollowId] = useState(null)
 
   let userDataMemo = useMemo(() => {
@@ -109,7 +108,6 @@ const Portfolio = ({ match }) => {
         body: JSON.stringify({ username: auth0User })
       })
       const followsData = await followsRes.json()
-      setAuth0Following(followsData)
 
       let index = followsData.findIndex(follow => {
         return follow.followee_username === userDataMemo.userProfile
@@ -181,7 +179,6 @@ const Portfolio = ({ match }) => {
           isFollowing={isFollowing}
           setIsFollowing={setIsFollowing}
           auth0User={auth0User}
-          auth0Following={auth0Following}
           handleTabChange={handleTabChange}
           followId={followId}
           setFollowId={setFollowId}

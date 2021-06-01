@@ -60,7 +60,6 @@ const UserInfo = (props) => {
         <div className={classes.headerText}><UsernameWithAchivements username={profileUsername} /></div>
         {profileUsername !== props.auth0User ?
           <FollowButton
-            auth0Following={props.auth0Following}
             username={profileUsername}
             auth0User={props.auth0User}
             isFollowing={props.isFollowing}
