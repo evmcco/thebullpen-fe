@@ -33,19 +33,19 @@ export default function UsernameWithAchivements(props) {
 
   useEffect(() => {
     try {
-      setImage(achievements[props.username][0].image)
-      setTooltip(achievements[props.username][0].title)
+      setImage(achievements[props.username] ? achievements[props.username][0].image : null)
+      setTooltip(achievements[props.username] ? achievements[props.username][0].title : null)
     } catch {
       return
     }
-  }, [])
+  }, [props.username])
 
 
   return (
-    <>
+    <div style={{position:'relative'}}>
       <span>{props.username}</span>
-      <span title={tooltip}> {image}</span>
-    </>
+      <span title={tooltip} style={{position: 'absolute', top: '50%', transform: 'translateY(-50%)'}}> {image}</span>
+    </div>
   )
 }
 
