@@ -80,7 +80,7 @@ const Portfolio = ({ match }) => {
       auth0User,
       userProfile: match.params.username,
       isFollowing,
-      isAuthenticated
+      isAuthenticated,
     }
   }, [auth0User, match.params.username, isFollowing])
 
@@ -119,8 +119,10 @@ const Portfolio = ({ match }) => {
     if (userDataMemo.isAuthenticated && userDataMemo.auth0User && (userDataMemo.auth0User !== userDataMemo.userProfile)) {
       getAuth0Follows()
     }
-
-  }, [userDataMemo.auth0User, userDataMemo.userProfile, userDataMemo.isAuthenticated])
+    else {
+      setIsFollowing(false)
+    }
+  }, [userDataMemo])
 
   // get followers of current profile
   useEffect(() => {
@@ -141,7 +143,6 @@ const Portfolio = ({ match }) => {
     } else if (!isAuthenticated){
       getUserFollowers()
     }
-
   }, [userDataMemo])
 
 
