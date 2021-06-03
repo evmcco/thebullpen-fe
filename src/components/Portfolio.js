@@ -79,7 +79,8 @@ const Portfolio = ({ match }) => {
     return {
       auth0User,
       userProfile: match.params.username,
-      isFollowing
+      isFollowing,
+      isAuthenticated,
     }
   }, [auth0User, match.params.username, isFollowing])
 
@@ -115,11 +116,13 @@ const Portfolio = ({ match }) => {
       setIsFollowing(index >= 0 ? true : false)
       setFollowId(followsData[index]?.follow_id)
     }
-    if (userDataMemo.auth0User && (userDataMemo.auth0User !== userDataMemo.userProfile)) {
+    if (userDataMemo.isAuthenticated && userDataMemo.auth0User && (userDataMemo.auth0User !== userDataMemo.userProfile)) {
       getAuth0Follows()
     }
-
-  }, [userDataMemo.auth0User, userDataMemo.userProfile])
+    else {
+      setIsFollowing(false)
+    }
+  }, [userDataMemo])
 
   // get followers of current profile
   useEffect(() => {
@@ -135,10 +138,11 @@ const Portfolio = ({ match }) => {
       const followersData = await followersRes.json()
       setFollowers(followersData)
     }
-    if (userDataMemo.isFollowing !== null || (userDataMemo.userProfile === userDataMemo.auth0User)) {
+    if (userDataMemo.isAuthenticated && userDataMemo.isFollowing !== null || (userDataMemo.userProfile === userDataMemo.auth0User)) {
+      getUserFollowers()
+    } else if (!isAuthenticated){
       getUserFollowers()
     }
-
   }, [userDataMemo])
 
 
@@ -182,6 +186,7 @@ const Portfolio = ({ match }) => {
           handleTabChange={handleTabChange}
           followId={followId}
           setFollowId={setFollowId}
+          isAuthenticated={isAuthenticated}
           />
         <AppBar className={classes.tabBar} position="static">
           <StyledTabs value={tabValue} onChange={handleTabChange}>

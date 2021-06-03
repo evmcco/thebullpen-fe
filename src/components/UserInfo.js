@@ -19,7 +19,7 @@ const UserInfo = (props) => {
       const data = await response.json()
       setDailyPerformance(data.performance)
     }
-    if (props.username && props.auth0User) {
+    if (props.username && props.isFollowing !== null) {
       getUserDailyPerformance()
         .then(() => {
           setProfileUsername(props.username)
@@ -29,7 +29,7 @@ const UserInfo = (props) => {
         })
 
     }
-  }, [props.username, props.auth0User])
+  }, [props.username, props.isFollowing])
 
   const useStyles = makeStyles((theme) => ({
     header: {
@@ -58,14 +58,16 @@ const UserInfo = (props) => {
       :
       <div className={classes.header}>
         <div className={classes.headerText}><UsernameWithAchivements username={profileUsername} /></div>
-        {profileUsername !== props.auth0User ?
+        {props.isAuthenticated && profileUsername !== props.auth0User ?
           <FollowButton
             username={profileUsername}
             auth0User={props.auth0User}
             isFollowing={props.isFollowing}
             setIsFollowing={props.setIsFollowing}
             followId={props.followId}
-            setFollowId={props.setFollowId} />
+            setFollowId={props.setFollowId}
+            getUserFollowers={props.getUserFollowers}
+            />
           : null
         }
         <UserStats
