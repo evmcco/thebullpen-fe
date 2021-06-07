@@ -91,7 +91,7 @@ const Portfolio = ({ match }) => {
   useEffect(() => {
     if (isLoading === false){
       if (auth0User && (auth0User !== match.params.username)) {
-        followsContext.getAuth0Follows(match.params.username)
+        followsContext.getAuth0Followees(match.params.username)
       } else {
         followsContext.setIsFollowing(false)
       }

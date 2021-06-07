@@ -13,7 +13,7 @@ const FollowsContextProvider = props => {
   let auth0User = isAuthenticated ? user["https://thebullpen.app/username"] : null
 
   // get followees of logged in user
-  const getAuth0Follows = async (userProfile) => {
+  const getAuth0Followees = async (userProfile) => {
     const followsRes = await fetch(`${process.env.REACT_APP_API_URL}/follows/user_follows`, {
       method: "POST",
       headers: {
@@ -63,7 +63,7 @@ const FollowsContextProvider = props => {
   return (
     <FollowsContext.Provider
       value={{
-        getAuth0Follows,
+        getAuth0Followees,
         getUserFollowers,
         getUserFollowees,
         isFollowing,
