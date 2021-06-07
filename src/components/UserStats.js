@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 
+import { FollowsContext } from "../contexts/FollowsContext"
 
-
-const UserStats = ({amtOfFollowers, amtOfFollows, handleTabChange, dailyPerformance }) => {
+const UserStats = ({handleTabChange, dailyPerformance }) => {
+  const followsContext = useContext(FollowsContext)
 
   const useStyles = makeStyles((theme) => ({
     userStatsContainer: {
@@ -47,7 +48,7 @@ const UserStats = ({amtOfFollowers, amtOfFollows, handleTabChange, dailyPerforma
   return (
       <div className={classes.userStatsContainer}>
         <div className={clsx(classes.statContainer, classes.followHover)} onClick={(e) => handleTabChange(e, 3)}>
-          <h2 className={classes.amtDisplay}>{amtOfFollowers}</h2>
+          <h2 className={classes.amtDisplay}>{followsContext.followers.length}</h2>
           <p className={classes.subTitle}>followers</p>
         </div>
 
@@ -57,7 +58,7 @@ const UserStats = ({amtOfFollowers, amtOfFollows, handleTabChange, dailyPerforma
         </div>
 
         <div className={clsx(classes.statContainer, classes.followHover)} onClick={(e) => handleTabChange(e, 4)}>
-          <h2 className={classes.amtDisplay}>{amtOfFollows}</h2>
+          <h2 className={classes.amtDisplay}>{followsContext.following.length}</h2>
           <p className={classes.subTitle}>following</p>
         </div>
       </div>

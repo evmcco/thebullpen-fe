@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -6,11 +6,11 @@ import UsernameWithAchivements from "./UsernameWithAchivements"
 import UserStats from './UserStats'
 import FollowButton from "./FollowButton"
 
-
 const UserInfo = (props) => {
   const [loading, setLoading] = useState(true)
   const [dailyPerformance, setDailyPerformance] = useState([])
   const [profileUsername, setProfileUsername] = useState('')
+
 
   useEffect(() => {
     setLoading(true)
@@ -19,7 +19,8 @@ const UserInfo = (props) => {
       const data = await response.json()
       setDailyPerformance(data.performance)
     }
-    if (props.username && props.isFollowing !== null) {
+
+    if (props.isLoading === false) {
       getUserDailyPerformance()
         .then(() => {
           setProfileUsername(props.username)
@@ -27,9 +28,8 @@ const UserInfo = (props) => {
             setLoading(false)
           }, 500)
         })
-
     }
-  }, [props.username, props.isFollowing])
+  }, [props.isLoading, props.username])
 
   const useStyles = makeStyles((theme) => ({
     header: {
@@ -62,18 +62,11 @@ const UserInfo = (props) => {
           <FollowButton
             username={profileUsername}
             auth0User={props.auth0User}
-            isFollowing={props.isFollowing}
-            setIsFollowing={props.setIsFollowing}
-            followId={props.followId}
-            setFollowId={props.setFollowId}
-            getUserFollowers={props.getUserFollowers}
             />
           : null
         }
         <UserStats
           username={profileUsername}
-          amtOfFollowers={props.followers.length}
-          amtOfFollows={props.following.length}
           handleTabChange={props.handleTabChange}
           dailyPerformance={dailyPerformance}
         />

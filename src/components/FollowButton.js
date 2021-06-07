@@ -1,11 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { FollowsContext } from "../contexts/FollowsContext"
 
-const FollowButton = ({username, auth0User, isFollowing, setIsFollowing, followId, setFollowId}) => {
+
+const FollowButton = ({username, auth0User}) => {
   const [isHovered, setIsHovered] = useState(false)
+  const followsContext = useContext(FollowsContext)
+
 
   const handleFollowClick = () => {
     fetch(`${process.env.REACT_APP_API_URL}/follows/add_follow`, {
@@ -20,7 +24,7 @@ const FollowButton = ({username, auth0User, isFollowing, setIsFollowing, followI
       })
     })
     .then(() => {
-      setIsFollowing(true)
+      followsContext.setIsFollowing(true)
     })
     .catch(err => console.log(err.message))
   }
@@ -32,12 +36,12 @@ const FollowButton = ({username, auth0User, isFollowing, setIsFollowing, followI
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        followId: followId,
+        followId: followsContext.followId,
       })
     })
     .then(() => {
-      setIsFollowing(false)
-      setFollowId(null)
+      followsContext.setIsFollowing(false)
+      followsContext.setFollowId(null)
     })
     .catch(err => console.log(err.message))
   }
@@ -56,11 +60,11 @@ const FollowButton = ({username, auth0User, isFollowing, setIsFollowing, followI
     <Button
       className={classes.button}
       variant="contained"
-      onClick={isFollowing ? handleUnfollowClick : handleFollowClick}
+      onClick={followsContext.isFollowing ? handleUnfollowClick : handleFollowClick}
       onMouseOver={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {isFollowing ? isHovered ? 'unfollow' : 'following' : 'follow'}
+      {followsContext.isFollowing ? isHovered ? 'unfollow' : 'following' : 'follow'}
     </Button>
   )
 }

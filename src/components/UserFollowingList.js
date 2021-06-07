@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import CardContent from '@material-ui/core/CardContent';
@@ -6,7 +6,10 @@ import Card from '@material-ui/core/Card';
 
 import UsernameWithAchivements from './UsernameWithAchivements'
 
+import { FollowsContext } from "../contexts/FollowsContext"
+
 export default function UserFollowingList(props) {
+  const followsContext = useContext(FollowsContext)
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -41,8 +44,8 @@ export default function UserFollowingList(props) {
         <CardContent className={classes.content}>
           <h2 className={classes.title}>{props.title}</h2>
           <div className={classes.listContainer}>
-            {props.following.length > 0 ? (
-              props.following.map((followee) => (
+            {followsContext.following.length > 0 ? (
+              followsContext.following.map((followee) => (
                 <Link key={followee.follow_id} className={classes.link} to={`/p/${followee.followee_username}`}>
                   <div className={classes.followees}>
                     <UsernameWithAchivements username={followee.followee_username} />
