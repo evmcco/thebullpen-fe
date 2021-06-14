@@ -4,6 +4,7 @@ import UserGroupsList from "./UserGroupsList"
 import Leaderboard from "./Leaderboard"
 import TrendingGroups from "./TrendingGroups"
 import UnderConstruction from "./UnderConstruction"
+import ActivityFeed from './ActivityFeed'
 
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -57,6 +58,7 @@ const Home = () => {
           </div> */}
           <div className={classes.root} >
             <Grid container direction="row" justify="center" className={classes.gridWrapper}>
+              <ActivityFeed username={user["https://thebullpen.app/username"]}/>
               <Grid item sm={6} xs={12} className={classes.innerGrid}>
                 <Leaderboard />
               </Grid>
