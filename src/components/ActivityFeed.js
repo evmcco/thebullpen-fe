@@ -1,28 +1,36 @@
-import React, {useEffect, useState} from 'react'
-import LazyLoad from 'react-lazyload'
+import React, { useState, useRef, useCallback } from 'react'
 import CardsList from "../containers/CardsList"
 import ActivityCard from "./ActivityCard"
 
+import useFetchActivityFeed from '../utils/useFetchActivityFeed'
+
 
 const ActivityFeed = ({username}) => {
-  const [activityFeed, setActivityFeed] = useState([])
+  const [lastActivityId, setLastActivityId] = useState(0)
 
-  useEffect(() => {
-    const getActivityFeed = async () => {
-      const activityFeedRes = await fetch(`${process.env.REACT_APP_API_URL}/activityFeed/get_user_activity_feed`, {
-        method: "POST",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username })
-      })
-      const feedData = await activityFeedRes.json()
-      console.log(feedData)
-      setActivityFeed(feedData)
+  const {
+    activityFeed,
+    hasMore,
+    loading,
+    error
+  } = useFetchActivityFeed(username, lastActivityId)
+  const observer = useRef()
+
+  const lastActivityElementRef = useCallback(node => {
+    if (loading) return
+    if (observer.current) observer.current.disconnect()
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasMore) {
+        if (node) {
+          setLastActivityId(Number(node.id))
+        }
+      }
+    })
+    if (node) {
+      observer.current.observe(node)
     }
-    getActivityFeed()
-  }, [])
+  }, [loading, hasMore])
+
 
   const Loader = () => {
     return (
@@ -34,17 +42,25 @@ const ActivityFeed = ({username}) => {
 
   return (
     activityFeed.length > 0 ?
-    <CardsList title="Activity">
-      {activityFeed.map((activity, index) => (
-        <LazyLoad key={activity.id} placeholder={<Loader />} once>
-          <ActivityCard
-            key={activity.id}
-            activity={activity}
-          />
-
-        </LazyLoad>
-        )
+    <CardsList>
+      {activityFeed.map((activity, index) => {
+        if (activityFeed.length === index + 1) {
+          return (
+            <div ref={lastActivityElementRef} key={activity.id} id={activity.id}>
+              <ActivityCard activity={activity} />
+            </div>
+          )
+        } else {
+          return (
+            <div key={activity.id}>
+              <ActivityCard activity={activity} />
+            </div>
+          )
+        }
+      }
       )}
+      {loading ? <Loader /> : <div style={{height: '100px'}}></div>}
+      {error && 'There was an error during your request. Please refresh the page.'}
     </CardsList>
     :
     <div>
