@@ -52,19 +52,11 @@ const Home = () => {
     return (
       isAuthenticated ?
         <div className={classes.body} >
-          {/* <div className={classes.heading}>
-            <h1>Bullpen</h1>
-            <h2 className={classes.subheading}>Stampeding toward the Moon since 2021</h2>
-          </div> */}
           <div className={classes.root} >
             <Grid container direction="row" justify="center" className={classes.gridWrapper}>
               <ActivityFeed username={user["https://thebullpen.app/username"]}/>
               <Grid item sm={6} xs={12} className={classes.innerGrid}>
                 <Leaderboard />
-              </Grid>
-              <Grid item sm={6} xs={12} className={classes.innerGrid}>
-                {isAuthenticated && <UserGroupsList username={user["https://thebullpen.app/username"]} title={"My Groups"} />}
-                <TrendingGroups />
               </Grid>
             </Grid>
           </div>
